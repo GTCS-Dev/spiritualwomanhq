@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { Suspense } from "react";
 import { TopLoadingBar } from "@/components/top-loading-bar";
 import "./globals.css";
 
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${appFont.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <TopLoadingBar />
+        <Suspense fallback={null}>
+          <TopLoadingBar />
+        </Suspense>
         {children}
       </body>
     </html>
