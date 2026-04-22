@@ -113,16 +113,22 @@ export default function ContactPage() {
       image="/images/hero-slide-2.jpg"
     >
       <div className="grid gap-5 md:grid-cols-2">
-        {contactChannels.map((channel) => (
+        {contactChannels.map((channel, index) => (
           <article
             key={channel.title}
-            className="elevated rounded-2xl border border-(--ash) bg-white px-6 py-6 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40"
+            className={`home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-6 py-6 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40 ${
+              index === 1 ? "ink-rose-card" : ""
+            }`}
           >
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-(--rose)">{channel.title}</p>
-            <p className="mt-3 text-lg font-bold text-(--ink)">{channel.detail}</p>
+            <p className={`text-xs font-bold uppercase tracking-[0.2em] ${index === 1 ? "ink-rose-title" : "text-(--rose)"}`}>{channel.title}</p>
+            <p className={`mt-3 text-lg font-bold ${index === 1 ? "text-white" : "text-(--ink)"}`}>{channel.detail}</p>
             <a
               href={channel.cta}
-              className="mt-5 inline-block rounded-full border border-(--ash) px-4 py-2 text-sm font-bold text-(--ink) transition-colors hover:border-(--rose)/40 hover:text-(--rose)"
+              className={`mt-5 inline-block rounded-full border px-4 py-2 text-sm font-bold transition-colors ${
+                index === 1
+                  ? "border-white/35 text-white hover:border-(--rose)/65 hover:text-(--rose)"
+                  : "border-(--ash) text-(--ink) hover:border-(--rose)/40 hover:text-(--rose)"
+              }`}
             >
               {channel.label}
             </a>
@@ -130,7 +136,7 @@ export default function ContactPage() {
         ))}
       </div>
 
-      <section className="mt-8 rounded-2xl border border-(--ash) bg-white px-6 py-7">
+      <section className="home-accent-card mt-8 rounded-2xl border border-(--ash) bg-white px-6 py-7">
         <h2 className="text-2xl font-bold text-(--ink)">Office And Gathering Details</h2>
         <div className="mt-4 grid gap-3 text-sm leading-7 text-(--stone) sm:grid-cols-2">
           <p>

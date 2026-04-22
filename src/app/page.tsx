@@ -86,15 +86,17 @@ export default function Home() {
         <HeroSlider />
 
         <section className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quickLinks.map((item) => (
+          {quickLinks.map((item, index) => (
             <Link
               key={item.href}
               href={item.href}
-              className="elevated group rounded-2xl border border-(--ash) bg-white px-5 py-5 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40"
+              className={`home-accent-card elevated group rounded-2xl border border-(--ash) bg-white px-5 py-5 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40 ${
+                index % 2 === 1 ? "ink-rose-card" : ""
+              }`}
             >
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-(--rose)">{item.title}</p>
-              <p className="mt-3 text-sm leading-7 text-(--stone)">{item.text}</p>
-              <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-(--rose) opacity-0 transition-opacity group-hover:opacity-100">
+              <p className={`text-sm font-bold uppercase tracking-[0.2em] ${index % 2 === 1 ? "ink-rose-title" : "text-(--rose)"}`}>{item.title}</p>
+              <p className={`mt-3 text-sm leading-7 ${index % 2 === 1 ? "text-white/85" : "text-(--stone)"}`}>{item.text}</p>
+              <p className={`mt-4 text-xs font-bold uppercase tracking-[0.18em] opacity-0 transition-opacity group-hover:opacity-100 ${index % 2 === 1 ? "ink-rose-link" : "text-(--rose)"}`}>
                 Explore now →
               </p>
             </Link>
@@ -109,7 +111,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.4 }}
-              className="elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 text-center"
+              className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 text-center"
             >
               <p className="text-3xl font-extrabold text-(--rose)">{s.value}</p>
               <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-(--stone)">{s.label}</p>
@@ -191,7 +193,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ delay: i * 0.1, duration: 0.45 }}
-                  className="elevated rounded-2xl border border-(--ash) bg-white px-6 py-7"
+                  className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-6 py-7"
                 >
                   <Quote size={28} className="text-(--rose) opacity-70" />
                   <p className="mt-3 text-sm italic leading-7 text-(--stone)">{t.quote}</p>
@@ -225,7 +227,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.35 }}
                 transition={{ delay: index * 0.12, duration: 0.4 }}
-                className="group elevated overflow-hidden rounded-2xl border border-white/70 bg-white"
+                className="home-accent-card group elevated overflow-hidden rounded-2xl border border-white/70 bg-white"
               >
                 <div className="overflow-hidden">
                   <Image
@@ -262,7 +264,7 @@ export default function Home() {
               {posts.map((post) => (
                 <article
                   key={post.id}
-                  className="elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40"
+                  className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40"
                 >
                   <h3 className="mt-3 text-2xl font-bold leading-tight text-(--ink)">{post.title}</h3>
                   <p className="mt-3 text-sm leading-7 text-(--stone)">{post.excerpt}</p>

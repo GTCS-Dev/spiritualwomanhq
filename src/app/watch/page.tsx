@@ -24,10 +24,15 @@ export default function WatchPage() {
       image="/images/hero-slide-2.jpg"
     >
       <div className="grid gap-5 md:grid-cols-3">
-        {programs.map((program) => (
-          <article key={program.title} className="elevated rounded-2xl border border-(--ash) bg-white px-5 py-6">
-            <h2 className="text-2xl font-bold text-(--ink)">{program.title}</h2>
-            <p className="mt-3 text-sm leading-7 text-(--stone)">{program.body}</p>
+        {programs.map((program, index) => (
+          <article
+            key={program.title}
+            className={`home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 ${
+              index === 1 ? "ink-rose-card" : ""
+            }`}
+          >
+            <h2 className={`text-2xl font-bold ${index === 1 ? "ink-rose-title" : "text-(--ink)"}`}>{program.title}</h2>
+            <p className={`mt-3 text-sm leading-7 ${index === 1 ? "text-white/85" : "text-(--stone)"}`}>{program.body}</p>
             <button className="mt-6 rounded-full bg-(--rose) px-5 py-2 text-sm font-bold text-white hover:bg-(--rose-dark)">
               Watch Now
             </button>

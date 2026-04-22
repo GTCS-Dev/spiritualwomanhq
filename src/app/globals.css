@@ -130,6 +130,30 @@ html[data-theme="dark"] select {
   background: linear-gradient(140deg, rgba(255, 244, 250, 0.95), rgba(255, 231, 242, 0.88));
 }
 
+html:not(.theme-dark):not([data-theme="dark"]) .home-accent-card {
+  border-color: color-mix(in srgb, #1f2126 18%, var(--rose) 22%, #ffffff 60%) !important;
+}
+
+html:not(.theme-dark):not([data-theme="dark"]) .home-accent-card:hover {
+  border-color: color-mix(in srgb, #1f2126 24%, var(--rose) 36%, #ffffff 40%) !important;
+  box-shadow: 0 16px 36px -24px rgba(31, 33, 38, 0.38);
+}
+
+html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card {
+  border-color: color-mix(in srgb, #0f1014 34%, var(--rose) 30%, #ffffff 36%) !important;
+  background: linear-gradient(145deg, #14151a 0%, #231925 56%, #322031 100%) !important;
+  box-shadow: 0 16px 34px -24px rgba(20, 21, 26, 0.52);
+}
+
+html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card .ink-rose-title,
+html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card .ink-rose-link {
+  color: #ff9fb9;
+}
+
 .soft-rise {
   animation: rise 700ms ease both;
 }

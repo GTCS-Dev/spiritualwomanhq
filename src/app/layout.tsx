@@ -14,7 +14,11 @@ export const metadata: Metadata = {
   title: "SpiritualWoman Fellowship",
   description: "A welcoming Christian fellowship community and blog platform.",
   icons: {
-    icon: "/images/logo.jpeg",
+    icon: [
+      { url: "/images/logo.jpeg?v=3", type: "image/jpeg" },
+    ],
+    shortcut: [{ url: "/images/logo.jpeg?v=3" }],
+    apple: [{ url: "/images/logo.jpeg?v=3" }],
   },
 };
 

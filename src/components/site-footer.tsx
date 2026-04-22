@@ -59,7 +59,7 @@ export function SiteFooter() {
 
       <div className="border-t border-(--ash)">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4 text-xs text-(--stone) sm:px-6">
-          <p>Copyright (c) 2026 LOPLATFORMS. All Rights Reserved.</p>
+          <p>Copyright © Layo Obidike 2026. Powered by LOPLATFORMS. All Rights Reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy-policy" className="hover:text-(--rose)">
               Privacy Policy
