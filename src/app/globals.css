@@ -166,6 +166,27 @@ html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card .ink-rose-link {
   animation-delay: 280ms;
 }
 
+.verse-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: verse-scroll 40s linear infinite;
+}
+
+.verse-marquee-item {
+  width: min(620px, 78vw);
+  flex: 0 0 auto;
+}
+
+@keyframes verse-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;

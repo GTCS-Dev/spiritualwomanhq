@@ -17,6 +17,12 @@ type Verse = {
   period: string;
 };
 
+type DisplayVerse = {
+  text: string;
+  reference: string;
+  period: string;
+};
+
 type Testimonial = {
   _id: string;
   quote: string;
@@ -52,26 +58,63 @@ const fallbackVerse = {
   period: "week",
 };
 
+function buildApiCandidates(path: string) {
+  const trimmedBase = baseApiUrl.replace(/\/+$/, "");
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  const candidates = [`${trimmedBase}${normalizedPath}`];
+
+  if (trimmedBase.endsWith("/api")) {
+    candidates.push(`${trimmedBase.slice(0, -4)}${normalizedPath}`);
+  } else {
+    candidates.push(`${trimmedBase}/api${normalizedPath}`);
+  }
+
+  return Array.from(new Set(candidates));
+}
+
+async function fetchJsonWithFallback<T>(path: string, signal: AbortSignal): Promise<T> {
+  const urls = buildApiCandidates(path);
+
+  for (let i = 0; i < urls.length; i += 1) {
+    try {
+      const response = await fetch(urls[i], { signal });
+      if (response.ok) return (await response.json()) as T;
+      if (response.status !== 404 || i === urls.length - 1) throw new Error(`Request failed: ${response.status}`);
+    } catch (error) {
+      if (i === urls.length - 1) throw error;
+    }
+  }
+
+  throw new Error("Request failed");
+}
+
 export default function Home() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [verse, setVerse] = useState(fallbackVerse);
+  const [verses, setVerses] = useState<DisplayVerse[]>([fallbackVerse]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   useEffect(() => {
     const ctrl = new AbortController();
 
-    fetch(`${baseApiUrl}/posts?limit=3`, { signal: ctrl.signal })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
+    fetchJsonWithFallback<BlogPost[]>(`/posts?limit=3`, ctrl.signal)
       .then((d: BlogPost[]) => setPosts(d))
       .catch(() => setPosts([]));
 
-    fetch(`${baseApiUrl}/verses/active?period=week`, { signal: ctrl.signal })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: Verse | null) => { if (d) setVerse(d); })
-      .catch(() => {});
+    fetchJsonWithFallback<Verse[]>(`/verses/active/list?limit=20`, ctrl.signal)
+      .then((list) => {
+        if (Array.isArray(list) && list.length > 0) {
+          setVerses(list.map((v) => ({ text: v.text, reference: v.reference, period: v.period })));
+          return;
+        }
+        return fetchJsonWithFallback<Verse | null>(`/verses/active`, ctrl.signal).then((single) => {
+          if (single) setVerses([{ text: single.text, reference: single.reference, period: single.period }]);
+        });
+      })
+      .catch(() => {
+        setVerses([fallbackVerse]);
+      });
 
-    fetch(`${baseApiUrl}/testimonials`, { signal: ctrl.signal })
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
+    fetchJsonWithFallback<Testimonial[]>(`/testimonials`, ctrl.signal)
       .then((d: Testimonial[]) => setTestimonials(d))
       .catch(() => setTestimonials([]));
 
@@ -142,14 +185,29 @@ export default function Home() {
 
         <section className="mt-14 flex items-start gap-5 rounded-3xl border border-(--rose)/20 bg-(--blush) px-8 py-10 sm:items-center sm:px-12">
           <BookOpen className="mt-1 shrink-0 text-(--rose) sm:mt-0" size={36} />
-          <div>
-            <p className="text-lg font-bold italic leading-8 text-(--ink) sm:text-xl">
-              &ldquo;{verse.text}&rdquo;
-            </p>
-            <p className="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-(--rose)">
-              {verse.reference}&nbsp;&nbsp;&#8212;&nbsp;&nbsp;Verse of the {verse.period === "day" ? "Day" : "Week"}
-            </p>
-          </div>
+          {verses.length > 1 ? (
+            <div className="verse-marquee w-full overflow-hidden">
+              <div className="verse-marquee-track">
+                {[...verses, ...verses].map((v, index) => (
+                  <div key={`${v.reference}-${index}`} className="verse-marquee-item rounded-2xl border border-(--rose)/25 bg-white/55 px-6 py-4">
+                    <p className="text-base font-bold italic leading-7 text-(--ink)">&ldquo;{v.text}&rdquo;</p>
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-(--rose)">
+                      {v.reference} &#8212; Verse of the {v.period === "day" ? "Day" : "Week"}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <p className="text-lg font-bold italic leading-8 text-(--ink) sm:text-xl">
+                &ldquo;{verses[0]?.text ?? fallbackVerse.text}&rdquo;
+              </p>
+              <p className="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-(--rose)">
+                {(verses[0]?.reference ?? fallbackVerse.reference)}&nbsp;&nbsp;&#8212;&nbsp;&nbsp;Verse of the {(verses[0]?.period ?? fallbackVerse.period) === "day" ? "Day" : "Week"}
+              </p>
+            </div>
+          )}
         </section>
 
         <section id="fellowship" className="mt-14 overflow-hidden rounded-3xl bg-[#1f2126] px-6 py-12 text-white sm:px-10">
