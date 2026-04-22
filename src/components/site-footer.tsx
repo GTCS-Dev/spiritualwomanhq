@@ -1,8 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Heart, Mail, Send } from "lucide-react";
 import { SiteLogo } from "@/components/site-logo";
 
 export function SiteFooter() {
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+
   return (
     <footer className="mt-16 border-t border-(--ash) bg-(--container)/90">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-4">
@@ -16,12 +22,12 @@ export function SiteFooter() {
         <div>
           <h3 className="text-sm font-extrabold uppercase tracking-[0.18em] text-(--ink)">Quick Links</h3>
           <div className="mt-4 grid gap-2 text-sm text-(--stone)">
-            <Link href="/about" className="hover:text-(--rose)">About</Link>
-            <Link href="/connect" className="hover:text-(--rose)">Fellowship</Link>
-            <Link href="/blog" className="hover:text-(--rose)">Blog</Link>
-            <Link href="/contact" className="hover:text-(--rose)">Contact</Link>
-            <Link href="/privacy-policy" className="hover:text-(--rose)">Privacy Policy</Link>
-            <Link href="/terms-of-use" className="hover:text-(--rose)">Terms of Use</Link>
+            <Link href="/about" className={isActive("/about") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>About</Link>
+            <Link href="/connect" className={isActive("/connect") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Fellowship</Link>
+            <Link href="/blog" className={isActive("/blog") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Blog</Link>
+            <Link href="/contact" className={isActive("/contact") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Contact</Link>
+            <Link href="/privacy-policy" className={isActive("/privacy-policy") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Privacy Policy</Link>
+            <Link href="/terms-of-use" className={isActive("/terms-of-use") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Terms of Use</Link>
           </div>
         </div>
 

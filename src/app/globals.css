@@ -4,11 +4,12 @@
   --rose: #de3163;
   --rose-dark: #be2150;
   --stone: #565656;
-  --ash: #eef0f3;
+  --ash: #e8e1e8;
   --ink: #1f2126;
-  --blush: #fff4f6;
-  --background: #fff9fb;
-  --container: #fffbfd;
+  --blush: #ffedf3;
+  --background: #fff4f8;
+  --container: #ffeff5;
+  --surface: #ffe9f2;
   --foreground: #1f2126;
 }
 
@@ -30,9 +31,9 @@ html[data-theme="dark"] {
 
 body {
   background:
-    radial-gradient(circle at 8% 5%, rgba(222, 49, 99, 0.13), transparent 38%),
+    radial-gradient(circle at 8% 5%, rgba(222, 49, 99, 0.17), transparent 38%),
     radial-gradient(circle at 88% 10%, rgba(86, 86, 86, 0.12), transparent 32%),
-    linear-gradient(180deg, #fff6f8 0%, #ffffff 42%, #f8f9fb 100%);
+    linear-gradient(180deg, #ffedf4 0%, #fff3f8 44%, #f3edf4 100%);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
 }
@@ -50,9 +51,15 @@ html[data-theme="dark"] [class*="bg-white"] {
   background-color: #12151c !important;
 }
 
-/* Light mode: replace white with soft container color */
-html:not(.theme-dark):not([data-theme="dark"]) .bg-white {
-  background-color: var(--container);
+/* Light mode: avoid harsh pure-white blocks across sections/cards */
+html:not(.theme-dark):not([data-theme="dark"]) .bg-white,
+html:not(.theme-dark):not([data-theme="dark"]) [class*="bg-white/"] {
+  background-color: var(--container) !important;
+}
+
+html:not(.theme-dark):not([data-theme="dark"]) header,
+html:not(.theme-dark):not([data-theme="dark"]) footer {
+  background-color: color-mix(in srgb, var(--surface) 88%, white 12%) !important;
 }
 
 html.theme-dark [class*="border-(--ash)"],
@@ -103,8 +110,8 @@ html[data-theme="dark"] select {
 }
 
 .glass-card {
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.72));
+  border: 1px solid rgba(255, 226, 239, 0.9);
+  background: linear-gradient(165deg, rgba(255, 246, 251, 0.92), rgba(255, 234, 244, 0.78));
   backdrop-filter: blur(6px);
 }
 
@@ -120,7 +127,7 @@ html[data-theme="dark"] select {
 }
 
 .section-gradient {
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(255, 244, 247, 0.84));
+  background: linear-gradient(140deg, rgba(255, 244, 250, 0.95), rgba(255, 231, 242, 0.88));
 }
 
 .soft-rise {

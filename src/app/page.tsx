@@ -163,15 +163,15 @@ export default function Home() {
             <div className="grid gap-4 text-sm">
               <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
                 <p className="font-bold text-(--rose)">Tuesday | 6:30 PM</p>
-                <p className="mt-1 text-white/85">Online Bible study and reflection.</p>
+                <p className="mt-1 text-(--ink) opacity-85">Online Bible study and reflection.</p>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
                 <p className="font-bold text-(--rose)">Saturday | 7:00 AM</p>
-                <p className="mt-1 text-white/85">Prayer and accountability session.</p>
+                <p className="mt-1 text-(--ink) opacity-85">Prayer and accountability session.</p>
               </div>
               <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
                 <p className="font-bold text-(--rose)">Sunday | 9:30 AM</p>
-                <p className="mt-1 text-white/85">Live worship service and message.</p>
+                <p className="mt-1 text-(--ink) opacity-85">Live worship service and message.</p>
               </div>
             </div>
           </div>

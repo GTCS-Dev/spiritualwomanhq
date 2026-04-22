@@ -48,7 +48,7 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-(--ash) bg-(--container)/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-(--ash) bg-(--container)/85 shadow-[0_8px_24px_-20px_rgba(31,33,38,0.45)] backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <SiteLogo />
 
@@ -59,7 +59,7 @@ export function SiteHeader() {
               href={item.href}
               className={`text-sm font-semibold tracking-wide transition-colors ${
                 isActive(item.href)
-                  ? "text-(--rose) border-b-2 border-(--rose)"
+                  ? "border-b-2 border-(--rose) text-(--rose)"
                   : "text-(--ink) hover:text-(--rose)"
               }`}
             >
@@ -129,7 +129,11 @@ export function SiteHeader() {
                 >
                   <Link
                     href={item.href}
-                    className="block rounded-md px-3 py-2 font-semibold text-(--ink) hover:bg-(--blush) hover:text-(--rose)"
+                    className={`block rounded-md px-3 py-2 font-semibold transition-colors ${
+                      isActive(item.href)
+                        ? "bg-(--blush) text-(--rose)"
+                        : "text-(--ink) hover:bg-(--blush) hover:text-(--rose)"
+                    }`}
                     onClick={() => setIsOpen(false)}
                   >
                     {item.label}
