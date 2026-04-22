@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { CalendarDays, HeartHandshake, Mic2 } from "lucide-react";
+import { BookOpen, CalendarDays, HeartHandshake, Mic2, Quote, Users } from "lucide-react";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { HeroSlider } from "@/components/hero-slider";
@@ -14,6 +14,31 @@ const highlights = [
   { icon: HeartHandshake, title: "Women Fellowship", text: "Weekly circle for prayer, mentoring, and real life support." },
   { icon: Mic2, title: "Sunday Messages", text: "Strong Bible-centered teachings for growth and clarity." },
   { icon: CalendarDays, title: "Events & Retreats", text: "Monthly gatherings, worship nights, and outreach projects." },
+];
+
+const stats = [
+  { value: "500+", label: "Women Empowered" },
+  { value: "8", label: "Years of Ministry" },
+  { value: "12", label: "Active Groups" },
+  { value: "3K+", label: "Lives Touched" },
+];
+
+const testimonials = [
+  {
+    quote: "This fellowship gave me the community I had been praying for. I found purpose, sisterhood, and a deeper walk with God.",
+    name: "Amara O.",
+    role: "Member since 2022",
+  },
+  {
+    quote: "The Bible study sessions changed how I read the Word. I came broken and left equipped. God used these women to restore me.",
+    name: "Patience A.",
+    role: "Prayer Team Leader",
+  },
+  {
+    quote: "I never thought I would lead anything — now I am running a small group and growing every week. This community believes in you.",
+    name: "Grace M.",
+    role: "Small Group Facilitator",
+  },
 ];
 
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
@@ -64,6 +89,23 @@ export default function Home() {
           ))}
         </section>
 
+        {/* ── Impact stats strip ── */}
+        <section className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
+              className="rounded-2xl border border-(--ash) bg-white px-5 py-6 text-center elevated"
+            >
+              <p className="text-3xl font-extrabold text-(--rose)">{s.value}</p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-(--stone)">{s.label}</p>
+            </motion.div>
+          ))}
+        </section>
+
         <section id="about" className="mt-12 grid gap-4 md:grid-cols-3">
           {highlights.map((item, index) => {
             const Icon = item.icon;
@@ -83,6 +125,17 @@ export default function Home() {
               </motion.article>
             );
           })}
+        </section>
+
+        {/* ── Scripture verse callout ── */}
+        <section className="mt-14 flex items-start gap-5 rounded-3xl border border-(--rose)/20 bg-(--blush) px-8 py-10 sm:items-center sm:px-12">
+          <BookOpen className="mt-1 shrink-0 text-(--rose) sm:mt-0" size={36} />
+          <div>
+            <p className="text-lg font-bold italic leading-8 text-(--ink) sm:text-xl">
+              &ldquo;She is clothed with strength and dignity, and she laughs without fear of the future.&rdquo;
+            </p>
+            <p className="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-(--rose)">Proverbs 31:25 &nbsp;—&nbsp; Verse of the Week</p>
+          </div>
         </section>
 
         <section id="fellowship" className="mt-14 overflow-hidden rounded-3xl bg-[#1f2126] px-6 py-12 text-white sm:px-10">
@@ -109,6 +162,38 @@ export default function Home() {
                 <p className="mt-1 text-white/85">Live worship service and message.</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ── Testimonials ── */}
+        <section className="mt-14">
+          <div className="mb-6">
+            <p className="text-sm font-bold uppercase tracking-[0.24em] text-(--rose)">Testimonies</p>
+            <h2 className="mt-2 text-3xl font-bold text-(--ink)">Words From Our Sisterhood</h2>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            {testimonials.map((t, i) => (
+              <motion.article
+                key={t.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: i * 0.1, duration: 0.45 }}
+                className="elevated rounded-2xl border border-(--ash) bg-white px-6 py-7"
+              >
+                <Quote size={28} className="text-(--rose) opacity-70" />
+                <p className="mt-3 text-sm leading-7 text-(--stone) italic">{t.quote}</p>
+                <div className="mt-5 flex items-center gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-(--blush) text-sm font-bold text-(--rose)">
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-(--ink)">{t.name}</p>
+                    <p className="text-xs text-(--stone)">{t.role}</p>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
           </div>
         </section>
 
@@ -197,9 +282,35 @@ export default function Home() {
           )}
         </section>
 
-        <section id="contact" className="mt-14 rounded-3xl bg-(--blush) px-6 py-12 text-center sm:px-10">
-          <h2 className="text-3xl font-bold text-(--ink)">Let&apos;s Walk This Journey Together</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-8 text-(--stone) sm:text-base">
+        {/* ── Newsletter ── */}
+        <section className="mt-14 rounded-3xl bg-(--blush) px-6 py-12 text-center sm:px-10">
+          <Users className="mx-auto text-(--rose)" size={38} />
+          <h2 className="mt-4 text-3xl font-bold text-(--ink)">Stay Connected With The Community</h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-8 text-(--stone)">
+            Get weekly devotionals, event notices, and encouragement delivered straight to your inbox.
+          </p>
+          <form
+            className="mx-auto mt-8 flex w-full max-w-md flex-col items-center gap-3 sm:flex-row"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <input
+              type="email"
+              required
+              placeholder="Your email address"
+              className="w-full rounded-full border border-(--ash) bg-white px-5 py-3 text-sm text-(--ink) outline-none focus:border-(--rose)/60 focus:ring-2 focus:ring-(--rose)/20"
+            />
+            <button
+              type="submit"
+              className="shrink-0 rounded-full bg-(--rose) px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-(--rose-dark)"
+            >
+              Subscribe
+            </button>
+          </form>
+        </section>
+
+        <section id="contact" className="mt-8 rounded-3xl bg-[#1f2126] px-6 py-12 text-center text-white sm:px-10">
+          <h2 className="text-3xl font-bold">Let&apos;s Walk This Journey Together</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-8 text-white/75 sm:text-base">
             Join a growing community of women committed to faith, purpose, and transformation through Christ.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -211,7 +322,7 @@ export default function Home() {
             </Link>
             <a
               href="mailto:hello@spiritualwoman.org"
-              className="inline-block rounded-full border border-(--ash) bg-white px-7 py-3 font-bold text-(--ink) transition-colors hover:border-(--rose)/40"
+              className="inline-block rounded-full border border-white/20 px-7 py-3 font-bold text-white/90 transition-colors hover:border-white/50"
             >
               Email Directly
             </a>

@@ -27,8 +27,8 @@ export function SiteHeader() {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("sw_theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const shouldUseDark = storedTheme ? storedTheme === "dark" : prefersDark;
+    // Default is always light; only switch dark if user explicitly chose it
+    const shouldUseDark = storedTheme === "dark";
 
     document.documentElement.classList.toggle("theme-dark", shouldUseDark);
     document.documentElement.setAttribute("data-theme", shouldUseDark ? "dark" : "light");

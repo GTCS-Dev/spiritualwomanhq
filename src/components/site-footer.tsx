@@ -38,22 +38,16 @@ export function SiteFooter() {
           <h3 className="text-sm font-extrabold uppercase tracking-[0.18em] text-(--ink)">Connect</h3>
           <p className="mt-4 text-sm text-(--stone)">hello@spiritualwoman.org</p>
           <div className="mt-4 flex items-center gap-2">
-            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="#" aria-label="Prayer requests">
+            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="mailto:hello@spiritualwoman.org" aria-label="Email us">
               <Mail size={16} />
             </a>
-            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="#" aria-label="Testimony submission">
+            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="mailto:prayer@spiritualwoman.org" aria-label="Prayer requests">
               <Heart size={16} />
             </a>
-            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="#" aria-label="News updates">
+            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="/contact" aria-label="Contact us">
               <Send size={16} />
             </a>
           </div>
-          <Link
-            href="/admin"
-            className="mt-4 inline-block rounded-full bg-[#1f2126] px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#121418]"
-          >
-            Admin Access
-          </Link>
         </div>
       </div>
 
