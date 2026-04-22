@@ -3,12 +3,26 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { BookOpen, CalendarDays, HeartHandshake, Mic2, Quote, Users } from "lucide-react";
+import { BookOpen, CalendarDays, HeartHandshake, Mic2, Quote } from "lucide-react";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { HeroSlider } from "@/components/hero-slider";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogPost } from "@/types/blog";
+
+type Verse = {
+  _id: string;
+  text: string;
+  reference: string;
+  period: string;
+};
+
+type Testimonial = {
+  _id: string;
+  quote: string;
+  name: string;
+  role: string;
+};
 
 const highlights = [
   { icon: HeartHandshake, title: "Women Fellowship", text: "Weekly circle for prayer, mentoring, and real life support." },
@@ -23,24 +37,6 @@ const stats = [
   { value: "3K+", label: "Lives Touched" },
 ];
 
-const testimonials = [
-  {
-    quote: "This fellowship gave me the community I had been praying for. I found purpose, sisterhood, and a deeper walk with God.",
-    name: "Amara O.",
-    role: "Member since 2022",
-  },
-  {
-    quote: "The Bible study sessions changed how I read the Word. I came broken and left equipped. God used these women to restore me.",
-    name: "Patience A.",
-    role: "Prayer Team Leader",
-  },
-  {
-    quote: "I never thought I would lead anything — now I am running a small group and growing every week. This community believes in you.",
-    name: "Grace M.",
-    role: "Small Group Facilitator",
-  },
-];
-
 const baseApiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
 const quickLinks = [
@@ -50,20 +46,36 @@ const quickLinks = [
   { href: "/about", title: "About", text: "Learn our mission, beliefs, and community vision." },
 ];
 
+const fallbackVerse = {
+  text: "She is clothed with strength and dignity, and she laughs without fear of the future.",
+  reference: "Proverbs 31:25",
+  period: "week",
+};
+
 export default function Home() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [verse, setVerse] = useState(fallbackVerse);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   useEffect(() => {
-    const controller = new AbortController();
+    const ctrl = new AbortController();
 
-    fetch(`${baseApiUrl}/posts?limit=3`, { signal: controller.signal })
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error("Could not load posts"))))
-      .then((data: BlogPost[]) => setPosts(data))
-      .catch(() => {
-        setPosts([]);
-      });
+    fetch(`${baseApiUrl}/posts?limit=3`, { signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d: BlogPost[]) => setPosts(d))
+      .catch(() => setPosts([]));
 
-    return () => controller.abort();
+    fetch(`${baseApiUrl}/verses/active?period=week`, { signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d: Verse | null) => { if (d) setVerse(d); })
+      .catch(() => {});
+
+    fetch(`${baseApiUrl}/testimonials`, { signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d: Testimonial[]) => setTestimonials(d))
+      .catch(() => setTestimonials([]));
+
+    return () => ctrl.abort();
   }, []);
 
   return (
@@ -89,7 +101,6 @@ export default function Home() {
           ))}
         </section>
 
-        {/* ── Impact stats strip ── */}
         <section className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
           {stats.map((s, i) => (
             <motion.div
@@ -98,7 +109,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.4 }}
-              className="rounded-2xl border border-(--ash) bg-white px-5 py-6 text-center elevated"
+              className="elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 text-center"
             >
               <p className="text-3xl font-extrabold text-(--rose)">{s.value}</p>
               <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-(--stone)">{s.label}</p>
@@ -127,14 +138,15 @@ export default function Home() {
           })}
         </section>
 
-        {/* ── Scripture verse callout ── */}
         <section className="mt-14 flex items-start gap-5 rounded-3xl border border-(--rose)/20 bg-(--blush) px-8 py-10 sm:items-center sm:px-12">
           <BookOpen className="mt-1 shrink-0 text-(--rose) sm:mt-0" size={36} />
           <div>
             <p className="text-lg font-bold italic leading-8 text-(--ink) sm:text-xl">
-              &ldquo;She is clothed with strength and dignity, and she laughs without fear of the future.&rdquo;
+              &ldquo;{verse.text}&rdquo;
             </p>
-            <p className="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-(--rose)">Proverbs 31:25 &nbsp;—&nbsp; Verse of the Week</p>
+            <p className="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-(--rose)">
+              {verse.reference}&nbsp;&nbsp;&#8212;&nbsp;&nbsp;Verse of the {verse.period === "day" ? "Day" : "Week"}
+            </p>
           </div>
         </section>
 
@@ -165,37 +177,38 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Testimonials ── */}
-        <section className="mt-14">
-          <div className="mb-6">
-            <p className="text-sm font-bold uppercase tracking-[0.24em] text-(--rose)">Testimonies</p>
-            <h2 className="mt-2 text-3xl font-bold text-(--ink)">Words From Our Sisterhood</h2>
-          </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <motion.article
-                key={t.name}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: i * 0.1, duration: 0.45 }}
-                className="elevated rounded-2xl border border-(--ash) bg-white px-6 py-7"
-              >
-                <Quote size={28} className="text-(--rose) opacity-70" />
-                <p className="mt-3 text-sm leading-7 text-(--stone) italic">{t.quote}</p>
-                <div className="mt-5 flex items-center gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-(--blush) text-sm font-bold text-(--rose)">
-                    {t.name[0]}
+        {testimonials.length > 0 && (
+          <section className="mt-14">
+            <div className="mb-6">
+              <p className="text-sm font-bold uppercase tracking-[0.24em] text-(--rose)">Testimonies</p>
+              <h2 className="mt-2 text-3xl font-bold text-(--ink)">Words From Our Sisterhood</h2>
+            </div>
+            <div className="grid gap-5 md:grid-cols-3">
+              {testimonials.map((t, i) => (
+                <motion.article
+                  key={t._id}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ delay: i * 0.1, duration: 0.45 }}
+                  className="elevated rounded-2xl border border-(--ash) bg-white px-6 py-7"
+                >
+                  <Quote size={28} className="text-(--rose) opacity-70" />
+                  <p className="mt-3 text-sm italic leading-7 text-(--stone)">{t.quote}</p>
+                  <div className="mt-5 flex items-center gap-3">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-(--blush) text-sm font-bold text-(--rose)">
+                      {t.name[0]}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-(--ink)">{t.name}</p>
+                      <p className="text-xs text-(--stone)">{t.role}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-bold text-(--ink)">{t.name}</p>
-                    <p className="text-xs text-(--stone)">{t.role}</p>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </section>
+                </motion.article>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="mt-14" aria-label="Ministry gallery">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
@@ -204,7 +217,6 @@ export default function Home() {
               <h2 className="mt-2 text-3xl font-bold text-(--ink)">Moments From Our Community</h2>
             </div>
           </div>
-
           <div className="grid gap-4 md:grid-cols-3">
             {["/images/hero-slide-1.jpg", "/images/hero-slide-2.jpg", "/images/hero-slide-3.jpg"].map((image, index) => (
               <motion.article
@@ -241,16 +253,10 @@ export default function Home() {
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-(--rose)">Latest Articles</p>
               <h2 className="mt-2 text-3xl font-bold text-(--ink)">Encouragement For Your Journey</h2>
             </div>
-            <div className="flex items-center gap-4">
-              <Link href="/blog" className="text-sm font-semibold text-(--rose) hover:text-(--rose-dark)">
-                View All Posts →
-              </Link>
-              <a href="/admin" className="text-sm font-semibold text-(--stone) hover:text-(--ink)">
-                Manage Blog
-              </a>
-            </div>
+            <Link href="/blog" className="text-sm font-semibold text-(--rose) hover:text-(--rose-dark)">
+              View All Posts →
+            </Link>
           </div>
-
           {posts.length > 0 ? (
             <div className="grid gap-5 md:grid-cols-3">
               {posts.map((post) => (
@@ -263,7 +269,7 @@ export default function Home() {
                   <p className="mt-4 text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">
                     {new Date(post.createdAt).toLocaleDateString()}
                   </p>
-                  <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-(--stone)">
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-(--stone)">
                     by {post.author}
                   </p>
                   <Link href={`/blog/${post.slug}`} className="mt-4 inline-block text-sm font-bold text-(--rose)">
@@ -275,40 +281,12 @@ export default function Home() {
           ) : (
             <div className="rounded-2xl border border-dashed border-(--stone)/40 bg-white/70 px-6 py-8 text-center">
               <p className="font-semibold text-(--ink)">No posts yet.</p>
-              <p className="mt-1 text-sm text-(--stone)">
-                Use the admin dashboard to publish your first article.
-              </p>
+              <p className="mt-1 text-sm text-(--stone)">Check back soon for encouragement articles.</p>
             </div>
           )}
         </section>
 
-        {/* ── Newsletter ── */}
-        <section className="mt-14 rounded-3xl bg-(--blush) px-6 py-12 text-center sm:px-10">
-          <Users className="mx-auto text-(--rose)" size={38} />
-          <h2 className="mt-4 text-3xl font-bold text-(--ink)">Stay Connected With The Community</h2>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-8 text-(--stone)">
-            Get weekly devotionals, event notices, and encouragement delivered straight to your inbox.
-          </p>
-          <form
-            className="mx-auto mt-8 flex w-full max-w-md flex-col items-center gap-3 sm:flex-row"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              required
-              placeholder="Your email address"
-              className="w-full rounded-full border border-(--ash) bg-white px-5 py-3 text-sm text-(--ink) outline-none focus:border-(--rose)/60 focus:ring-2 focus:ring-(--rose)/20"
-            />
-            <button
-              type="submit"
-              className="shrink-0 rounded-full bg-(--rose) px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-(--rose-dark)"
-            >
-              Subscribe
-            </button>
-          </form>
-        </section>
-
-        <section id="contact" className="mt-8 rounded-3xl bg-[#1f2126] px-6 py-12 text-center text-white sm:px-10">
+        <section id="contact" className="mt-14 rounded-3xl bg-[#1f2126] px-6 py-12 text-center text-white sm:px-10">
           <h2 className="text-3xl font-bold">Let&apos;s Walk This Journey Together</h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-8 text-white/75 sm:text-base">
             Join a growing community of women committed to faith, purpose, and transformation through Christ.
