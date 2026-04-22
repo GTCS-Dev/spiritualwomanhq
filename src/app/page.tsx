@@ -53,10 +53,13 @@ export default function Home() {
             <Link
               key={item.href}
               href={item.href}
-              className="elevated rounded-2xl border border-(--ash) bg-white px-5 py-5 transition-transform hover:-translate-y-1"
+              className="elevated group rounded-2xl border border-(--ash) bg-white px-5 py-5 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40"
             >
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-(--rose)">{item.title}</p>
               <p className="mt-3 text-sm leading-7 text-(--stone)">{item.text}</p>
+              <p className="mt-4 text-xs font-bold uppercase tracking-[0.18em] text-(--rose) opacity-0 transition-opacity group-hover:opacity-100">
+                Explore now →
+              </p>
             </Link>
           ))}
         </section>
@@ -93,15 +96,15 @@ export default function Home() {
               </p>
             </div>
             <div className="grid gap-4 text-sm">
-              <div className="rounded-xl bg-white/7 px-5 py-4">
+              <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
                 <p className="font-bold text-(--rose)">Tuesday | 6:30 PM</p>
                 <p className="mt-1 text-white/85">Online Bible study and reflection.</p>
               </div>
-              <div className="rounded-xl bg-white/7 px-5 py-4">
+              <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
                 <p className="font-bold text-(--rose)">Saturday | 7:00 AM</p>
                 <p className="mt-1 text-white/85">Prayer and accountability session.</p>
               </div>
-              <div className="rounded-xl bg-white/7 px-5 py-4">
+              <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
                 <p className="font-bold text-(--rose)">Sunday | 9:30 AM</p>
                 <p className="mt-1 text-white/85">Live worship service and message.</p>
               </div>
@@ -166,12 +169,15 @@ export default function Home() {
           {posts.length > 0 ? (
             <div className="grid gap-5 md:grid-cols-3">
               {posts.map((post) => (
-                <article key={post.id} className="elevated rounded-2xl border border-(--ash) bg-white px-5 py-6">
-                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">
-                    {new Date(post.createdAt).toLocaleDateString()}
-                  </p>
+                <article
+                  key={post.id}
+                  className="elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40"
+                >
                   <h3 className="mt-3 text-2xl font-bold leading-tight text-(--ink)">{post.title}</h3>
                   <p className="mt-3 text-sm leading-7 text-(--stone)">{post.excerpt}</p>
+                  <p className="mt-4 text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </p>
                   <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-(--stone)">
                     by {post.author}
                   </p>
@@ -196,12 +202,20 @@ export default function Home() {
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-8 text-(--stone) sm:text-base">
             Join a growing community of women committed to faith, purpose, and transformation through Christ.
           </p>
-          <a
-            href="mailto:hello@spiritualwoman.org"
-            className="mt-8 inline-block rounded-full bg-(--rose) px-7 py-3 font-bold text-white transition-colors hover:bg-(--rose-dark)"
-          >
-            Contact Fellowship Team
-          </a>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/contact"
+              className="inline-block rounded-full bg-(--rose) px-7 py-3 font-bold text-white transition-colors hover:bg-(--rose-dark)"
+            >
+              Contact Fellowship Team
+            </Link>
+            <a
+              href="mailto:hello@spiritualwoman.org"
+              className="inline-block rounded-full border border-(--ash) bg-white px-7 py-3 font-bold text-(--ink) transition-colors hover:border-(--rose)/40"
+            >
+              Email Directly
+            </a>
+          </div>
         </section>
       </main>
 

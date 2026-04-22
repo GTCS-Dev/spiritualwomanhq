@@ -19,7 +19,7 @@ export function SiteFooter() {
             <Link href="/about" className="hover:text-(--rose)">About</Link>
             <Link href="/connect" className="hover:text-(--rose)">Fellowship</Link>
             <Link href="/blog" className="hover:text-(--rose)">Blog</Link>
-            <Link href="/visit" className="hover:text-(--rose)">Contact</Link>
+            <Link href="/contact" className="hover:text-(--rose)">Contact</Link>
             <Link href="/privacy-policy" className="hover:text-(--rose)">Privacy Policy</Link>
             <Link href="/terms-of-use" className="hover:text-(--rose)">Terms of Use</Link>
           </div>
