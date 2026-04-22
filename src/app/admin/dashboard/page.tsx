@@ -135,24 +135,24 @@ export default function AdminDashboardPage() {
   return (
     <div className="min-h-screen bg-(--background) text-(--ink)">
       {/* ── Top bar ── */}
-      <header className="sticky top-0 z-40 border-b border-(--ash) bg-white/90 backdrop-blur-sm">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+      <header className="sticky top-0 z-40 border-b border-(--ash) bg-(--background)/95 shadow-sm backdrop-blur-md">
+        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-y-2 px-4 py-3 sm:flex-nowrap sm:px-6">
           <div className="flex items-center gap-3">
             <SiteLogo compact />
             <span className="hidden text-xs font-bold uppercase tracking-[0.22em] text-(--rose) sm:block">Admin</span>
           </div>
 
           {/* Tabs */}
-          <nav className="flex items-center gap-1">
+          <nav className="order-3 flex w-full items-center justify-center gap-1 sm:order-2 sm:w-auto sm:justify-start">
             {tabs.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 type="button"
                 onClick={() => setActiveTab(id)}
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold transition-colors sm:px-4 sm:text-sm ${
+                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold transition-all sm:px-4 sm:text-sm ${
                   activeTab === id
-                    ? "bg-(--rose) text-white"
-                    : "text-(--stone) hover:bg-(--blush) hover:text-(--rose)"
+                    ? "bg-(--rose) text-white shadow-sm"
+                    : "border border-transparent text-(--stone) hover:border-(--rose)/30 hover:bg-(--blush) hover:text-(--rose)"
                 }`}
               >
                 <Icon size={14} />
@@ -161,11 +161,18 @@ export default function AdminDashboardPage() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <Link href="/" className="rounded-full border border-(--ash) px-3 py-1.5 text-xs font-semibold text-(--ink) hover:border-(--rose)/40">
+          <div className="order-2 flex items-center gap-2 sm:order-3">
+            <Link
+              href="/"
+              className="rounded-full border border-(--ash) bg-white px-3 py-1.5 text-xs font-semibold text-(--ink) transition-colors hover:border-(--rose)/40 hover:text-(--rose)"
+            >
               View Site
             </Link>
-            <button type="button" onClick={logout} className="rounded-full bg-(--ink) px-3 py-1.5 text-xs font-semibold text-white">
+            <button
+              type="button"
+              onClick={logout}
+              className="rounded-full bg-(--rose) px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-(--rose-dark)"
+            >
               Logout
             </button>
           </div>
@@ -173,7 +180,7 @@ export default function AdminDashboardPage() {
       </header>
 
       {/* ── Status bar ── */}
-      <div className="border-b border-(--ash) bg-(--blush) px-4 py-2 text-center text-xs font-semibold text-(--rose) sm:px-6">
+      <div className="border-b border-(--ash) bg-(--blush) px-4 py-2 text-center text-xs font-semibold tracking-wide text-(--rose) sm:px-6">
         {status}
       </div>
 
