@@ -13,6 +13,9 @@ const appFont = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "SpiritualWoman Fellowship",
   description: "A welcoming Christian fellowship community and blog platform.",
+  icons: {
+    icon: "/images/logo.jpeg",
+  },
 };
 
 export default function RootLayout({
