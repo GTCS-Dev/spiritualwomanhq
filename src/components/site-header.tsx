@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Menu, MoonStar, Sun, X } from "lucide-react";
@@ -22,6 +23,7 @@ const navItems: NavItem[] = [
 ];
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
@@ -43,8 +45,10 @@ export function SiteHeader() {
     localStorage.setItem("sw_theme", nextThemeIsDark ? "dark" : "light");
   }
 
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/80 bg-white/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-(--ash) bg-(--container)/90 backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <SiteLogo />
 
@@ -53,7 +57,11 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-semibold tracking-wide text-(--ink) transition-colors hover:text-(--rose)"
+              className={`text-sm font-semibold tracking-wide transition-colors ${
+                isActive(item.href)
+                  ? "text-(--rose) border-b-2 border-(--rose)"
+                  : "text-(--ink) hover:text-(--rose)"
+              }`}
             >
               {item.label}
             </Link>
@@ -67,7 +75,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="inline-flex items-center gap-2 rounded-full border border-(--ash) bg-white px-4 py-2 text-sm font-semibold text-(--ink) transition-colors hover:border-(--rose)"
+            className="inline-flex items-center gap-2 rounded-full border border-(--ash) bg-(--blush) px-4 py-2 text-sm font-semibold text-(--ink) transition-colors hover:border-(--rose)"
             aria-label="Toggle dark theme"
           >
             {isDarkTheme ? <Sun size={16} /> : <MoonStar size={16} />}
@@ -102,7 +110,7 @@ export function SiteHeader() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
-            className="border-t border-(--ash) bg-white px-4 py-3 md:hidden"
+            className="border-t border-(--ash) bg-(--container) px-4 py-3 md:hidden"
           >
             <motion.div
               initial="hidden"

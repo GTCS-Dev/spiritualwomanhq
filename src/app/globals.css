@@ -8,6 +8,7 @@
   --ink: #1f2126;
   --blush: #fff4f6;
   --background: #fff9fb;
+  --container: #fffbfd;
   --foreground: #1f2126;
 }
 
@@ -47,6 +48,11 @@ html[data-theme="dark"] body {
 html.theme-dark [class*="bg-white"],
 html[data-theme="dark"] [class*="bg-white"] {
   background-color: #12151c !important;
+}
+
+/* Light mode: replace white with soft container color */
+html:not(.theme-dark):not([data-theme="dark"]) .bg-white {
+  background-color: var(--container);
 }
 
 html.theme-dark [class*="border-(--ash)"],
