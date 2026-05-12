@@ -4,6 +4,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { heroImages } from "@/lib/site-images";
 
 type Slide = {
   id: number;
@@ -20,7 +21,7 @@ const slides: Slide[] = [
     subtitle: "SpiritualWoman Fellowship",
     description:
       "A welcoming place for women to grow spiritually, build healthy relationships, and serve with confidence.",
-    image: "/images/hero-slide-1.jpg",
+    image: heroImages[0],
   },
   {
     id: 2,
@@ -28,7 +29,7 @@ const slides: Slide[] = [
     subtitle: "Weekly Gatherings",
     description:
       "Join Bible study, worship devotion, and consistent prayer sessions that strengthen daily faith routines.",
-    image: "/images/hero-slide-2.jpg",
+    image: heroImages[1],
   },
   {
     id: 3,
@@ -36,7 +37,7 @@ const slides: Slide[] = [
     subtitle: "Life Transformation",
     description:
       "Discover testimonies, practical teachings, and mentorship pathways that encourage purposeful living in Christ.",
-    image: "/images/hero-slide-3.jpg",
+    image: heroImages[2],
   },
 ];
 

@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { ContentPageShell } from "@/components/content-page-shell";
+import { pageHeroImages } from "@/lib/site-images";
 
 const contactChannels = [
   {
@@ -110,7 +111,7 @@ export default function ContactPage() {
       title="Contact Us"
       subtitle="We Are Here For You"
       description="Reach out for prayer, support, events, and fellowship information. We would love to hear your story and walk with you in faith."
-      image="/images/hero-slide-2.jpg"
+      image={pageHeroImages.contact}
     >
       <div className="grid gap-5 md:grid-cols-2">
         {contactChannels.map((channel, index) => (

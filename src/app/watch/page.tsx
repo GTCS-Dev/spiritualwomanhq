@@ -1,4 +1,5 @@
 import { ContentPageShell } from "@/components/content-page-shell";
+import { pageHeroImages } from "@/lib/site-images";
 
 const programs = [
   {
@@ -21,7 +22,7 @@ export default function WatchPage() {
       title="Watch Online"
       subtitle="Live + On Demand"
       description="Watch worship services, encouragement messages, and prayer sessions wherever you are."
-      image="/images/hero-slide-2.jpg"
+      image={pageHeroImages.watch}
     >
       <div className="grid gap-5 md:grid-cols-3">
         {programs.map((program, index) => (

@@ -1,12 +1,13 @@
 import { ContentPageShell } from "@/components/content-page-shell";
+import { pageHeroImages } from "@/lib/site-images";
 
 export default function AboutPage() {
   return (
     <ContentPageShell
-      title="About SpiritualWoman Fellowship"
+      title="About Spiritual Woman Fellowship"
       subtitle="Our Mission"
       description="We exist to help women know God deeply, build strong spiritual habits, and live out their God-given purpose with courage."
-      image="/images/hero-slide-1.jpg"
+      image={pageHeroImages.about}
     >
       <div className="grid gap-6 lg:grid-cols-3">
         <article className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-6 py-6">

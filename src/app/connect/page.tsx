@@ -1,4 +1,5 @@
 import { ContentPageShell } from "@/components/content-page-shell";
+import { pageHeroImages } from "@/lib/site-images";
 
 const options = [
   {
@@ -25,7 +26,7 @@ export default function ConnectPage() {
       title="Get Connected"
       subtitle="Belong + Serve"
       description="Build meaningful relationships, discover your calling, and take practical steps in community."
-      image="/images/hero-slide-3.jpg"
+      image={pageHeroImages.connect}
     >
       <div className="grid gap-5 sm:grid-cols-2">
         {options.map((item, index) => (

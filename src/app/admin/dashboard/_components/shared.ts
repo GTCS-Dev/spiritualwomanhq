@@ -1,4 +1,5 @@
 import { BlogPost, PostBlock, PostBlockType, PostCategory, categoryLabels } from "@/types/blog";
+import { blogCoverImages } from "@/lib/site-images";
 
 export type Tab = "blog" | "verse" | "testimonials" | "messages";
 
@@ -51,20 +52,14 @@ export const initialPost: DraftPost = {
   title: "",
   excerpt: "",
   category: "devotional",
-  coverImage: "/images/blog-prayer-rhythm.jpg",
+  coverImage: blogCoverImages[0],
   content: "",
   blocks: [{ id: crypto.randomUUID(), type: "paragraph", text: "", bold: false, italic: false }],
   isPublished: true,
   author: "Admin",
 };
 
-export const coverOptions = [
-  "/images/blog-prayer-rhythm.jpg",
-  "/images/blog-testimony-light.jpg",
-  "/images/blog-events-gathering.jpg",
-  "/images/blog-leadership-deborah.jpg",
-  "/images/blog-devotional-peace.jpg",
-];
+export const coverOptions = [...blogCoverImages];
 
 export const MAX_TESTIMONIAL_WORDS = 23;
 

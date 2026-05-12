@@ -1,4 +1,5 @@
 import { ContentPageShell } from "@/components/content-page-shell";
+import { pageHeroImages } from "@/lib/site-images";
 
 const serviceTimes = [
   "Sunday: 9:30 AM and 11:30 AM",
@@ -12,7 +13,7 @@ export default function VisitPage() {
       title="Plan Your Visit"
       subtitle="You Are Welcome"
       description="Whether this is your first time in church or your first time in a long time, we are ready to receive you with love."
-      image="/images/hero-slide-1.jpg"
+      image={pageHeroImages.visit}
     >
       <div className="grid gap-6 lg:grid-cols-2">
         <article className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-6 py-6">

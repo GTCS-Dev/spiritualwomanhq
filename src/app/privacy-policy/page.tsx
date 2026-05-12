@@ -1,4 +1,5 @@
 import { ContentPageShell } from "@/components/content-page-shell";
+import { pageHeroImages } from "@/lib/site-images";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -6,7 +7,7 @@ export default function PrivacyPolicyPage() {
       title="Privacy Policy"
       subtitle="Legal"
       description="This Privacy Policy explains how SpiritualWoman Fellowship collects, uses, and protects your personal information when you use this website."
-      image="/images/blog-testimony-light.jpg"
+      image={pageHeroImages.privacy}
     >
       <div className="grid gap-5">
         <article className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-6 py-6">

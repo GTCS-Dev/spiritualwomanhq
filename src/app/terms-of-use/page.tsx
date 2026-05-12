@@ -1,4 +1,5 @@
 import { ContentPageShell } from "@/components/content-page-shell";
+import { pageHeroImages } from "@/lib/site-images";
 
 export default function TermsOfUsePage() {
   return (
@@ -6,7 +7,7 @@ export default function TermsOfUsePage() {
       title="Terms Of Use"
       subtitle="Legal"
       description="These Terms of Use govern your access to and use of the SpiritualWoman Fellowship website and related content."
-      image="/images/blog-events-gathering.jpg"
+      image={pageHeroImages.terms}
     >
       <div className="grid gap-5">
         <article className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-6 py-6">

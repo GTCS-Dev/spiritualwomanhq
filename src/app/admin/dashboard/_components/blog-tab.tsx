@@ -16,6 +16,7 @@ import {
   initialPost,
   parseApiError,
 } from "./shared";
+import { blogCoverImages } from "@/lib/site-images";
 
 export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
   const [post, setPost] = useState<DraftPost>({
@@ -173,7 +174,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
           id: crypto.randomUUID(),
           type: activeBlockType,
           text: activeBlockType === "image" ? undefined : "",
-          imageUrl: activeBlockType === "image" ? "/images/blog-prayer-rhythm.jpg" : undefined,
+          imageUrl: activeBlockType === "image" ? blogCoverImages[0] : undefined,
           bold: false,
           italic: false,
         },

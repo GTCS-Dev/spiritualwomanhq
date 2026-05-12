@@ -8,6 +8,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { HeroSlider } from "@/components/hero-slider";
 import { SiteFooter } from "@/components/site-footer";
+import { ministryGalleryImages } from "@/lib/site-images";
 import { BlogPost } from "@/types/blog";
 
 type Verse = {
@@ -278,7 +279,7 @@ export default function Home() {
             </div>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {["/images/hero-slide-1.jpg", "/images/hero-slide-2.jpg", "/images/hero-slide-3.jpg"].map((image, index) => (
+            {ministryGalleryImages.map((image, index) => (
               <motion.article
                 key={image}
                 initial={{ opacity: 0, y: 16 }}
