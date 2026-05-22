@@ -9,65 +9,105 @@ export function SiteFooter() {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
+  const linkCls = (href: string) =>
+    `flex items-center gap-2 py-1 text-sm transition-colors ${
+      isActive(href) ? "font-semibold text-(--rose)" : "text-(--stone) hover:text-(--rose)"
+    }`;
+
   return (
-    <footer className="mt-16 border-t border-(--ash) bg-(--container)/90">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-4">
-        <div>
+    <footer className="mt-24 border-t-2 border-(--rose)/18 bg-(--container)">
+      {/* Main columns */}
+      <div className="mx-auto grid w-full max-w-6xl gap-14 px-4 py-16 sm:px-6 sm:py-20 md:grid-cols-2 xl:grid-cols-[1.35fr_0.9fr_1fr_1fr] xl:gap-20">
+        {/* Brand */}
+        <div className="xl:col-span-1">
           <SiteLogo />
-          <p className="mt-4 text-sm leading-7 text-(--stone)">
-            Building women of faith through worship, teaching, mentoring, and purpose-driven community impact.
+          <p className="mt-5 text-sm leading-7 text-(--stone)">
+            Building women of faith through worship, teaching, mentoring, and purpose-driven community impact across every season of life.
           </p>
+          <div className="mt-6 flex items-center gap-3">
+            <a
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-(--ash) text-(--stone) transition-colors hover:border-(--rose) hover:text-(--rose)"
+              href="mailto:hello@spiritualwoman.org"
+              aria-label="Email us"
+            >
+              <Mail size={15} />
+            </a>
+            <a
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-(--ash) text-(--stone) transition-colors hover:border-(--rose) hover:text-(--rose)"
+              href="mailto:prayer@spiritualwoman.org"
+              aria-label="Prayer requests"
+            >
+              <Heart size={15} />
+            </a>
+            <a
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-(--ash) text-(--stone) transition-colors hover:border-(--rose) hover:text-(--rose)"
+              href="/contact"
+              aria-label="Contact page"
+            >
+              <Send size={15} />
+            </a>
+          </div>
         </div>
 
+        {/* Service Hours */}
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-[0.18em] text-(--ink)">Quick Links</h3>
-          <div className="mt-4 grid gap-2 text-sm text-(--stone)">
-            <Link href="/about" className={isActive("/about") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>About</Link>
-            <Link href="/connect" className={isActive("/connect") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Fellowship</Link>
-            <Link href="/blog" className={isActive("/blog") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Blog</Link>
-            <Link href="/contact" className={isActive("/contact") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Contact</Link>
-            <Link href="/privacy-policy" className={isActive("/privacy-policy") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Privacy Policy</Link>
-            <Link href="/terms-of-use" className={isActive("/terms-of-use") ? "font-semibold text-(--rose)" : "hover:text-(--rose)"}>Terms of Use</Link>
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">Service Times</p>
+          <div className="grid gap-3">
+            <div className="rounded-xl border border-(--ash) px-4 py-3">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-(--stone)">Bible Study</p>
+              <p className="mt-1 font-semibold text-(--ink)">Tuesday · 6:30 PM</p>
+            </div>
+            <div className="rounded-xl border border-(--ash) px-4 py-3">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-(--stone)">Prayer Session</p>
+              <p className="mt-1 font-semibold text-(--ink)">Saturday · 7:00 AM</p>
+            </div>
+            <div className="rounded-xl border border-(--ash) px-4 py-3">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-(--stone)">Sunday Worship</p>
+              <p className="mt-1 font-semibold text-(--ink)">Sunday · 9:30 AM</p>
+            </div>
           </div>
         </div>
 
+        {/* Explore */}
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-[0.18em] text-(--ink)">Service Hours</h3>
-          <div className="mt-4 grid gap-2 text-sm text-(--stone)">
-            <p>Tue: 6:30 PM Bible Study</p>
-            <p>Sat: 7:00 AM Prayer</p>
-            <p>Sun: 9:30 AM Worship</p>
-          </div>
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">Explore</p>
+          <nav className="grid gap-0.5">
+            <Link href="/about" className={linkCls("/about")}>About Us</Link>
+            <Link href="/connect" className={linkCls("/connect")}>Fellowship Groups</Link>
+            <Link href="/blog" className={linkCls("/blog")}>Blog &amp; Articles</Link>
+            <Link href="/competitions" className={linkCls("/competitions")}>Competitions</Link>
+            <Link href="/watch" className={linkCls("/watch")}>Watch Online</Link>
+            <Link href="/visit" className={linkCls("/visit")}>Plan a Visit</Link>
+            <Link href="/contact" className={linkCls("/contact")}>Contact Us</Link>
+          </nav>
         </div>
 
+        {/* Contact */}
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-[0.18em] text-(--ink)">Connect</h3>
-          <p className="mt-4 text-sm text-(--stone)">hello@spiritualwoman.org</p>
-          <div className="mt-4 flex items-center gap-2">
-            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="mailto:hello@spiritualwoman.org" aria-label="Email us">
-              <Mail size={16} />
-            </a>
-            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="mailto:prayer@spiritualwoman.org" aria-label="Prayer requests">
-              <Heart size={16} />
-            </a>
-            <a className="rounded-full border border-(--ash) p-2 text-(--stone) hover:text-(--rose)" href="/contact" aria-label="Contact us">
-              <Send size={16} />
-            </a>
-          </div>
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">Get In Touch</p>
+          <p className="text-sm text-(--stone)">We would love to hear from you and welcome you into our community.</p>
+          <a
+            href="mailto:hello@spiritualwoman.org"
+            className="mt-4 block text-sm font-semibold text-(--ink) hover:text-(--rose)"
+          >
+            hello@spiritualwoman.org
+          </a>
+          <Link
+            href="/contact"
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-(--rose) px-5 py-2.5 text-sm font-bold text-white hover:bg-(--rose-dark)"
+          >
+            Send a Message
+          </Link>
         </div>
       </div>
 
+      {/* Bottom bar */}
       <div className="border-t border-(--ash)">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4 text-xs text-(--stone) sm:px-6">
-          <p>Copyright © Layo Obidike 2026. Powered by LOPLATFORMS. All Rights Reserved.</p>
-          <div className="flex items-center gap-4">
-            <Link href="/privacy-policy" className="hover:text-(--rose)">
-              Privacy Policy
-            </Link>
-            <Link href="/terms-of-use" className="hover:text-(--rose)">
-              Terms of Use
-            </Link>
-            <p>Designed for worship, fellowship, and impact.</p>
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-4 py-5 text-xs text-(--stone) sm:px-6 lg:flex-row lg:items-center">
+          <p>© 2026 Layo Obidike · Powered by LOPLATFORMS · All Rights Reserved.</p>
+          <div className="flex flex-wrap items-center gap-5">
+            <Link href="/privacy-policy" className="hover:text-(--rose)">Privacy Policy</Link>
+            <Link href="/terms-of-use" className="hover:text-(--rose)">Terms of Use</Link>
           </div>
         </div>
       </div>

@@ -1,26 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --rose: #de3163;
-  --rose-dark: #be2150;
-  --stone: #565656;
-  --ash: #e8e1e8;
-  --ink: #1f2126;
-  --blush: #ffedf3;
-  --background: #fff4f8;
-  --container: #ffeff5;
-  --surface: #ffe9f2;
-  --foreground: #1f2126;
+  --rose: #c23a62;
+  --rose-dark: #922747;
+  --stone: #615963;
+  --ash: #e7dde5;
+  --ink: #1f1822;
+  --blush: #f8edf3;
+  --background: #f8f3f7;
+  --container: #fffafd;
+  --surface: #f2e7ee;
+  --foreground: #1f1822;
 }
 
 html.theme-dark,
 html[data-theme="dark"] {
-  --stone: #a8afbc;
-  --ash: #2b2f36;
-  --ink: #f3f4f6;
-  --blush: #15171c;
-  --background: #090a0d;
-  --foreground: #f3f4f6;
+  --stone: #a5a1ad;
+  --ash: #35303a;
+  --ink: #f3f5f7;
+  --blush: #1a1620;
+  --background: #0e0b12;
+  --container: #17131c;
+  --surface: #221a28;
+  --foreground: #f3f5f7;
 }
 
 @theme inline {
@@ -29,11 +31,21 @@ html[data-theme="dark"] {
   --font-sans: var(--font-body);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), serif;
+  letter-spacing: 0.01em;
+}
+
 body {
   background:
-    radial-gradient(circle at 8% 5%, rgba(222, 49, 99, 0.17), transparent 38%),
-    radial-gradient(circle at 88% 10%, rgba(86, 86, 86, 0.12), transparent 32%),
-    linear-gradient(180deg, #ffedf4 0%, #fff3f8 44%, #f3edf4 100%);
+    radial-gradient(circle at 12% 6%, rgba(194, 58, 98, 0.16), transparent 38%),
+    radial-gradient(circle at 85% 8%, rgba(96, 83, 112, 0.1), transparent 30%),
+    linear-gradient(180deg, #f6f0f5 0%, #faf6f9 42%, #f3edf3 100%);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
 }
@@ -41,20 +53,14 @@ body {
 html.theme-dark body,
 html[data-theme="dark"] body {
   background:
-    radial-gradient(circle at 8% 5%, rgba(222, 49, 99, 0.2), transparent 36%),
-    radial-gradient(circle at 88% 10%, rgba(90, 98, 120, 0.15), transparent 30%),
-    linear-gradient(180deg, #090a0d 0%, #0d1016 45%, #11141b 100%);
+    radial-gradient(circle at 8% 5%, rgba(194, 58, 98, 0.24), transparent 36%),
+    radial-gradient(circle at 86% 8%, rgba(114, 86, 132, 0.14), transparent 30%),
+    linear-gradient(180deg, #0e0b12 0%, #141019 45%, #0e0b12 100%);
 }
 
 html.theme-dark [class*="bg-white"],
 html[data-theme="dark"] [class*="bg-white"] {
   background-color: #12151c !important;
-}
-
-/* Light mode: avoid harsh pure-white blocks across sections/cards */
-html:not(.theme-dark):not([data-theme="dark"]) .bg-white,
-html:not(.theme-dark):not([data-theme="dark"]) [class*="bg-white/"] {
-  background-color: var(--container) !important;
 }
 
 html:not(.theme-dark):not([data-theme="dark"]) header,
@@ -69,20 +75,20 @@ html[data-theme="dark"] [class*="border-(--ash)"] {
 
 html.theme-dark .section-gradient,
 html[data-theme="dark"] .section-gradient {
-  background: linear-gradient(150deg, rgba(18, 21, 28, 0.95), rgba(26, 30, 38, 0.92));
+  background: linear-gradient(145deg, rgba(26, 20, 30, 0.95), rgba(19, 15, 24, 0.92));
 }
 
 html.theme-dark .hero-pattern,
 html[data-theme="dark"] .hero-pattern {
   background-image:
-    linear-gradient(to right, rgba(222, 49, 99, 0.22) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(150, 158, 176, 0.09) 1px, transparent 1px);
+    linear-gradient(to right, rgba(194, 58, 98, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(161, 140, 179, 0.08) 1px, transparent 1px);
 }
 
 html.theme-dark .glass-card,
 html[data-theme="dark"] .glass-card {
-  border-color: rgba(65, 72, 86, 0.65);
-  background: linear-gradient(160deg, rgba(24, 27, 35, 0.92), rgba(18, 21, 27, 0.84));
+  border-color: rgba(79, 70, 88, 0.65);
+  background: linear-gradient(160deg, rgba(33, 25, 38, 0.92), rgba(24, 19, 30, 0.84));
 }
 
 html.theme-dark .elevated,
@@ -110,39 +116,39 @@ html[data-theme="dark"] select {
 }
 
 .glass-card {
-  border: 1px solid rgba(255, 226, 239, 0.9);
-  background: linear-gradient(165deg, rgba(255, 246, 251, 0.92), rgba(255, 234, 244, 0.78));
+  border: 1px solid rgba(211, 177, 195, 0.45);
+  background: linear-gradient(165deg, rgba(255, 250, 253, 0.94), rgba(248, 236, 244, 0.84));
   backdrop-filter: blur(6px);
 }
 
 .hero-pattern {
   background-image:
-    linear-gradient(to right, rgba(222, 49, 99, 0.16) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(86, 86, 86, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(194, 58, 98, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(85, 72, 94, 0.07) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 .elevated {
-  box-shadow: 0 18px 45px -22px rgba(31, 33, 38, 0.42);
+  box-shadow: 0 24px 46px -30px rgba(19, 34, 42, 0.45);
 }
 
 .section-gradient {
-  background: linear-gradient(140deg, rgba(255, 244, 250, 0.95), rgba(255, 231, 242, 0.88));
+  background: linear-gradient(140deg, rgba(255, 250, 253, 0.95), rgba(247, 236, 244, 0.9));
 }
 
 html:not(.theme-dark):not([data-theme="dark"]) .home-accent-card {
-  border-color: color-mix(in srgb, #1f2126 18%, var(--rose) 22%, #ffffff 60%) !important;
+  border-color: color-mix(in srgb, #1f1822 15%, var(--rose) 20%, #ffffff 65%) !important;
 }
 
 html:not(.theme-dark):not([data-theme="dark"]) .home-accent-card:hover {
-  border-color: color-mix(in srgb, #1f2126 24%, var(--rose) 36%, #ffffff 40%) !important;
-  box-shadow: 0 16px 36px -24px rgba(31, 33, 38, 0.38);
+  border-color: color-mix(in srgb, #1f1822 22%, var(--rose) 34%, #ffffff 44%) !important;
+  box-shadow: 0 18px 34px -24px rgba(31, 24, 34, 0.4);
 }
 
 html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card {
-  border-color: color-mix(in srgb, #0f1014 34%, var(--rose) 30%, #ffffff 36%) !important;
-  background: linear-gradient(145deg, #14151a 0%, #231925 56%, #322031 100%) !important;
-  box-shadow: 0 16px 34px -24px rgba(20, 21, 26, 0.52);
+  border-color: color-mix(in srgb, #251928 34%, var(--rose) 34%, #ffffff 32%) !important;
+  background: linear-gradient(145deg, #271a2a 0%, #3a2238 56%, #4a2a42 100%) !important;
+  box-shadow: 0 18px 36px -24px rgba(37, 25, 40, 0.52);
 }
 
 html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card p {
@@ -155,7 +161,7 @@ html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card .ink-rose-link {
 }
 
 .soft-rise {
-  animation: rise 700ms ease both;
+  animation: rise 740ms cubic-bezier(0.17, 0.8, 0.24, 1) both;
 }
 
 .stagger-1 {
@@ -170,11 +176,15 @@ html:not(.theme-dark):not([data-theme="dark"]) .ink-rose-card .ink-rose-link {
   display: flex;
   width: max-content;
   gap: 1rem;
-  animation: verse-scroll 40s linear infinite;
+  animation: verse-scroll 96s linear infinite;
+}
+
+.verse-marquee-track:hover {
+  animation-play-state: paused;
 }
 
 .verse-marquee-item {
-  width: min(620px, 78vw);
+  width: min(860px, 90vw);
   flex: 0 0 auto;
 }
 

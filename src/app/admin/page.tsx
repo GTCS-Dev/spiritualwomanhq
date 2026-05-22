@@ -47,21 +47,26 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[80vh] w-full max-w-5xl flex-1 items-center px-4 py-10 sm:px-6">
-      <section className="section-gradient elevated grid w-full gap-8 overflow-hidden rounded-3xl border border-white/80 p-6 sm:p-9 lg:grid-cols-2">
+    <main className="mx-auto flex min-h-[84vh] w-full max-w-6xl flex-1 items-center px-4 py-12 sm:px-6">
+      <section className="grid w-full gap-8 overflow-hidden rounded-3xl border border-(--ash) bg-(--container) p-6 sm:p-9 lg:grid-cols-2 lg:p-12">
         <div className="flex flex-col justify-center">
           <SiteLogo />
           <p className="mt-5 text-sm font-bold uppercase tracking-[0.22em] text-(--rose)">Admin Access</p>
-          <h1 className="mt-2 text-4xl font-extrabold leading-tight text-(--ink)">Manage Blog Content Professionally</h1>
+          <h1 className="mt-2 text-4xl font-semibold leading-tight text-(--ink)">Manage Content With Precision</h1>
           <p className="mt-4 text-sm leading-7 text-(--stone)">
             Sign in to create, edit, unpublish, and delete posts with rich content formatting and image uploads.
           </p>
+          <div className="mt-7 grid gap-2 text-sm text-(--stone)">
+            <p>• Fast publishing workflow for devotionals and announcements</p>
+            <p>• Centralized management for verses, testimonies, and competitions</p>
+            <p>• Secure access to administrative tools</p>
+          </div>
           <Link href="/" className="mt-6 inline-block text-sm font-bold text-(--rose)">
             Back to Website
           </Link>
         </div>
 
-        <form onSubmit={onLogin} className="rounded-2xl border border-(--ash) bg-white p-6">
+        <form onSubmit={onLogin} className="rounded-2xl border border-(--ash) bg-white p-6 shadow-[0_16px_34px_-24px_rgba(31,24,34,0.4)]">
           <h2 className="text-2xl font-bold text-(--ink)">Login</h2>
           <p className="mt-2 text-sm text-(--stone)">{message}</p>
 

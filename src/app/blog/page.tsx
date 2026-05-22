@@ -37,73 +37,112 @@ export default function BlogPage() {
 
   const heroPost = useMemo(() => posts[0], [posts]);
   const gridPosts = useMemo(() => posts.slice(1), [posts]);
+  const activeCategoryLabel = activeCategory === "all" ? "All Articles" : categoryLabels[activeCategory];
 
   return (
     <div className="min-h-screen text-(--ink)">
       <SiteHeader />
 
-      <main className="mx-auto w-full max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
-        <section className="section-gradient elevated mt-8 rounded-3xl border border-white/70 px-6 py-12 sm:px-10">
-          <p className="text-sm font-bold uppercase tracking-[0.24em] text-(--rose)">Blog</p>
-          <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-5xl">Stories, Teachings, And Encouragement</h1>
-          <p className="mt-5 max-w-3xl text-base leading-8 text-(--stone)">
-            Explore modern faith articles across categories including prayer, testimony, leadership, family, and events.
-          </p>
+      <main className="w-full pb-20">
+        <section className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-(--ash)">
+          <Image
+            src={heroPost?.coverImage ?? "https://images.unsplash.com/photo-1519817650390-64a93db511aa?auto=format&fit=crop&w=2000&q=80"}
+            alt="SpiritualWoman blog"
+            width={2200}
+            height={960}
+            className="h-[58vh] min-h-[420px] w-full object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-linear-to-r from-[#221226]/72 via-[#3b2140]/35 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-6xl px-4 pb-12 sm:px-6 lg:px-8 lg:pb-16">
+            <div className="max-w-3xl rounded-3xl border border-white/15 bg-black/22 px-6 py-6 backdrop-blur-md sm:px-8 sm:py-7">
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#ffbfd1]">Blog</p>
+              <h1 className="mt-3 text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
+                Stories, Teachings, And Encouragement
+              </h1>
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/90 sm:text-base sm:leading-8">
+                Explore modern faith articles across prayer, testimony, leadership, family, and events.
+              </p>
+            </div>
+          </div>
+        </section>
 
-          <div className="mt-8 flex flex-wrap gap-2">
+        <section className="mx-auto mt-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-4 rounded-3xl border border-(--ash) bg-(--container) p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-(--rose)">Current View</p>
+              <h2 className="mt-2 text-2xl font-semibold text-(--ink)">{activeCategoryLabel}</h2>
+              <p className="mt-1 text-sm text-(--stone)">{posts.length} article{posts.length === 1 ? "" : "s"} available right now.</p>
+            </div>
+            <div className="flex flex-wrap gap-2.5">
             {categories.map((category) => (
               <button
                 key={category}
                 type="button"
                 onClick={() => setActiveCategory(category)}
                 className={`rounded-full px-4 py-2 text-sm font-bold transition-colors ${
-                  activeCategory === category ? "bg-(--rose) text-white" : "bg-white text-(--ink) hover:text-(--rose)"
+                  activeCategory === category
+                    ? "bg-(--rose) text-white"
+                    : "bg-white text-(--ink) hover:bg-(--blush) hover:text-(--rose)"
                 }`}
               >
                 {category === "all" ? "All" : categoryLabels[category]}
               </button>
             ))}
+              </div>
           </div>
         </section>
 
         {heroPost ? (
-          <article className="elevated mt-10 grid overflow-hidden rounded-3xl border border-(--ash) bg-white lg:grid-cols-2">
+            <article className="mx-auto mt-10 grid w-full max-w-6xl overflow-hidden rounded-3xl border border-(--ash) bg-white shadow-[0_20px_40px_-28px_rgba(31,24,34,0.35)] lg:grid-cols-[1.1fr_0.9fr]">
             <Image
               src={heroPost.coverImage}
               alt={heroPost.title}
               width={1200}
               height={700}
               loading="eager"
-              className="h-full w-full object-cover"
+                className="h-full min-h-[360px] w-full object-cover"
             />
-            <div className="p-7 sm:p-10">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">{categoryLabels[heroPost.category]}</p>
-              <h2 className="mt-3 text-3xl font-bold leading-tight">{heroPost.title}</h2>
-              <p className="mt-4 text-sm leading-7 text-(--stone)">{heroPost.excerpt}</p>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-(--stone)">
-                {new Date(heroPost.createdAt).toLocaleDateString()} • {heroPost.author}
-              </p>
-              <Link
-                href={`/blog/${heroPost.slug}`}
-                className="mt-7 inline-block rounded-full bg-(--rose) px-6 py-3 text-sm font-bold text-white hover:bg-(--rose-dark)"
-              >
-                Read Article
-              </Link>
+              <div className="flex flex-col justify-between gap-6 p-7 sm:p-10">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">{categoryLabels[heroPost.category]}</p>
+                  <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">{heroPost.title}</h2>
+                  <p className="mt-4 text-sm leading-7 text-(--stone)">{heroPost.excerpt}</p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-(--stone)">
+                    {new Date(heroPost.createdAt).toLocaleDateString()} • {heroPost.author}
+                  </p>
+                  <Link
+                    href={`/blog/${heroPost.slug}`}
+                    className="inline-flex rounded-full bg-(--rose) px-6 py-3 text-sm font-bold text-white hover:bg-(--rose-dark)"
+                  >
+                    Read Article
+                  </Link>
+                </div>
             </div>
           </article>
         ) : null}
 
-        <section className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <section className="mx-auto mt-8 grid w-full max-w-6xl gap-5 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8">
           {gridPosts.map((post) => (
-            <article key={post.id} className="elevated overflow-hidden rounded-2xl border border-(--ash) bg-white">
-              <Image src={post.coverImage} alt={post.title} width={700} height={420} className="h-48 w-full object-cover" />
-              <div className="px-5 py-5">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-(--rose)">{categoryLabels[post.category]}</p>
-                <h3 className="mt-3 text-2xl font-bold leading-tight">{post.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-(--stone)">{post.excerpt}</p>
-                <Link href={`/blog/${post.slug}`} className="mt-5 inline-block text-sm font-bold text-(--rose)">
-                  Continue Reading →
-                </Link>
+              <article key={post.id} className="elevated overflow-hidden rounded-2xl border border-(--ash) bg-white transition-transform duration-300 hover:-translate-y-1">
+                <div className="relative">
+                  <Image src={post.coverImage} alt={post.title} width={700} height={420} className="h-52 w-full object-cover" />
+                  <div className="absolute left-4 top-4 rounded-full bg-white/92 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.18em] text-(--rose)">
+                    {categoryLabels[post.category]}
+                  </div>
+                </div>
+                <div className="px-5 py-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-(--stone)">
+                    {new Date(post.createdAt).toLocaleDateString()} • {post.author}
+                  </p>
+                  <h3 className="mt-3 text-2xl font-bold leading-tight text-(--ink)">{post.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-(--stone)">{post.excerpt}</p>
+                  <Link href={`/blog/${post.slug}`} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-(--rose)">
+                    Continue Reading <span aria-hidden>→</span>
+                  </Link>
               </div>
             </article>
           ))}

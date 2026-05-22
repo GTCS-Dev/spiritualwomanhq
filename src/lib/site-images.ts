@@ -20,6 +20,7 @@ export const pageHeroImages = {
   contact: heroImages[1],
   watch: heroImages[1],
   connect: heroImages[2],
+  competitions: blogCoverImages[1],
   privacy: blogCoverImages[0],
   terms: blogCoverImages[3],
 } as const;

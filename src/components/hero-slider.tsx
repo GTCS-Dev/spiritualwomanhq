@@ -17,26 +17,26 @@ type Slide = {
 const slides: Slide[] = [
   {
     id: 1,
-    title: "Faith. Purpose. Community.",
-    subtitle: "SpiritualWoman Fellowship",
+    title: "Live Worship And On-Demand Messages",
+    subtitle: "Watch",
     description:
-      "A welcoming place for women to grow spiritually, build healthy relationships, and serve with confidence.",
+      "Join every service online and revisit past teachings any time for practical encouragement and spiritual growth.",
     image: heroImages[0],
   },
   {
     id: 2,
-    title: "Worship And Prayer Moments",
-    subtitle: "Weekly Gatherings",
+    title: "Plan Your Visit Before You Arrive",
+    subtitle: "Visit",
     description:
-      "Join Bible study, worship devotion, and consistent prayer sessions that strengthen daily faith routines.",
+      "See service times, meeting details, and fellowship information so your first visit feels easy and welcoming.",
     image: heroImages[1],
   },
   {
     id: 3,
-    title: "Stories That Inspire Growth",
-    subtitle: "Life Transformation",
+    title: "Join Fellowship And Grow In Faith",
+    subtitle: "Connect",
     description:
-      "Discover testimonies, practical teachings, and mentorship pathways that encourage purposeful living in Christ.",
+      "Become part of a caring sisterhood through prayer circles, mentorship, and community-centered discipleship.",
     image: heroImages[2],
   },
 ];
@@ -63,95 +63,91 @@ export function HeroSlider() {
   }
 
   return (
-    <section className="hero-pattern relative -mx-2 mt-8 overflow-hidden rounded-3xl border border-white/70 p-3 sm:mx-0 sm:p-5 lg:-mx-3">
-      <div className="absolute -right-18 -top-20 h-52 w-52 rounded-full bg-(--rose)/12 blur-3xl" />
-      <div className="absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-(--stone)/15 blur-3xl" />
+    <section className="relative left-1/2 -mt-px w-screen -translate-x-1/2 overflow-hidden border-b border-(--ash)">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeSlide.id}
+          initial={{ opacity: 0.35, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0.25, scale: 1.03 }}
+          transition={{ duration: 0.6 }}
+          className="relative"
+        >
+          <Image
+            src={activeSlide.image}
+            alt={activeSlide.title}
+            width={2200}
+            height={980}
+            loading="eager"
+            className="h-[82vh] min-h-[580px] w-full object-cover object-center"
+            priority
+          />
 
-      <div className="relative z-10 grid items-stretch gap-5 overflow-hidden rounded-2xl bg-white/74 p-4 sm:p-6 lg:grid-cols-[1fr_1.06fr] lg:p-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeSlide.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className="order-2 flex h-full flex-col justify-center lg:order-1"
-          >
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-(--rose) sm:text-sm">{activeSlide.subtitle}</p>
-            <h1 className="mt-3 text-3xl font-extrabold leading-tight text-(--ink) sm:text-[2.7rem] lg:text-[3.15rem]">{activeSlide.title}</h1>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-(--stone) sm:text-base sm:leading-8">{activeSlide.description}</p>
+          <div className="absolute inset-0 bg-linear-to-r from-[#221126]/70 via-[#351c37]/34 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/15 to-transparent" />
 
-            <div className="mt-6 flex flex-wrap gap-3 sm:mt-7 sm:gap-4">
-              <a
-                href="#fellowship"
-                className="rounded-full bg-(--rose) px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-(--rose-dark)"
-              >
-                Join Fellowship
-              </a>
-              <a
-                href="#blog"
-                className="rounded-full border border-(--stone)/40 bg-white px-5 py-3 text-sm font-semibold text-(--ink) hover:border-(--rose)"
-              >
-                Read Latest
-              </a>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+          <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-6xl px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="max-w-2xl px-1 text-white sm:px-0"
+            >
+              <p className="text-xs font-bold uppercase tracking-[0.31em] text-[#ffbfd1] sm:text-sm">{activeSlide.subtitle}</p>
+              <h1 className="mt-3 text-4xl font-semibold leading-tight text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.55)] sm:text-[3.25rem] lg:text-[3.85rem]">{activeSlide.title}</h1>
+              <p className="mt-4 max-w-xl text-sm leading-7 text-white/92 drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)] sm:text-base sm:leading-8">{activeSlide.description}</p>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`image-${activeSlide.id}`}
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.04 }}
-            transition={{ duration: 0.45 }}
-            className="order-1 h-full overflow-hidden rounded-2xl border border-white/70 lg:order-2"
-          >
-            <Image
-              src={activeSlide.image}
-              alt={activeSlide.title}
-              width={900}
-              height={620}
-              loading="eager"
-              className="h-74 w-full object-cover sm:h-94 lg:h-full lg:min-h-124"
-              priority
+              <div className="mt-6 flex flex-wrap gap-3 sm:mt-7 sm:gap-4">
+                <a
+                  href="#fellowship"
+                  className="rounded-full bg-(--rose) px-6 py-3 text-sm font-bold text-white shadow-[0_12px_28px_-16px_rgba(0,0,0,0.7)] transition-colors hover:bg-(--rose-dark)"
+                >
+                  Join Fellowship
+                </a>
+                <a
+                  href="#blog"
+                  className="rounded-full bg-white/16 px-5 py-3 text-sm font-semibold text-white hover:bg-white/26"
+                >
+                  Read Latest
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="absolute inset-x-0 bottom-4 z-20 mx-auto flex w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-2">
+          {slides.map((slide, index) => (
+            <button
+              key={slide.id}
+              type="button"
+              aria-label={`Go to slide ${index + 1}`}
+              onClick={() => setActiveIndex(index)}
+              className={`h-2.5 rounded-full transition-all ${
+                index === activeIndex ? "w-12 bg-[#ffbfd1]" : "w-3 bg-white/55"
+              }`}
             />
-          </motion.div>
-        </AnimatePresence>
+          ))}
+        </div>
 
-        <div className="order-3 flex items-center justify-between pt-1 lg:col-span-2">
-          <div className="flex items-center gap-2">
-            {slides.map((slide, index) => (
-              <button
-                key={slide.id}
-                type="button"
-                aria-label={`Go to slide ${index + 1}`}
-                onClick={() => setActiveIndex(index)}
-                className={`h-2.5 rounded-full transition-all ${
-                  index === activeIndex ? "w-10 bg-(--rose)" : "w-3 bg-(--stone)/30"
-                }`}
-              />
-            ))}
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={goPrev}
-              aria-label="Previous slide"
-              className="rounded-full border border-(--ash) bg-white p-2 text-(--ink) hover:border-(--rose)"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              type="button"
-              onClick={goNext}
-              aria-label="Next slide"
-              className="rounded-full border border-(--ash) bg-white p-2 text-(--ink) hover:border-(--rose)"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={goPrev}
+            aria-label="Previous slide"
+            className="rounded-full border border-white/35 bg-black/20 p-2 text-white hover:border-[#ffbfd1]"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            type="button"
+            onClick={goNext}
+            aria-label="Next slide"
+            className="rounded-full border border-white/35 bg-black/20 p-2 text-white hover:border-[#ffbfd1]"
+          >
+            <ChevronRight size={18} />
+          </button>
         </div>
       </div>
     </section>

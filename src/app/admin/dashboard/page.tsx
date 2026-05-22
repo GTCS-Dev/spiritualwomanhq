@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { BookOpen, FileText, MessageSquare, Quote } from "lucide-react";
+import { BookOpen, FileText, MessageSquare, Quote, Trophy } from "lucide-react";
 import { SiteLogo } from "@/components/site-logo";
 import type { Tab } from "./_components/shared";
 
@@ -23,6 +23,11 @@ const TestimonialsTab = dynamic(
   { loading: () => <DashboardPanelFallback label="Loading testimonials..." /> }
 );
 
+const CompetitionsTab = dynamic(
+  () => import("./_components/competitions-tab").then((m) => m.CompetitionsTab),
+  { loading: () => <DashboardPanelFallback label="Loading competitions..." /> }
+);
+
 const MessagesTab = dynamic(
   () => import("./_components/messages-tab").then((m) => m.MessagesTab),
   { loading: () => <DashboardPanelFallback label="Loading messages..." /> }
@@ -39,8 +44,10 @@ function DashboardPanelFallback({ label }: { label: string }) {
 export default function AdminDashboardPage() {
   const router = useRouter();
 
-  const [token, setToken] = useState("");
-  const [isReady, setIsReady] = useState(false);
+  const [token, setToken] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("admin_access_token") ?? "";
+  });
   const [activeTab, setActiveTab] = useState<Tab>("blog");
   const [status, setStatus] = useState("Dashboard ready.");
 
@@ -50,37 +57,33 @@ export default function AdminDashboardPage() {
       { id: "blog" as Tab, label: "Blog", icon: FileText },
       { id: "verse" as Tab, label: "Verse of Week", icon: BookOpen },
       { id: "testimonials" as Tab, label: "Testimonials", icon: Quote },
+      { id: "competitions" as Tab, label: "Competitions", icon: Trophy },
       { id: "messages" as Tab, label: "Messages", icon: MessageSquare },
     ],
     []
   );
 
-  // ✅ FIX: no unnecessary dependency on router object
   useEffect(() => {
-    const stored = localStorage.getItem("admin_access_token");
-
-    if (!stored) {
+    if (!token) {
       router.replace("/admin");
-      return;
     }
-
-    setToken(stored);
-    setIsReady(true);
-  }, []);
+  }, [router, token]);
 
   const handleUnauthorized = useCallback(() => {
     localStorage.removeItem("admin_access_token");
     document.cookie = "admin_session=; path=/; max-age=0; samesite=lax";
+    setToken("");
     router.replace("/admin");
   }, [router]);
 
   const logout = useCallback(() => {
     localStorage.removeItem("admin_access_token");
     document.cookie = "admin_session=; path=/; max-age=0; samesite=lax";
+    setToken("");
     router.push("/admin");
   }, [router]);
 
-  if (!isReady) {
+  if (!token) {
     return (
       <main className="p-10 text-sm text-(--stone)">
         Loading dashboard…
@@ -89,7 +92,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-(--background) text-(--ink)">
+    <div className="min-h-screen bg-background text-(--ink)">
       {/* HEADER */}
       <header className="sticky top-0 z-40 border-b border-(--ash) bg-(--background)/95 shadow-sm backdrop-blur-md">
         <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-y-2 px-4 py-3 sm:flex-nowrap sm:px-6">
@@ -144,24 +147,25 @@ export default function AdminDashboardPage() {
 
       {/* MAIN CONTENT */}
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">
-
-        {/* ✅ FIX: KEEP ALL TABS MOUNTED (prevents memory leaks from remounting) */}
-        <div style={{ display: activeTab === "blog" ? "block" : "none" }}>
+        {activeTab === "blog" && (
           <BlogTab token={token} onUnauthorized={handleUnauthorized} onStatus={setStatus} />
-        </div>
+        )}
 
-        <div style={{ display: activeTab === "verse" ? "block" : "none" }}>
+        {activeTab === "verse" && (
           <VerseTab token={token} onUnauthorized={handleUnauthorized} onStatus={setStatus} />
-        </div>
+        )}
 
-        <div style={{ display: activeTab === "testimonials" ? "block" : "none" }}>
+        {activeTab === "testimonials" && (
           <TestimonialsTab token={token} onUnauthorized={handleUnauthorized} onStatus={setStatus} />
-        </div>
+        )}
 
-        <div style={{ display: activeTab === "messages" ? "block" : "none" }}>
+        {activeTab === "competitions" && (
+          <CompetitionsTab token={token} onUnauthorized={handleUnauthorized} onStatus={setStatus} />
+        )}
+
+        {activeTab === "messages" && (
           <MessagesTab token={token} onUnauthorized={handleUnauthorized} onStatus={setStatus} />
-        </div>
-
+        )}
       </main>
     </div>
   );

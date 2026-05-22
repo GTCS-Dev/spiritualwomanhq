@@ -126,123 +126,180 @@ export default function Home() {
     <div className="min-h-screen text-(--ink)" id="home">
       <SiteHeader />
 
-      <main className="mx-auto w-full max-w-6xl px-4 pb-14 sm:px-6 lg:px-8">
+      <main className="w-full overflow-x-hidden pb-20">
         <HeroSlider />
 
-        <section className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quickLinks.map((item, index) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`home-accent-card elevated group rounded-2xl border border-(--ash) bg-white px-5 py-5 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40 ${
-                index % 2 === 1 ? "ink-rose-card" : ""
-              }`}
-            >
-              <p className={`text-sm font-bold uppercase tracking-[0.2em] ${index % 2 === 1 ? "ink-rose-title" : "text-(--rose)"}`}>{item.title}</p>
-              <p className={`mt-3 text-sm leading-7 ${index % 2 === 1 ? "text-white/85" : "text-(--stone)"}`}>{item.text}</p>
-              <p className={`mt-4 text-xs font-bold uppercase tracking-[0.18em] opacity-0 transition-opacity group-hover:opacity-100 ${index % 2 === 1 ? "ink-rose-link" : "text-(--rose)"}`}>
-                Explore now →
+        {/* ── STATS BAND ── full-width stripe, no cards */}
+        <div className="border-b border-(--ash) bg-(--surface)">
+          <div className="mx-auto grid w-full max-w-6xl grid-cols-2 divide-x divide-(--ash) md:grid-cols-4">
+            {stats.map((s) => (
+              <div key={s.label} className="px-6 py-8 text-center">
+                <p className="text-4xl font-extrabold tracking-tight text-(--rose)">{s.value}</p>
+                <p className="mt-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-(--stone)">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── INTRO + QUICK LINKS ── editorial split */}
+        <section className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Welcome</p>
+              <h2 className="mt-3 text-5xl font-semibold leading-[1.12] text-(--ink)">
+                A Place Built<br />For Women<br />Of Faith.
+              </h2>
+              <p className="mt-5 max-w-md text-base leading-8 text-(--stone)">
+                SpiritualWoman Fellowship is a safe, empowering community where women grow in faith, connect with purpose, and serve with strength.
               </p>
-            </Link>
-          ))}
-        </section>
-
-        <section className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-          {stats.map((s, i) => (
-            <motion.div
-              key={s.label}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
-              className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 text-center"
-            >
-              <p className="text-3xl font-extrabold text-(--rose)">{s.value}</p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-(--stone)">{s.label}</p>
-            </motion.div>
-          ))}
-        </section>
-
-        <section id="about" className="mt-12 grid gap-4 md:grid-cols-3">
-          {highlights.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <motion.article
-                key={item.title}
-                animate={{ opacity: 1, y: 0 }}
-                className="glass-card elevated rounded-2xl px-6 py-7"
-                initial={{ opacity: 0, y: 14 }}
-                transition={{ delay: index * 0.12, duration: 0.45 }}
+              <Link
+                href="/about"
+                className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-(--rose) hover:text-(--rose-dark)"
               >
-                <div className="mb-4 inline-flex rounded-full bg-(--blush) p-3 text-(--rose)">
-                  <Icon size={22} />
-                </div>
-                <h3 className="text-2xl font-bold text-(--ink)">{item.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-(--stone)">{item.text}</p>
-              </motion.article>
-            );
-          })}
+                Learn our story →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {quickLinks.map((item, index) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`group flex flex-col justify-between rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5 ${
+                    index === 1
+                      ? "bg-(--rose) text-white"
+                      : index === 3
+                        ? "border border-(--ash) bg-(--ink) text-white"
+                        : "border border-(--ash) bg-white"
+                  }`}
+                >
+                  <p className={`text-sm font-bold uppercase tracking-[0.2em] ${index === 1 || index === 3 ? "text-white/70" : "text-(--rose)"}`}>
+                    {item.title}
+                  </p>
+                  <p className={`mt-3 text-sm leading-6 ${index === 1 || index === 3 ? "text-white/85" : "text-(--stone)"}`}>
+                    {item.text}
+                  </p>
+                  <span className={`mt-4 text-xs font-bold uppercase tracking-[0.18em] ${index === 1 || index === 3 ? "text-white/90" : "text-(--rose)"}`}>
+                    Go →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
         </section>
 
-        <section className="mt-14 flex items-start gap-5 rounded-3xl border border-(--rose)/20 bg-(--blush) px-8 py-10 sm:items-center sm:px-12">
-          <BookOpen className="mt-1 shrink-0 text-(--rose) sm:mt-0" size={36} />
-          {verses.length > 1 ? (
-            <div className="verse-marquee w-full overflow-hidden">
-              <div className="verse-marquee-track">
-                {[...verses, ...verses].map((v, index) => (
-                  <div key={`${v.reference}-${index}`} className="verse-marquee-item rounded-2xl border border-(--rose)/25 bg-white/55 px-6 py-4">
-                    <p className="text-base font-bold italic leading-7 text-(--ink)">&ldquo;{v.text}&rdquo;</p>
-                    <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-(--rose)">
-                      {v.reference} &#8212; Verse of the {v.period === "day" ? "Day" : "Week"}
-                    </p>
+        {/* ── HIGHLIGHTS ── horizontal list, no duplicate cards */}
+        <section id="about" className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="divide-y divide-(--ash) rounded-3xl border border-(--ash) bg-white">
+            {highlights.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.4 }}
+                  className="flex items-start gap-6 px-6 py-7 sm:items-center sm:px-8"
+                >
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-(--blush) text-(--rose)">
+                    <Icon size={22} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-(--ink)">{item.title}</h3>
+                    <p className="mt-1 text-sm leading-7 text-(--stone)">{item.text}</p>
+                  </div>
+                  <span className="hidden shrink-0 text-2xl font-light text-(--ash) sm:block">
+                    0{index + 1}
+                  </span>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── VERSE ── full-width editorial pull-quote, no card box */}
+        <section className="mt-14 bg-(--blush) py-10 sm:py-12">
+          <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
+            <BookOpen className="mx-auto text-(--rose)" size={32} />
+            {verses.length > 1 ? (
+              <div className="mt-6 overflow-hidden">
+                <div className="verse-marquee-track">
+                  {[...verses, ...verses].map((v, index) => (
+                    <div key={`${v.reference}-${index}`} className="verse-marquee-item px-4">
+                      <p className="text-xl font-medium italic leading-8 text-(--ink) sm:text-[1.65rem] sm:leading-10">
+                        &ldquo;{v.text}&rdquo;
+                      </p>
+                      <p className="mt-4 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-(--rose)">
+                        {v.reference} — Verse of the {v.period === "day" ? "Day" : "Week"}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <>
+                <p className="mt-6 text-xl font-medium italic leading-8 text-(--ink) sm:text-[1.65rem] sm:leading-10">
+                  &ldquo;{verses[0]?.text ?? fallbackVerse.text}&rdquo;
+                </p>
+                <p className="mt-5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-(--rose)">
+                  {verses[0]?.reference ?? fallbackVerse.reference} — Verse of the{" "}
+                  {(verses[0]?.period ?? fallbackVerse.period) === "day" ? "Day" : "Week"}
+                </p>
+              </>
+            )}
+          </div>
+        </section>
+
+        {/* ── FELLOWSHIP SCHEDULE ── two-column, left text right timeline */}
+        <section id="fellowship" className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="overflow-hidden rounded-3xl bg-(--ink)">
+            <div className="grid gap-0 md:grid-cols-2">
+              {/* Left: text */}
+              <div className="px-8 py-12 sm:px-12">
+                <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Fellowship Rhythm</p>
+                <h2 className="mt-4 text-4xl font-semibold leading-tight text-white">
+                  Build a Consistent Faith Routine
+                </h2>
+                <p className="mt-5 text-sm leading-8 text-white/70">
+                  Join a weekly rhythm of worship, study, and prayer that keeps your spiritual growth grounded and intentional.
+                </p>
+                <Link
+                  href="/connect"
+                  className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
+                >
+                  Join a group →
+                </Link>
+              </div>
+
+              {/* Right: schedule cards */}
+              <div className="flex flex-col justify-center gap-3 border-t border-white/10 px-8 py-12 sm:px-10 md:border-l md:border-t-0">
+                {[
+                  { day: "Tuesday", time: "6:30 PM", label: "Online Bible Study" },
+                  { day: "Saturday", time: "7:00 AM", label: "Prayer & Accountability" },
+                  { day: "Sunday", time: "9:30 AM", label: "Live Worship Service" },
+                ].map((item) => (
+                  <div key={item.day} className="flex items-center gap-4 rounded-xl border border-white/10 bg-white/8 px-5 py-4">
+                    <div className="h-2 w-2 shrink-0 rounded-full bg-(--rose)" />
+                    <div className="flex-1">
+                      <p className="text-sm font-bold text-white">{item.label}</p>
+                      <p className="mt-0.5 text-xs text-white/55">{item.day} · {item.time}</p>
+                    </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          ) : (
-            <div>
-              <p className="text-lg font-bold italic leading-8 text-(--ink) sm:text-xl">
-                &ldquo;{verses[0]?.text ?? fallbackVerse.text}&rdquo;
-              </p>
-              <p className="mt-3 text-sm font-semibold uppercase tracking-[0.2em] text-(--rose)">
-                {(verses[0]?.reference ?? fallbackVerse.reference)}&nbsp;&nbsp;&#8212;&nbsp;&nbsp;Verse of the {(verses[0]?.period ?? fallbackVerse.period) === "day" ? "Day" : "Week"}
-              </p>
-            </div>
-          )}
-        </section>
-
-        <section id="fellowship" className="mt-14 overflow-hidden rounded-3xl bg-[#1f2126] px-6 py-12 text-white sm:px-10">
-          <div className="grid gap-8 md:grid-cols-2 md:items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.23em] text-(--rose)">Fellowship Rhythm</p>
-              <h2 className="mt-3 text-3xl font-bold sm:text-4xl">Build A Consistent Faith Routine</h2>
-              <p className="mt-4 text-sm leading-8 text-white/80 sm:text-base">
-                Connect every week through Bible study, worship devotion, and guided prayer sessions that keep your
-                spiritual growth intentional and sustainable.
-              </p>
-            </div>
-            <div className="grid gap-4 text-sm">
-              <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
-                <p className="font-bold text-(--rose)">Tuesday | 6:30 PM</p>
-                <p className="mt-1 text-(--ink) opacity-85">Online Bible study and reflection.</p>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
-                <p className="font-bold text-(--rose)">Saturday | 7:00 AM</p>
-                <p className="mt-1 text-(--ink) opacity-85">Prayer and accountability session.</p>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-white/7 px-5 py-4">
-                <p className="font-bold text-(--rose)">Sunday | 9:30 AM</p>
-                <p className="mt-1 text-(--ink) opacity-85">Live worship service and message.</p>
               </div>
             </div>
           </div>
         </section>
 
+        {/* ── TESTIMONIALS ── if present */}
         {testimonials.length > 0 && (
-          <section className="mt-14">
-            <div className="mb-6">
-              <p className="text-sm font-bold uppercase tracking-[0.24em] text-(--rose)">Testimonies</p>
-              <h2 className="mt-2 text-3xl font-bold text-(--ink)">Words From Our Sisterhood</h2>
+          <section className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Testimonies</p>
+                <h2 className="mt-3 text-4xl font-semibold text-(--ink)">Words From Our Sisterhood</h2>
+              </div>
             </div>
             <div className="grid gap-5 md:grid-cols-3">
               {testimonials.map((t, i) => (
@@ -252,17 +309,17 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ delay: i * 0.1, duration: 0.45 }}
-                  className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-6 py-7"
+                  className={`rounded-2xl px-6 py-7 ${i === 1 ? "bg-(--rose) text-white" : "border border-(--ash) bg-white"}`}
                 >
-                  <Quote size={28} className="text-(--rose) opacity-70" />
-                  <p className="mt-3 text-sm italic leading-7 text-(--stone)">{t.quote}</p>
+                  <Quote size={24} className={i === 1 ? "text-white/60" : "text-(--rose) opacity-60"} />
+                  <p className={`mt-3 text-sm italic leading-7 ${i === 1 ? "text-white/90" : "text-(--stone)"}`}>{t.quote}</p>
                   <div className="mt-5 flex items-center gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-(--blush) text-sm font-bold text-(--rose)">
+                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold ${i === 1 ? "bg-white/20 text-white" : "bg-(--blush) text-(--rose)"}`}>
                       {t.name[0]}
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-(--ink)">{t.name}</p>
-                      <p className="text-xs text-(--stone)">{t.role}</p>
+                      <p className={`text-sm font-bold ${i === 1 ? "text-white" : "text-(--ink)"}`}>{t.name}</p>
+                      <p className={`text-xs ${i === 1 ? "text-white/70" : "text-(--stone)"}`}>{t.role}</p>
                     </div>
                   </div>
                 </motion.article>
@@ -271,100 +328,107 @@ export default function Home() {
           </section>
         )}
 
-        <section className="mt-14" aria-label="Ministry gallery">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.24em] text-(--rose)">Ministry Life</p>
-              <h2 className="mt-2 text-3xl font-bold text-(--ink)">Moments From Our Community</h2>
-            </div>
+        {/* ── GALLERY ── full bleed, no text below images */}
+        <section className="mt-20" aria-label="Ministry gallery">
+          <div className="mx-auto mb-8 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+            <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Ministry Life</p>
+            <h2 className="mt-3 text-4xl font-semibold text-(--ink)">Moments From Our Community</h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="mx-auto grid w-full max-w-6xl gap-3 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
             {ministryGalleryImages.map((image, index) => (
-              <motion.article
+              <motion.div
                 key={image}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ delay: index * 0.12, duration: 0.4 }}
-                className="home-accent-card group elevated overflow-hidden rounded-2xl border border-white/70 bg-white"
+                initial={{ opacity: 0, scale: 0.97 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.1, duration: 0.45 }}
+                className={`group overflow-hidden rounded-2xl ${index === 1 ? "lg:row-span-1 lg:mt-6" : ""}`}
               >
-                <div className="overflow-hidden">
+                <div className="relative overflow-hidden">
                   <Image
                     src={image}
                     alt="SpiritualWoman community moment"
                     width={650}
                     height={400}
-                    className="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${index === 1 ? "h-64" : "h-56"}`}
                   />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
+                  <p className="absolute bottom-4 left-5 text-sm font-bold text-white">Faith Story {index + 1}</p>
                 </div>
-                <div className="px-5 py-4">
-                  <p className="text-sm font-semibold text-(--rose)">Faith Story {index + 1}</p>
-                  <p className="mt-2 text-sm leading-7 text-(--stone)">
-                    Real testimonies of women growing in prayer, purpose, leadership, and compassion.
-                  </p>
-                </div>
-              </motion.article>
+              </motion.div>
             ))}
           </div>
         </section>
 
-        <section id="blog" className="mt-14">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+        {/* ── BLOG ── list layout, not card grid */}
+        <section id="blog" className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.24em] text-(--rose)">Latest Articles</p>
-              <h2 className="mt-2 text-3xl font-bold text-(--ink)">Encouragement For Your Journey</h2>
+              <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Latest Articles</p>
+              <h2 className="mt-3 text-4xl font-semibold text-(--ink)">Encouragement For Your Journey</h2>
             </div>
             <Link href="/blog" className="text-sm font-semibold text-(--rose) hover:text-(--rose-dark)">
               View All Posts →
             </Link>
           </div>
           {posts.length > 0 ? (
-            <div className="grid gap-5 md:grid-cols-3">
-              {posts.map((post) => (
+            <div className="divide-y divide-(--ash) rounded-3xl border border-(--ash) bg-white">
+              {posts.map((post, i) => (
                 <article
                   key={post.id}
-                  className="home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-5 py-6 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40"
+                  className="flex flex-col gap-4 px-6 py-6 transition-colors hover:bg-(--blush)/40 sm:flex-row sm:items-center sm:gap-6 sm:px-8"
                 >
-                  <h3 className="mt-3 text-2xl font-bold leading-tight text-(--ink)">{post.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-(--stone)">{post.excerpt}</p>
-                  <p className="mt-4 text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">
-                    {new Date(post.createdAt).toLocaleDateString()}
-                  </p>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-(--stone)">
-                    by {post.author}
-                  </p>
-                  <Link href={`/blog/${post.slug}`} className="mt-4 inline-block text-sm font-bold text-(--rose)">
-                    Read More →
+                  <span className="shrink-0 text-3xl font-extrabold text-(--ash)">
+                    0{i + 1}
+                  </span>
+                  <div className="flex-1">
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-(--rose)">
+                      {new Date(post.createdAt).toLocaleDateString()} · {post.author}
+                    </p>
+                    <h3 className="mt-1 text-xl font-bold text-(--ink)">{post.title}</h3>
+                    <p className="mt-1.5 text-sm leading-6 text-(--stone)">{post.excerpt}</p>
+                  </div>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="shrink-0 rounded-full border border-(--rose)/40 px-5 py-2 text-sm font-bold text-(--rose) hover:bg-(--blush)"
+                  >
+                    Read →
                   </Link>
                 </article>
               ))}
             </div>
           ) : (
-            <div className="rounded-2xl border border-dashed border-(--stone)/40 bg-white/70 px-6 py-8 text-center">
+            <div className="rounded-2xl border border-dashed border-(--stone)/30 px-6 py-10 text-center">
               <p className="font-semibold text-(--ink)">No posts yet.</p>
               <p className="mt-1 text-sm text-(--stone)">Check back soon for encouragement articles.</p>
             </div>
           )}
         </section>
 
-        <section id="contact" className="mt-14 rounded-3xl bg-[#1f2126] px-6 py-12 text-center text-white sm:px-10">
-          <h2 className="text-3xl font-bold">Let&apos;s Walk This Journey Together</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-8 text-white/75 sm:text-base">
-            Join a growing community of women committed to faith, purpose, and transformation through Christ.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/contact"
-              className="inline-block rounded-full bg-(--rose) px-7 py-3 font-bold text-white transition-colors hover:bg-(--rose-dark)"
-            >
-              Contact Fellowship Team
-            </Link>
-            <a
-              href="mailto:hello@spiritualwoman.org"
-              className="inline-block rounded-full border border-white/20 px-7 py-3 font-bold text-white/90 transition-colors hover:border-white/50"
-            >
-              Email Directly
-            </a>
+        {/* ── CTA ── clean centred band */}
+        <section id="contact" className="mx-auto mt-14 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center rounded-3xl border border-(--rose)/25 bg-(--blush) px-8 py-10 text-center sm:px-14 sm:py-12">
+            <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Join Us</p>
+            <h2 className="mt-4 max-w-xl text-4xl font-semibold text-(--ink)">
+              Let&apos;s Walk This Journey Together
+            </h2>
+            <p className="mx-auto mt-5 max-w-lg text-sm leading-8 text-(--stone)">
+              Join a growing community of women committed to faith, purpose, and transformation through Christ.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/contact"
+                className="rounded-full bg-(--rose) px-8 py-3 font-bold text-white hover:bg-(--rose-dark)"
+              >
+                Contact Fellowship Team
+              </Link>
+              <a
+                href="mailto:hello@spiritualwoman.org"
+                className="rounded-full border border-(--rose)/40 px-8 py-3 font-bold text-(--rose) hover:bg-white"
+              >
+                Email Directly
+              </a>
+            </div>
           </div>
         </section>
       </main>

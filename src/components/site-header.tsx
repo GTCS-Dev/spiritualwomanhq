@@ -15,27 +15,23 @@ type NavItem = {
 const navItems: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/blog", label: "Blog" },
-  { href: "/watch", label: "Watch" },
+  { href: "/competitions", label: "Competitions" },
   { href: "/contact", label: "Contact" },
-  { href: "/visit", label: "Visit" },
-  { href: "/connect", label: "Connect" },
-  { href: "/about", label: "About" },
 ];
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("sw_theme") === "dark";
+  });
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("sw_theme");
-    // Default is always light; only switch dark if user explicitly chose it
-    const shouldUseDark = storedTheme === "dark";
-
-    document.documentElement.classList.toggle("theme-dark", shouldUseDark);
-    document.documentElement.setAttribute("data-theme", shouldUseDark ? "dark" : "light");
-    setIsDarkTheme(shouldUseDark);
-  }, []);
+    document.documentElement.classList.toggle("theme-dark", isDarkTheme);
+    document.documentElement.setAttribute("data-theme", isDarkTheme ? "dark" : "light");
+    localStorage.setItem("sw_theme", isDarkTheme ? "dark" : "light");
+  }, [isDarkTheme]);
 
   function toggleTheme() {
     const nextThemeIsDark = !isDarkTheme;
@@ -48,47 +44,55 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-(--ash) bg-(--container)/85 shadow-[0_8px_24px_-20px_rgba(31,33,38,0.45)] backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+    <header className="sticky top-0 z-50 border-b border-(--ash) bg-(--container)/96 shadow-[0_8px_24px_-18px_rgba(31,24,34,0.28)] backdrop-blur-md">
+      <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-4 py-3.5 sm:px-6">
+        {/* Logo — always visible */}
         <SiteLogo />
 
-        <nav className="hidden items-center gap-7 md:flex">
+        {/* Desktop nav — centred, fills space, links flush right */}
+        <nav className="ml-auto hidden items-center gap-1 lg:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm font-semibold tracking-wide transition-colors ${
+              className={`rounded-full px-3.5 py-1.5 text-sm font-medium tracking-wide transition-colors ${
                 isActive(item.href)
-                  ? "border-b-2 border-(--rose) text-(--rose)"
-                  : "text-(--ink) hover:text-(--rose)"
+                  ? "bg-(--blush) font-semibold text-(--rose)"
+                  : "text-(--stone) hover:bg-(--blush) hover:text-(--rose)"
               }`}
             >
               {item.label}
             </Link>
           ))}
+
+          {/* Separator */}
+          <span className="mx-1.5 h-5 w-px bg-(--ash)" aria-hidden />
+
+          {/* Actions */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="rounded-full p-2 text-(--stone) transition-colors hover:bg-(--blush) hover:text-(--rose)"
+            aria-label="Toggle dark theme"
+          >
+            {isDarkTheme ? <Sun size={17} /> : <MoonStar size={17} />}
+          </button>
+
           <Link
             href="/admin"
-            className="rounded-full bg-(--rose) px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-(--rose-dark)"
+            className="ml-1 rounded-full bg-(--rose) px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-(--rose-dark)"
           >
             Admin
           </Link>
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="inline-flex items-center gap-2 rounded-full border border-(--ash) bg-(--blush) px-4 py-2 text-sm font-semibold text-(--ink) transition-colors hover:border-(--rose)"
-            aria-label="Toggle dark theme"
-          >
-            {isDarkTheme ? <Sun size={16} /> : <MoonStar size={16} />}
-            {isDarkTheme ? "Light" : "Dark"}
-          </button>
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        {/* Mobile actions */}
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
           <button
             type="button"
             onClick={toggleTheme}
             aria-label="Toggle dark theme"
-            className="rounded-lg border border-(--ash) p-2 text-(--ink)"
+            className="rounded-full p-2 text-(--stone) hover:bg-(--blush)"
           >
             {isDarkTheme ? <Sun size={20} /> : <MoonStar size={20} />}
           </button>
@@ -110,7 +114,7 @@ export function SiteHeader() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
-            className="border-t border-(--ash) bg-(--container) px-4 py-3 md:hidden"
+            className="border-t border-(--ash) bg-(--container) px-4 py-3 lg:hidden"
           >
             <motion.div
               initial="hidden"
@@ -119,7 +123,7 @@ export function SiteHeader() {
                 hidden: { opacity: 0 },
                 show: { opacity: 1, transition: { staggerChildren: 0.05 } },
               }}
-              className="mx-auto flex max-w-6xl flex-col gap-2"
+              className="mx-auto grid max-w-6xl grid-cols-2 gap-1 sm:grid-cols-3"
             >
               {navItems.map((item) => (
                 <motion.div
@@ -129,7 +133,7 @@ export function SiteHeader() {
                 >
                   <Link
                     href={item.href}
-                    className={`block rounded-md px-3 py-2 font-semibold transition-colors ${
+                    className={`block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${
                       isActive(item.href)
                         ? "bg-(--blush) text-(--rose)"
                         : "text-(--ink) hover:bg-(--blush) hover:text-(--rose)"
@@ -140,13 +144,13 @@ export function SiteHeader() {
                   </Link>
                 </motion.div>
               ))}
-              <motion.div variants={{ hidden: { opacity: 0, y: -8 }, show: { opacity: 1, y: 0 } }} transition={{ duration: 0.2 }}>
+              <motion.div variants={{ hidden: { opacity: 0, y: -8 }, show: { opacity: 1, y: 0 } }} transition={{ duration: 0.2 }} className="col-span-2 sm:col-span-3">
                 <Link
                   href="/admin"
-                  className="mt-1 block rounded-md bg-(--rose) px-3 py-2 text-center font-semibold text-white"
+                  className="mt-1 block rounded-xl bg-(--rose) px-4 py-2.5 text-center text-sm font-bold text-white"
                   onClick={() => setIsOpen(false)}
                 >
-                  Admin
+                  Admin Dashboard
                 </Link>
               </motion.div>
             </motion.div>

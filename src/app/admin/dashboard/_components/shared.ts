@@ -1,7 +1,7 @@
 import { BlogPost, PostBlock, PostBlockType, PostCategory, categoryLabels } from "@/types/blog";
 import { blogCoverImages } from "@/lib/site-images";
 
-export type Tab = "blog" | "verse" | "testimonials" | "messages";
+export type Tab = "blog" | "verse" | "testimonials" | "competitions" | "messages";
 
 export type DraftPost = {
   id?: number;
