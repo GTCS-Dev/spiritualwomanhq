@@ -4,10 +4,9 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SiteLogo } from "@/components/site-logo";
+import { getApiBaseUrl } from "@/lib/api-base-url";
 
-const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").trim();
-const normalizedApiUrl = /^https?:\/\//i.test(rawApiUrl) ? rawApiUrl : `https://${rawApiUrl}`;
-const apiUrl = normalizedApiUrl.replace(/\/+$/, "");
+const apiUrl = getApiBaseUrl();
 
 export default function AdminLoginPage() {
   const router = useRouter();

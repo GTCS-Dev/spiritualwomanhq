@@ -5,11 +5,10 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getApiBaseUrl } from "@/lib/api-base-url";
 import { BlogPost, PostCategory, categoryLabels } from "@/types/blog";
 
-const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").trim();
-const normalizedApiUrl = /^https?:\/\//i.test(rawApiUrl) ? rawApiUrl : `https://${rawApiUrl}`;
-const apiUrl = normalizedApiUrl.replace(/\/+$/, "");
+const apiUrl = getApiBaseUrl();
 
 const categories: Array<PostCategory | "all"> = [
   "all",

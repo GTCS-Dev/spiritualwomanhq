@@ -1,5 +1,6 @@
 import { BlogPost, PostBlock, PostBlockType, PostCategory, categoryLabels } from "@/types/blog";
 import { blogCoverImages } from "@/lib/site-images";
+import { getApiBaseUrl } from "@/lib/api-base-url";
 
 export type Tab = "blog" | "verse" | "testimonials" | "competitions" | "messages";
 
@@ -46,9 +47,7 @@ export type AdminTabProps = {
   onStatus: (message: string) => void;
 };
 
-const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").trim();
-const normalizedApiUrl = /^https?:\/\//i.test(rawApiUrl) ? rawApiUrl : `https://${rawApiUrl}`;
-export const apiUrl = normalizedApiUrl.replace(/\/+$/, "");
+export const apiUrl = getApiBaseUrl();
 
 export const initialPost: DraftPost = {
   title: "",

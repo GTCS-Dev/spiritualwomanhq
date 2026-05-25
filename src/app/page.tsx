@@ -9,6 +9,7 @@ import { SiteHeader } from "@/components/site-header";
 import { HeroSlider } from "@/components/hero-slider";
 import { SiteFooter } from "@/components/site-footer";
 import { ministryGalleryImages } from "@/lib/site-images";
+import { getApiBaseUrl } from "@/lib/api-base-url";
 import { BlogPost } from "@/types/blog";
 
 type Verse = {
@@ -44,9 +45,7 @@ const stats = [
   { value: "3K+", label: "Lives Touched" },
 ];
 
-const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").trim();
-const normalizedApiUrl = /^https?:\/\//i.test(rawApiUrl) ? rawApiUrl : `https://${rawApiUrl}`;
-const baseApiUrl = normalizedApiUrl.replace(/\/+$/, "");
+const baseApiUrl = getApiBaseUrl();
 
 const quickLinks = [
   { href: "/watch", title: "Watch", text: "Live worship services and on-demand encouragement messages." },

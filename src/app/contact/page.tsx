@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { ContentPageShell } from "@/components/content-page-shell";
+import { getApiBaseUrl } from "@/lib/api-base-url";
 import { pageHeroImages } from "@/lib/site-images";
 
 const contactChannels = [
@@ -31,9 +32,7 @@ const contactChannels = [
   },
 ];
 
-const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").trim();
-const normalizedApiUrl = /^https?:\/\//i.test(rawApiUrl) ? rawApiUrl : `https://${rawApiUrl}`;
-const baseApiUrl = normalizedApiUrl.replace(/\/+$/, "");
+const baseApiUrl = getApiBaseUrl();
 
 type ContactFormState = {
   name: string;
