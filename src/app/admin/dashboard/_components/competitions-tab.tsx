@@ -1,15 +1,11 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { Trash2 } from "lucide-react";
-import {
-  defaultCompetitionWinners,
-  readCompetitionWinnersFromStorage,
-  writeCompetitionWinnersToStorage,
-} from "@/lib/competition-winners";
+import { defaultCompetitionWinners } from "@/lib/competition-winners";
 import { blogCoverImages } from "@/lib/site-images";
 import { CompetitionWinner } from "@/types/competition-winner";
-import { AdminTabProps } from "./shared";
+import { AdminTabProps, apiUrl, parseApiError } from "./shared";
 
 type DraftWinner = {
   name: string;
@@ -31,12 +27,34 @@ const initialDraft: DraftWinner = {
   year: "",
 };
 
-export function CompetitionsTab({ onStatus }: AdminTabProps) {
+export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
   const [draft, setDraft] = useState<DraftWinner>(initialDraft);
-  const [winners, setWinners] = useState<CompetitionWinner[]>(() => {
-    if (typeof window === "undefined") return defaultCompetitionWinners;
-    return readCompetitionWinnersFromStorage();
-  });
+  const [winners, setWinners] = useState<CompetitionWinner[]>(defaultCompetitionWinners);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  const fetchWinners = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiUrl}/competitions/admin/all`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) onUnauthorized();
+        return;
+      }
+
+      const data = (await response.json()) as CompetitionWinner[];
+      setWinners(data);
+    } catch {
+      // Keep current list on transient network failure.
+    }
+  }, [token, onUnauthorized]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (token) fetchWinners();
+  }, [token, fetchWinners]);
 
   function setField<K extends keyof DraftWinner>(key: K, value: DraftWinner[K]) {
     setDraft((current) => ({ ...current, [key]: value }));
@@ -51,7 +69,24 @@ export function CompetitionsTab({ onStatus }: AdminTabProps) {
     return null;
   }
 
-  function save(event: FormEvent) {
+  async function uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await fetch(`${apiUrl}/uploads/image`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) onUnauthorized();
+      throw new Error(await parseApiError(response, "Image upload failed."));
+    }
+
+    return ((await response.json()) as { url: string }).url;
+  }
+
+  async function save(event: FormEvent) {
     event.preventDefault();
 
     const error = validate();
@@ -60,32 +95,62 @@ export function CompetitionsTab({ onStatus }: AdminTabProps) {
       return;
     }
 
-    const next: CompetitionWinner = {
-      id: crypto.randomUUID(),
-      name: draft.name.trim(),
-      competitionId: draft.competitionId.trim(),
-      competition: draft.competition.trim(),
-      ageCategory: draft.ageCategory.trim(),
-      position: draft.position.trim(),
-      picture: draft.picture.trim() || blogCoverImages[0],
-      year: draft.year.trim(),
-      createdAt: new Date().toISOString(),
-    };
+    setSaving(true);
 
-    const updated = [next, ...winners];
-    setWinners(updated);
-    writeCompetitionWinnersToStorage(updated);
-    setDraft(initialDraft);
-    onStatus("Competition winner saved.");
+    try {
+      const pictureUrl = imageFile ? await uploadFile(imageFile) : draft.picture.trim() || blogCoverImages[0];
+
+      const response = await fetch(`${apiUrl}/competitions`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          name: draft.name.trim(),
+          competitionId: draft.competitionId.trim(),
+          competition: draft.competition.trim(),
+          ageCategory: draft.ageCategory.trim(),
+          position: draft.position.trim(),
+          picture: pictureUrl,
+          year: draft.year.trim(),
+        }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          onUnauthorized();
+          return;
+        }
+
+        onStatus(await parseApiError(response, "Saving competition winner failed."));
+        return;
+      }
+
+      setDraft(initialDraft);
+      setImageFile(null);
+      onStatus("Competition winner saved.");
+      await fetchWinners();
+    } catch (error) {
+      onStatus(error instanceof Error ? error.message : "Network error.");
+    } finally {
+      setSaving(false);
+    }
   }
 
-  function removeWinner(id: string) {
+  async function removeWinner(id: string) {
     if (!confirm("Delete this competition winner?")) return;
 
-    const updated = winners.filter((item) => item.id !== id);
-    setWinners(updated);
-    writeCompetitionWinnersToStorage(updated);
+    const response = await fetch(`${apiUrl}/competitions/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) onUnauthorized();
+      onStatus(await parseApiError(response, "Deleting competition winner failed."));
+      return;
+    }
+
     onStatus("Competition winner deleted.");
+    await fetchWinners();
   }
 
   const inputCls = "w-full rounded-xl border border-(--ash) bg-white px-4 py-2.5 text-sm outline-none focus:border-(--rose)/60 focus:ring-2 focus:ring-(--rose)/15";
@@ -127,12 +192,21 @@ export function CompetitionsTab({ onStatus }: AdminTabProps) {
               </div>
             </div>
             <div>
-              <label className={labelCls}>Picture URL</label>
+              <label className={labelCls}>Picture URL (Optional)</label>
               <input className={inputCls} value={draft.picture} onChange={(event) => setField("picture", event.target.value)} placeholder="https://..." />
-              <p className="mt-1 text-xs text-(--stone)">You can paste a URL or keep the default image for now.</p>
             </div>
-            <button type="submit" className="rounded-full bg-(--rose) px-6 py-2.5 font-bold text-white hover:bg-(--rose-dark)">
-              Save Winner
+            <div>
+              <label className={labelCls}>Or Upload Picture</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(event) => setImageFile(event.target.files?.[0] ?? null)}
+                className="w-full rounded-xl border border-(--ash) bg-white px-3 py-2 text-sm"
+              />
+              <p className="mt-1 text-xs text-(--stone)">Upload sends image to Cloudinary and stores returned URL in database.</p>
+            </div>
+            <button type="submit" disabled={saving} className="rounded-full bg-(--rose) px-6 py-2.5 font-bold text-white hover:bg-(--rose-dark) disabled:opacity-65">
+              {saving ? "Saving..." : "Save Winner"}
             </button>
           </div>
         </div>

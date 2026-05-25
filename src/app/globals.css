@@ -31,6 +31,15 @@ html[data-theme="dark"] {
   --font-sans: var(--font-body);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--rose) 24%, white 76%);
+  color: var(--ink);
+}
+
 h1,
 h2,
 h3,
@@ -38,7 +47,9 @@ h4,
 h5,
 h6 {
   font-family: var(--font-display), serif;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.015em;
+  line-height: 0.98;
+  text-wrap: balance;
 }
 
 body {
@@ -48,6 +59,31 @@ body {
     linear-gradient(180deg, #f6f0f5 0%, #faf6f9 42%, #f3edf3 100%);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
+  font-feature-settings: "ss01" 1, "cv02" 1, "cv11" 1;
+  text-rendering: optimizeLegibility;
+}
+
+p,
+li,
+label,
+input,
+textarea,
+select,
+button {
+  letter-spacing: -0.01em;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
 html.theme-dark body,
@@ -134,6 +170,97 @@ html[data-theme="dark"] select {
 
 .section-gradient {
   background: linear-gradient(140deg, rgba(255, 250, 253, 0.95), rgba(247, 236, 244, 0.9));
+}
+
+.competition-panel {
+  border: 1px solid color-mix(in srgb, var(--ash) 72%, white 28%);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.88), transparent 42%),
+    linear-gradient(155deg, rgba(255, 253, 254, 0.95), rgba(247, 236, 244, 0.92));
+  box-shadow: 0 28px 60px -40px rgba(31, 24, 34, 0.38);
+}
+
+.competition-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ash) 70%, white 30%);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.92), transparent 40%),
+    linear-gradient(180deg, rgba(255, 250, 252, 0.98), rgba(246, 238, 243, 0.98));
+  box-shadow: 0 26px 56px -36px rgba(37, 25, 40, 0.42);
+}
+
+.competition-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, #261327 0%, #c23a62 48%, #efc6d5 100%);
+}
+
+.competition-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 70px -38px rgba(37, 25, 40, 0.5);
+}
+
+.competition-filter {
+  border: 1px solid color-mix(in srgb, var(--ash) 75%, white 25%);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.88), transparent 38%),
+    linear-gradient(140deg, rgba(255, 251, 253, 0.96), rgba(248, 240, 245, 0.92));
+  box-shadow: 0 22px 46px -36px rgba(31, 24, 34, 0.34);
+}
+
+.competition-badge {
+  background: linear-gradient(135deg, #261327 0%, #4e2543 100%);
+  box-shadow: 0 16px 30px -18px rgba(38, 19, 39, 0.55);
+}
+
+.competition-avatar {
+  box-shadow:
+    0 18px 34px -22px rgba(0, 0, 0, 0.52),
+    0 0 0 10px rgba(255, 246, 250, 0.92);
+}
+
+.competition-highlight {
+  background: linear-gradient(135deg, rgba(194, 58, 98, 0.14), rgba(255, 255, 255, 0.82));
+}
+
+html.theme-dark .competition-panel,
+html.theme-dark .competition-card,
+html.theme-dark .competition-filter,
+html[data-theme="dark"] .competition-panel,
+html[data-theme="dark"] .competition-card,
+html[data-theme="dark"] .competition-filter {
+  border-color: rgba(76, 69, 82, 0.88);
+}
+
+html.theme-dark .competition-panel,
+html[data-theme="dark"] .competition-panel {
+  background:
+    radial-gradient(circle at top left, rgba(69, 52, 68, 0.4), transparent 42%),
+    linear-gradient(150deg, rgba(24, 18, 29, 0.96), rgba(18, 14, 23, 0.96));
+}
+
+html.theme-dark .competition-card,
+html[data-theme="dark"] .competition-card {
+  background:
+    radial-gradient(circle at top, rgba(83, 58, 80, 0.3), transparent 38%),
+    linear-gradient(180deg, rgba(24, 18, 29, 0.98), rgba(18, 14, 23, 0.98));
+  box-shadow: 0 28px 56px -36px rgba(0, 0, 0, 0.7);
+}
+
+html.theme-dark .competition-filter,
+html[data-theme="dark"] .competition-filter {
+  background:
+    radial-gradient(circle at top left, rgba(73, 57, 72, 0.34), transparent 36%),
+    linear-gradient(150deg, rgba(22, 17, 27, 0.96), rgba(17, 13, 21, 0.96));
+}
+
+html.theme-dark .competition-highlight,
+html[data-theme="dark"] .competition-highlight {
+  background: linear-gradient(135deg, rgba(194, 58, 98, 0.18), rgba(34, 27, 40, 0.92));
 }
 
 html:not(.theme-dark):not([data-theme="dark"]) .home-accent-card {

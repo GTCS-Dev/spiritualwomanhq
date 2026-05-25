@@ -22,14 +22,14 @@ export function ContentPageShell({ title, subtitle, description, image, children
 
           <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-6xl px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16">
             <div className="max-w-2xl text-white">
-              <p className="text-xs font-bold uppercase tracking-[0.29em] text-[#ffbfd1] sm:text-sm">{subtitle}</p>
-              <h1 className="mt-3 text-4xl font-semibold leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl">{title}</h1>
-              <p className="mt-4 max-w-xl text-sm leading-7 text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] sm:text-base sm:leading-8">{description}</p>
+              <p className="text-[11px] font-extrabold uppercase tracking-[0.34em] text-[#ffbfd1] sm:text-sm">{subtitle}</p>
+              <h1 className="mt-3 max-w-[12ch] text-4xl font-semibold leading-[0.95] drop-shadow-[0_4px_16px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl">{title}</h1>
+              <p className="mt-5 max-w-xl text-sm leading-7 text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)] sm:text-[1.02rem] sm:leading-8">{description}</p>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto mt-14 w-full max-w-6xl px-4 sm:px-6 lg:px-8">{children}</section>
+        <section className="mx-auto mt-16 w-full max-w-6xl px-4 sm:px-6 lg:px-8">{children}</section>
       </main>
       <SiteFooter />
     </div>
