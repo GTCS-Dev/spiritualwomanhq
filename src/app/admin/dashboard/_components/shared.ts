@@ -46,7 +46,9 @@ export type AdminTabProps = {
   onStatus: (message: string) => void;
 };
 
-export const apiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").replace(/\/+$/, "");
+const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").trim();
+const normalizedApiUrl = /^https?:\/\//i.test(rawApiUrl) ? rawApiUrl : `https://${rawApiUrl}`;
+export const apiUrl = normalizedApiUrl.replace(/\/+$/, "");
 
 export const initialPost: DraftPost = {
   title: "",

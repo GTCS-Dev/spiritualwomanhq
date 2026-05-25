@@ -44,7 +44,9 @@ const stats = [
   { value: "3K+", label: "Lives Touched" },
 ];
 
-const baseApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").replace(/\/+$/, "");
+const rawApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").trim();
+const normalizedApiUrl = /^https?:\/\//i.test(rawApiUrl) ? rawApiUrl : `https://${rawApiUrl}`;
+const baseApiUrl = normalizedApiUrl.replace(/\/+$/, "");
 
 const quickLinks = [
   { href: "/watch", title: "Watch", text: "Live worship services and on-demand encouragement messages." },
