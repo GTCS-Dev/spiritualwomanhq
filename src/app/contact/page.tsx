@@ -31,7 +31,7 @@ const contactChannels = [
   },
 ];
 
-const baseApiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+const baseApiUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000").replace(/\/+$/, "");
 
 type ContactFormState = {
   name: string;
