@@ -25,6 +25,7 @@ export function VerseTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
   }, [token, onUnauthorized]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (token) fetchVerses();
   }, [token, fetchVerses]);
 
@@ -147,7 +148,7 @@ export function VerseTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     {verse.isActive && <span className="mb-2 inline-block rounded-full bg-(--rose) px-2.5 py-0.5 text-xs font-bold text-white">Active</span>}
-                    <p className="text-sm font-semibold italic text-(--ink)">"{verse.text}"</p>
+                    <p className="text-sm font-semibold italic text-(--ink)">&ldquo;{verse.text}&rdquo;</p>
                     <p className="mt-1 text-xs font-bold text-(--rose)">{verse.reference} — {verse.period === "day" ? "Day" : "Week"}</p>
                   </div>
                 </div>

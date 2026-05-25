@@ -34,6 +34,7 @@ export function TestimonialsTab({ token, onUnauthorized, onStatus }: AdminTabPro
   }, [token, onUnauthorized]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (token) fetchAll();
   }, [token, fetchAll]);
 
@@ -176,7 +177,7 @@ export function TestimonialsTab({ token, onUnauthorized, onStatus }: AdminTabPro
                     {testimonial.isPublished ? "Visible" : "Hidden"}
                   </span>
                 </div>
-                <p className="mt-3 text-sm italic text-(--stone)">"{testimonial.quote}"</p>
+                <p className="mt-3 text-sm italic text-(--stone)">&ldquo;{testimonial.quote}&rdquo;</p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <button type="button" onClick={() => startEdit(testimonial)} className="flex items-center gap-1 rounded-full border border-(--ash) px-3 py-1 text-xs font-semibold hover:text-(--rose)">
                     <Pencil size={11} /> Edit

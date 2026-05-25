@@ -39,7 +39,7 @@ export default function TermsOfUsePage() {
           <h2 className="text-2xl font-bold text-(--ink)">Disclaimer And Liability</h2>
           <p className="mt-3 text-sm leading-7 text-(--stone)">
             Content is provided in good faith for spiritual encouragement and general information. The site is provided
-            on an "as is" basis without warranties of uninterrupted availability.
+            on an &ldquo;as is&rdquo; basis without warranties of uninterrupted availability.
           </p>
         </article>
 

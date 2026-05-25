@@ -41,6 +41,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
   }, [token, onUnauthorized]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (token) fetchPosts();
   }, [token, fetchPosts]);
 
