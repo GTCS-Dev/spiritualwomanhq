@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { defaultCompetitionWinners } from "@/lib/competition-winners";
 import { getApiBaseUrl } from "@/lib/api-base-url";
@@ -97,38 +98,43 @@ export function CompetitionWinnersGrid() {
               </div>
 
               <div className="flex justify-center px-2 pt-6">
-                <img
-                  src={winner.picture}
-                  alt={`${winner.name} - ${winner.competition}`}
-                  className="competition-avatar h-36 w-36 rounded-full border-[6px] border-white object-cover"
-                  loading="lazy"
-                />
+                <div className="competition-card__media-ring relative h-40 w-40 rounded-full p-2 sm:h-44 sm:w-44">
+                  <div className="relative h-full w-full overflow-hidden rounded-full border-[6px] border-white shadow-[0_18px_40px_-24px_rgba(31,24,34,0.65)]">
+                    <Image
+                      src={winner.picture}
+                      alt={`${winner.name} - ${winner.competition}`}
+                      fill
+                      sizes="(max-width: 640px) 160px, 176px"
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="grid gap-4 px-1 pb-1 pt-6">
                 <div className="text-center">
-                  <h3 className="text-3xl font-semibold text-(--ink)">{winner.name}</h3>
+                  <h3 className="competition-card__title text-3xl font-semibold text-(--ink)">{winner.name}</h3>
                   <p className="mt-2 text-sm font-medium uppercase tracking-[0.14em] text-(--rose)">
                     {winner.position || "Outstanding Performance"}
                   </p>
+                  <div className="mt-4 flex flex-wrap justify-center gap-2">
+                    <span className="competition-card__chip rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-(--stone)">
+                      {winner.ageCategory || "Age category n/a"}
+                    </span>
+                    <span className="competition-card__chip rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-(--stone)">
+                      ID {winner.competitionId}
+                    </span>
+                  </div>
                 </div>
 
                 <dl className="grid gap-3 text-sm">
-                  <div className="flex items-start justify-between gap-3 rounded-2xl border border-(--ash) bg-white/70 px-4 py-3">
-                    <dt className="font-semibold text-(--stone)">Competition ID</dt>
-                    <dd className="text-right font-bold text-(--ink)">{winner.competitionId}</dd>
-                  </div>
-                  <div className="flex items-start justify-between gap-3 rounded-2xl border border-(--ash) bg-white/70 px-4 py-3">
+                  <div className="competition-card__meta flex items-start justify-between gap-3 rounded-2xl px-4 py-3">
                     <dt className="font-semibold text-(--stone)">Competition</dt>
-                    <dd className="text-right text-(--ink)">{winner.competition}</dd>
+                    <dd className="text-right font-medium text-(--ink)">{winner.competition}</dd>
                   </div>
-                  <div className="flex items-start justify-between gap-3 rounded-2xl border border-(--ash) bg-white/70 px-4 py-3">
-                    <dt className="font-semibold text-(--stone)">Age Category</dt>
-                    <dd className="text-right text-(--ink)">{winner.ageCategory || "-"}</dd>
-                  </div>
-                  <div className="competition-highlight flex items-start justify-between gap-3 rounded-2xl border border-(--ash) px-4 py-3">
+                  <div className="competition-card__meta flex items-start justify-between gap-3 rounded-2xl px-4 py-3">
                     <dt className="font-semibold text-(--stone)">Position</dt>
-                    <dd className="rounded-full bg-white/85 px-3 py-1 text-right text-xs font-extrabold uppercase tracking-[0.12em] text-(--rose)">
+                    <dd className="rounded-full bg-(--blush) px-3 py-1 text-right text-xs font-extrabold uppercase tracking-[0.12em] text-(--rose)">
                       {winner.position || "-"}
                     </dd>
                   </div>
