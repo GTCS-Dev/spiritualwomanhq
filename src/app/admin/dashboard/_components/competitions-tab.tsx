@@ -27,6 +27,15 @@ const initialDraft: DraftWinner = {
   year: "",
 };
 
+const positionOptions = ["1ST", "2ND", "3RD"];
+const ageCategoryOptions = [
+  "8-10 YEARS",
+  "14-18 YEARS",
+  "5-7 YEARS",
+  "11-13 YEARS",
+  "11 -12 YEARS",
+];
+
 export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
   const [draft, setDraft] = useState<DraftWinner>(initialDraft);
   const [winners, setWinners] = useState<CompetitionWinner[]>(defaultCompetitionWinners);
@@ -64,6 +73,7 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
     if (draft.name.trim().length < 2) return "Winner name is required.";
     if (draft.competitionId.trim().length < 2) return "Competition ID is required.";
     if (draft.competition.trim().length < 2) return "Competition name is required.";
+    if (draft.ageCategory.trim().length < 2) return "Age category is required.";
     if (draft.position.trim().length < 2) return "Position is required.";
     if (draft.year.trim().length < 4) return "Year is required.";
     return null;
@@ -184,11 +194,25 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label className={labelCls}>Age Category</label>
-                <input className={inputCls} value={draft.ageCategory} onChange={(event) => setField("ageCategory", event.target.value)} placeholder="e.g. 8 to 10" />
+                <select className={inputCls} value={draft.ageCategory} onChange={(event) => setField("ageCategory", event.target.value)}>
+                  <option value="">Select age category</option>
+                  {ageCategoryOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label className={labelCls}>Position</label>
-                <input className={inputCls} value={draft.position} onChange={(event) => setField("position", event.target.value)} placeholder="e.g. 3rd Position" />
+                <select className={inputCls} value={draft.position} onChange={(event) => setField("position", event.target.value)}>
+                  <option value="">Select position</option>
+                  {positionOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div>

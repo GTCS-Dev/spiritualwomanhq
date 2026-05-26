@@ -85,14 +85,14 @@ export function CompetitionWinnersGrid() {
       {filteredWinners.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredWinners.map((winner) => (
-            <article key={winner.id} className="competition-card overflow-hidden rounded-[1.75rem] p-4 sm:p-5">
-              <div className="relative overflow-hidden rounded-[1.35rem] border border-(--ash) bg-white/80">
+            <article key={winner.id} className="competition-card overflow-hidden rounded-[1.5rem]">
+              <div className="relative aspect-[4/3] w-full border-b border-(--ash)">
                 <div className="absolute right-3 top-3 z-10">
-                  <p className="competition-badge rounded-full px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white sm:text-[11px]">
+                  <p className="competition-badge rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white sm:text-[11px]">
                     {winner.year || "Year n/a"}
                   </p>
                 </div>
-                <div className="relative aspect-[4/3] w-full">
+                <div className="relative h-full w-full">
                   <Image
                     src={winner.picture}
                     alt={`${winner.name} - ${winner.competition}`}
@@ -103,33 +103,29 @@ export function CompetitionWinnersGrid() {
                 </div>
               </div>
 
-              <div className="grid gap-4 px-1 pb-1 pt-5">
-                <div>
-                  <h3 className="competition-card__title text-2xl font-semibold leading-tight text-(--ink) sm:text-[1.75rem]">
-                    {winner.name}
-                  </h3>
-                  <p className="mt-2 text-sm font-semibold uppercase tracking-[0.12em] text-(--rose)">
-                    {winner.position || "Outstanding Performance"}
-                  </p>
-                </div>
+              <div className="grid gap-1.5 p-2.5 sm:p-3">
+                <h3 className="competition-card__title text-center text-[1rem] font-semibold leading-tight text-(--ink)">{winner.name}</h3>
+                <dl className="grid gap-1.5 text-[12px] leading-5 sm:text-[12.5px]">
+                  <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
+                    <dt className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Competition ID:</dt>
+                    <dd className="text-right font-semibold text-(--ink)">{winner.competitionId || "-"}</dd>
+                  </div>
 
-                <div className="competition-card__meta rounded-2xl px-4 py-3.5">
-                  <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-(--stone)">Competition</p>
-                  <p className="mt-1 text-sm font-semibold leading-6 text-(--ink)">{winner.competition || "Competition"}</p>
-                </div>
+                  <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
+                    <dt className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Competition:</dt>
+                    <dd className="text-right font-semibold text-(--ink)">{winner.competition || "-"}</dd>
+                  </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {winner.ageCategory ? (
-                    <span className="competition-card__chip rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-(--stone)">
-                      {winner.ageCategory}
-                    </span>
-                  ) : null}
-                  {winner.competitionId ? (
-                    <span className="competition-card__chip rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-(--stone)">
-                      Candidate ID {winner.competitionId}
-                    </span>
-                  ) : null}
-                </div>
+                  <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
+                    <dt className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Age Category:</dt>
+                    <dd className="text-right font-semibold text-(--ink)">{winner.ageCategory || "-"}</dd>
+                  </div>
+
+                  <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
+                    <dt className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Position:</dt>
+                    <dd className="text-right font-semibold text-(--rose)">{winner.position || "-"}</dd>
+                  </div>
+                </dl>
               </div>
             </article>
           ))}

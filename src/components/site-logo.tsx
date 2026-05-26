@@ -14,7 +14,7 @@ export function SiteLogo({ compact = false }: SiteLogoProps) {
       {!compact ? (
         <div>
           <p className="font-serif text-[1.55rem] font-semibold leading-none tracking-[0.015em] text-(--ink)">SpiritualWoman</p>
-          <p className="mt-0.5 text-[0.64rem] font-bold uppercase tracking-[0.28em] text-(--rose)">Fellowship Collective</p>
+          <p className="mt-0.5 text-[0.64rem] font-bold uppercase tracking-[0.28em] text-(--rose)">Fellowship</p>
         </div>
       ) : null}
     </Link>
