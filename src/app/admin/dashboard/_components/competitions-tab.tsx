@@ -36,6 +36,7 @@ const ageCategoryOptions = [
   "11 -12 YEARS",
 ];
 const competitionOptions = ["SPELLING BEE", "BIBLE QUIZ"];
+const yearOptions = ["2025", "2026"];
 
 export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
   const [draft, setDraft] = useState<DraftWinner>(initialDraft);
@@ -185,7 +186,14 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
               </div>
               <div>
                 <label className={labelCls}>Year</label>
-                <input className={inputCls} value={draft.year} onChange={(event) => setField("year", event.target.value)} placeholder="e.g. 2024" />
+                <select className={inputCls} value={draft.year} onChange={(event) => setField("year", event.target.value)}>
+                  <option value="">Select year</option>
+                  {yearOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div>
