@@ -48,13 +48,13 @@ export function CompetitionWinnersGrid() {
 
   return (
     <div className="grid gap-7">
-      <div className="competition-filter rounded-[1.8rem] px-5 py-5 sm:px-6">
+      <div className="competition-filter rounded-[1.8rem] px-5 py-6 sm:px-7">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="grid gap-2">
             <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-(--rose)">Archive Overview</p>
-            <h2 className="text-2xl font-semibold text-(--ink) sm:text-3xl">Competition Hall of Fame</h2>
+            <h2 className="text-2xl font-semibold text-(--ink) sm:text-3xl">Competition Winners</h2>
             <p className="max-w-2xl text-sm leading-7 text-(--stone) sm:text-base">
-              Browse our winner profiles by year and revisit the performances that brought honour to the fellowship.
+              Browse every winner profile by year in a clean layout designed for clarity, consistency, and visual polish.
             </p>
           </div>
 
@@ -85,60 +85,51 @@ export function CompetitionWinnersGrid() {
       {filteredWinners.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredWinners.map((winner) => (
-            <article key={winner.id} className="competition-card rounded-[1.9rem] p-5 sm:p-6">
-              <div className="flex items-start justify-between gap-4">
+            <article key={winner.id} className="competition-card overflow-hidden rounded-[1.75rem] p-4 sm:p-5">
+              <div className="relative overflow-hidden rounded-[1.35rem] border border-(--ash) bg-white/80">
+                <div className="absolute right-3 top-3 z-10">
+                  <p className="competition-badge rounded-full px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white sm:text-[11px]">
+                    {winner.year || "Year n/a"}
+                  </p>
+                </div>
+                <div className="relative aspect-[4/3] w-full">
+                  <Image
+                    src={winner.picture}
+                    alt={`${winner.name} - ${winner.competition}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4 px-1 pb-1 pt-5">
                 <div>
-                  <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-(--stone)">Winner Profile</p>
-                  <p className="mt-2 text-sm font-semibold text-(--stone)">{winner.competition || "Competition"}</p>
-                </div>
-
-                <p className="competition-badge rounded-full px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white">
-                  {winner.year || "Year not set"}
-                </p>
-              </div>
-
-              <div className="flex justify-center px-2 pt-6">
-                <div className="competition-card__media-ring relative h-40 w-40 rounded-full p-2 sm:h-44 sm:w-44">
-                  <div className="relative h-full w-full overflow-hidden rounded-full border-[6px] border-white shadow-[0_18px_40px_-24px_rgba(31,24,34,0.65)]">
-                    <Image
-                      src={winner.picture}
-                      alt={`${winner.name} - ${winner.competition}`}
-                      fill
-                      sizes="(max-width: 640px) 160px, 176px"
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid gap-4 px-1 pb-1 pt-6">
-                <div className="text-center">
-                  <h3 className="competition-card__title text-3xl font-semibold text-(--ink)">{winner.name}</h3>
-                  <p className="mt-2 text-sm font-medium uppercase tracking-[0.14em] text-(--rose)">
+                  <h3 className="competition-card__title text-2xl font-semibold leading-tight text-(--ink) sm:text-[1.75rem]">
+                    {winner.name}
+                  </h3>
+                  <p className="mt-2 text-sm font-semibold uppercase tracking-[0.12em] text-(--rose)">
                     {winner.position || "Outstanding Performance"}
                   </p>
-                  <div className="mt-4 flex flex-wrap justify-center gap-2">
-                    <span className="competition-card__chip rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-(--stone)">
-                      {winner.ageCategory || "Age category n/a"}
-                    </span>
-                    <span className="competition-card__chip rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-(--stone)">
-                      ID {winner.competitionId}
-                    </span>
-                  </div>
                 </div>
 
-                <dl className="grid gap-3 text-sm">
-                  <div className="competition-card__meta flex items-start justify-between gap-3 rounded-2xl px-4 py-3">
-                    <dt className="font-semibold text-(--stone)">Competition</dt>
-                    <dd className="text-right font-medium text-(--ink)">{winner.competition}</dd>
-                  </div>
-                  <div className="competition-card__meta flex items-start justify-between gap-3 rounded-2xl px-4 py-3">
-                    <dt className="font-semibold text-(--stone)">Position</dt>
-                    <dd className="rounded-full bg-(--blush) px-3 py-1 text-right text-xs font-extrabold uppercase tracking-[0.12em] text-(--rose)">
-                      {winner.position || "-"}
-                    </dd>
-                  </div>
-                </dl>
+                <div className="competition-card__meta rounded-2xl px-4 py-3.5">
+                  <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-(--stone)">Competition</p>
+                  <p className="mt-1 text-sm font-semibold leading-6 text-(--ink)">{winner.competition || "Competition"}</p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {winner.ageCategory ? (
+                    <span className="competition-card__chip rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-(--stone)">
+                      {winner.ageCategory}
+                    </span>
+                  ) : null}
+                  {winner.competitionId ? (
+                    <span className="competition-card__chip rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-(--stone)">
+                      Candidate ID {winner.competitionId}
+                    </span>
+                  ) : null}
+                </div>
               </div>
             </article>
           ))}

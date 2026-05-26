@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { Suspense } from "react";
 import { TopLoadingBar } from "@/components/top-loading-bar";
 import "./globals.css";
 
-const displayFont = Cormorant_Garamond({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-});
-
-const bodyFont = Manrope({
+const robotoFont = Roboto({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "700", "900"],
 });
 
 export const metadata: Metadata = {
@@ -34,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}>
+    <html lang="en" className={`${robotoFont.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Suspense fallback={null}>
           <TopLoadingBar />
