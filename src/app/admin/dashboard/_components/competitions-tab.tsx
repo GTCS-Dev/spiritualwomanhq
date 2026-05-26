@@ -193,7 +193,7 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
     <div className="grid gap-8 lg:grid-cols-12">
       <form onSubmit={save} className="lg:col-span-5">
         <div className="rounded-2xl border border-(--ash) bg-white p-6">
-          <h2 className="mb-5 text-xl font-extrabold text-(--ink)">Add Competition Winner</h2>
+           <h2 className="mb-5 text-xl font-extrabold text-(--ink)">{editingId ? "Edit Competition Winner" : "Add Competition Winner"}</h2>
           <div className="grid gap-4">
             <div>
               <label className={labelCls}>Name</label>
