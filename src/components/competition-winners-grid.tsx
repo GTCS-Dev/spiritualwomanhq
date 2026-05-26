@@ -54,7 +54,7 @@ export function CompetitionWinnersGrid() {
             <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-(--rose)">Archive Overview</p>
             <h2 className="text-2xl font-semibold text-(--ink) sm:text-3xl">Competition Winners</h2>
             <p className="max-w-2xl text-sm leading-7 text-(--stone) sm:text-base">
-              Browse every winner profile by year in a clean layout designed for clarity, consistency, and visual polish.
+              Explore our winners archive by year in a structured presentation that highlights each achievement with clarity, dignity, and professionalism.
             </p>
           </div>
 
