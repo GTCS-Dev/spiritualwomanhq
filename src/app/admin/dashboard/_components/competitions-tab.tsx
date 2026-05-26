@@ -73,11 +73,6 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
 
   function validate() {
     if (draft.name.trim().length < 2) return "Winner name is required.";
-    if (draft.competitionId.trim().length < 2) return "Competition ID is required.";
-    if (draft.competition.trim().length < 2) return "Competition name is required.";
-    if (draft.ageCategory.trim().length < 2) return "Age category is required.";
-    if (draft.position.trim().length < 2) return "Position is required.";
-    if (draft.year.trim().length < 4) return "Year is required.";
     return null;
   }
 
