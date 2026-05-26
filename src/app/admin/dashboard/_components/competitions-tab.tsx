@@ -35,6 +35,7 @@ const ageCategoryOptions = [
   "11-13 YEARS",
   "11 -12 YEARS",
 ];
+const competitionOptions = ["SPELLING BEE", "BIBLE QUIZ"];
 
 export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
   const [draft, setDraft] = useState<DraftWinner>(initialDraft);
@@ -189,7 +190,14 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
             </div>
             <div>
               <label className={labelCls}>Competition</label>
-              <input className={inputCls} value={draft.competition} onChange={(event) => setField("competition", event.target.value)} placeholder="e.g. Spelling Bee" />
+              <select className={inputCls} value={draft.competition} onChange={(event) => setField("competition", event.target.value)}>
+                <option value="">Select competition</option>
+                {competitionOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
