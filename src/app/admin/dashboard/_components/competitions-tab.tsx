@@ -43,6 +43,7 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
   const [winners, setWinners] = useState<CompetitionWinner[]>(defaultCompetitionWinners);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const fetchWinners = useCallback(async () => {
     try {
@@ -107,8 +108,11 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
     try {
       const pictureUrl = imageFile ? await uploadFile(imageFile) : draft.picture.trim() || blogCoverImages[0];
 
-      const response = await fetch(`${apiUrl}/competitions`, {
-        method: "POST",
+      const method = editingId ? "PATCH" : "POST";
+      const endpoint = editingId ? `${apiUrl}/competitions/${editingId}` : `${apiUrl}/competitions`;
+
+      const response = await fetch(endpoint, {
+        method,
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           name: draft.name.trim(),
@@ -127,19 +131,40 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
           return;
         }
 
-        onStatus(await parseApiError(response, "Saving competition winner failed."));
+        onStatus(await parseApiError(response, editingId ? "Updating competition winner failed." : "Saving competition winner failed."));
         return;
       }
 
       setDraft(initialDraft);
       setImageFile(null);
-      onStatus("Competition winner saved.");
+      setEditingId(null);
+      onStatus(editingId ? "Competition winner updated." : "Competition winner saved.");
       await fetchWinners();
     } catch (error) {
       onStatus(error instanceof Error ? error.message : "Network error.");
     } finally {
       setSaving(false);
     }
+  }
+
+  function startEdit(winner: CompetitionWinner) {
+    setDraft({
+      name: winner.name,
+      competitionId: winner.competitionId,
+      competition: winner.competition,
+      ageCategory: winner.ageCategory,
+      position: winner.position,
+      picture: winner.picture,
+      year: winner.year,
+    });
+    setEditingId(winner.id);
+    setImageFile(null);
+  }
+
+  function cancelEdit() {
+    setDraft(initialDraft);
+    setImageFile(null);
+    setEditingId(null);
   }
 
   async function removeWinner(id: string) {
@@ -241,8 +266,13 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
               <p className="mt-1 text-xs text-(--stone)">Upload sends image to Cloudinary and stores returned URL in database.</p>
             </div>
             <button type="submit" disabled={saving} className="rounded-full bg-(--rose) px-6 py-2.5 font-bold text-white hover:bg-(--rose-dark) disabled:opacity-65">
-              {saving ? "Saving..." : "Save Winner"}
+              {saving ? "Saving..." : editingId ? "Update Winner" : "Save Winner"}
             </button>
+            {editingId && (
+              <button type="button" onClick={cancelEdit} className="rounded-full border border-(--ash) px-6 py-2.5 font-bold text-(--ink) hover:bg-(--blush)">
+                Cancel
+              </button>
+            )}
           </div>
         </div>
       </form>
@@ -264,13 +294,22 @@ export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabPro
                       <p className="text-sm text-(--stone)">{winner.competition} ({winner.competitionId})</p>
                       <p className="text-sm text-(--stone)">{winner.ageCategory} • {winner.position}</p>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => removeWinner(winner.id)}
-                      className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50"
-                    >
-                      <Trash2 size={12} />
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => startEdit(winner)}
+                        className="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-600 hover:bg-blue-50"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeWinner(winner.id)}
+                        className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </article>
