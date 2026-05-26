@@ -1,3 +1,4 @@
+import { blogCoverImages } from "@/lib/site-images";
 import { CompetitionWinner } from "@/types/competition-winner";
 
 export const COMPETITION_WINNERS_STORAGE_KEY = "sw_competition_winners_v1";
