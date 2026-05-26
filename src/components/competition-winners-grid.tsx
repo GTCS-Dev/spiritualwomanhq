@@ -96,16 +96,16 @@ export function CompetitionWinnersGrid() {
       </div>
 
       {filteredWinners.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 justify-items-center gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {filteredWinners.map((winner) => (
-            <article key={winner.id} className="competition-card relative overflow-hidden rounded-3xl">
+            <article key={winner.id} className="competition-card relative w-full max-w-full overflow-hidden rounded-3xl">
               <div className="absolute right-3 top-3 z-20">
                 <p className="competition-badge rounded-full border border-white/25 bg-(--ink)/85 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-white shadow-sm backdrop-blur-sm sm:text-[10px]">
                   {winner.year || "Year n/a"}
                 </p>
               </div>
-              <div className="flex items-center justify-center border-b border-(--ash) bg-white px-4 py-4 sm:px-6 sm:py-6">
-                <div className="relative aspect-square h-55 w-55 overflow-hidden rounded-full border-4 border-(--ash) bg-white sm:h-72 sm:w-72">
+              <div className="flex items-center justify-center border-b border-(--ash) bg-white px-2 py-3 sm:px-6 sm:py-6">
+                <div className="relative aspect-square h-28 w-28 overflow-hidden rounded-full border-4 border-(--ash) bg-white sm:h-72 sm:w-72">
                   <div className="relative h-full w-full overflow-hidden rounded-full">
                     <Image
                       src={winner.picture}
@@ -118,27 +118,27 @@ export function CompetitionWinnersGrid() {
                 </div>
               </div>
 
-              <div className="grid gap-1.5 p-2.5 sm:p-3">
-                <h3 className="competition-card__title text-center text-[1rem] font-semibold uppercase leading-tight text-(--ink)">{winner.name}</h3>
-                <dl className="grid gap-1.5 text-[11px] leading-5 sm:text-[11.5px]">
+              <div className="grid gap-1 p-2 sm:gap-1.5 sm:p-3">
+                <h3 className="competition-card__title text-center text-[0.72rem] font-semibold uppercase leading-tight text-(--ink) sm:text-[1rem]">{winner.name}</h3>
+                <dl className="grid gap-1 text-[9px] leading-4 sm:gap-1.5 sm:text-[11.5px] sm:leading-5">
                   <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
-                    <dt className="text-[8px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Competition ID:</dt>
-                    <dd className="text-right text-[11px] font-semibold uppercase text-(--ink)">{toUpperDisplay(winner.competitionId)}</dd>
+                    <dt className="text-[6px] font-extrabold uppercase tracking-[0.08em] text-(--stone) sm:text-[8px] sm:tracking-[0.12em]">Competition ID:</dt>
+                    <dd className="text-right text-[8px] font-semibold uppercase text-(--ink) sm:text-[11px]">{toUpperDisplay(winner.competitionId)}</dd>
                   </div>
 
                   <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
-                    <dt className="text-[8px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Competition:</dt>
-                    <dd className="text-right text-[11px] font-semibold uppercase text-(--ink)">{toUpperDisplay(winner.competition)}</dd>
+                    <dt className="text-[6px] font-extrabold uppercase tracking-[0.08em] text-(--stone) sm:text-[8px] sm:tracking-[0.12em]">Competition:</dt>
+                    <dd className="text-right text-[8px] font-semibold uppercase text-(--ink) sm:text-[11px]">{toUpperDisplay(winner.competition)}</dd>
                   </div>
 
                   <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
-                    <dt className="text-[8px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Age Category:</dt>
-                    <dd className="text-right text-[11px] font-semibold uppercase text-(--ink)">{toUpperDisplay(winner.ageCategory)}</dd>
+                    <dt className="text-[6px] font-extrabold uppercase tracking-[0.08em] text-(--stone) sm:text-[8px] sm:tracking-[0.12em]">Age Category:</dt>
+                    <dd className="text-right text-[8px] font-semibold uppercase text-(--ink) sm:text-[11px]">{toUpperDisplay(winner.ageCategory)}</dd>
                   </div>
 
                   <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
-                    <dt className="text-[8px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Position:</dt>
-                    <dd className="text-right text-[11px] font-semibold uppercase text-(--rose)">{toUpperDisplay(winner.position)}</dd>
+                    <dt className="text-[6px] font-extrabold uppercase tracking-[0.08em] text-(--stone) sm:text-[8px] sm:tracking-[0.12em]">Position:</dt>
+                    <dd className="text-right text-[8px] font-semibold uppercase text-(--rose) sm:text-[11px]">{toUpperDisplay(winner.position)}</dd>
                   </div>
                 </dl>
               </div>
