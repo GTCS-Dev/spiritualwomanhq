@@ -9,6 +9,7 @@ export default function CompetitionsPage() {
       subtitle="Winners Archive"
       description="A refined showcase of our young champions, organized by year and designed to spotlight each achievement with clarity and pride."
       image={pageHeroImages.competitions}
+      
     >
       <CompetitionWinnersGrid />
     </ContentPageShell>
