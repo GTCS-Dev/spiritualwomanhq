@@ -2,7 +2,6 @@
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { Trash2 } from "lucide-react";
-import { defaultCompetitionWinners } from "@/lib/competition-winners";
 import { blogCoverImages } from "@/lib/site-images";
 import { CompetitionWinner } from "@/types/competition-winner";
 import { AdminTabProps, apiUrl, parseApiError } from "./shared";
@@ -40,7 +39,7 @@ const yearOptions = ["2025", "2026"];
 
 export function CompetitionsTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
   const [draft, setDraft] = useState<DraftWinner>(initialDraft);
-  const [winners, setWinners] = useState<CompetitionWinner[]>(defaultCompetitionWinners);
+  const [winners, setWinners] = useState<CompetitionWinner[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);

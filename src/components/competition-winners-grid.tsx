@@ -2,16 +2,29 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { defaultCompetitionWinners } from "@/lib/competition-winners";
 import { getApiBaseUrl } from "@/lib/api-base-url";
 import { CompetitionWinner } from "@/types/competition-winner";
 
 function sortByNewest(entries: CompetitionWinner[]) {
-  return [...entries].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  return [...entries].sort((a, b) => {
+    const yearA = Number.parseInt(a.year ?? "0", 10);
+    const yearB = Number.parseInt(b.year ?? "0", 10);
+
+    if (yearA !== yearB) {
+      return yearB - yearA;
+    }
+
+    return b.createdAt.localeCompare(a.createdAt);
+  });
+}
+
+function toUpperDisplay(value?: string) {
+  const safeValue = value?.trim();
+  return safeValue ? safeValue.toUpperCase() : "-";
 }
 
 export function CompetitionWinnersGrid() {
-  const [winners, setWinners] = useState<CompetitionWinner[]>(defaultCompetitionWinners);
+  const [winners, setWinners] = useState<CompetitionWinner[]>([]);
   const [yearFilter, setYearFilter] = useState<string>("all");
 
   useEffect(() => {
@@ -25,10 +38,10 @@ export function CompetitionWinnersGrid() {
           setWinners(sortByNewest(data));
           return;
         }
-        setWinners(defaultCompetitionWinners);
+        setWinners([]);
       })
       .catch(() => {
-        setWinners(defaultCompetitionWinners);
+        setWinners([]);
       });
 
     return () => controller.abort();
@@ -83,47 +96,49 @@ export function CompetitionWinnersGrid() {
       </div>
 
       {filteredWinners.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filteredWinners.map((winner) => (
-            <article key={winner.id} className="competition-card overflow-hidden rounded-[1.5rem]">
-              <div className="relative aspect-[4/3] w-full border-b border-(--ash)">
-                <div className="absolute right-3 top-3 z-10">
-                  <p className="competition-badge rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white sm:text-[11px]">
-                    {winner.year || "Year n/a"}
-                  </p>
-                </div>
-                <div className="relative h-full w-full">
-                  <Image
-                    src={winner.picture}
-                    alt={`${winner.name} - ${winner.competition}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover"
-                  />
+            <article key={winner.id} className="competition-card relative overflow-hidden rounded-3xl">
+              <div className="absolute right-3 top-3 z-20">
+                <p className="competition-badge rounded-full border border-white/25 bg-(--ink)/85 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-white shadow-sm backdrop-blur-sm sm:text-[10px]">
+                  {winner.year || "Year n/a"}
+                </p>
+              </div>
+              <div className="flex items-center justify-center border-b border-(--ash) bg-white px-4 py-4 sm:px-6 sm:py-6">
+                <div className="relative aspect-square h-55 w-55 overflow-hidden rounded-full border-4 border-(--ash) bg-white sm:h-72 sm:w-72">
+                  <div className="relative h-full w-full overflow-hidden rounded-full">
+                    <Image
+                      src={winner.picture}
+                      alt={`${winner.name} - ${winner.competition}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 320px"
+                      className="object-contain object-center"
+                    />
+                  </div>
                 </div>
               </div>
 
               <div className="grid gap-1.5 p-2.5 sm:p-3">
-                <h3 className="competition-card__title text-center text-[1rem] font-semibold leading-tight text-(--ink)">{winner.name}</h3>
-                <dl className="grid gap-1.5 text-[12px] leading-5 sm:text-[12.5px]">
+                <h3 className="competition-card__title text-center text-[1rem] font-semibold uppercase leading-tight text-(--ink)">{winner.name}</h3>
+                <dl className="grid gap-1.5 text-[11px] leading-5 sm:text-[11.5px]">
                   <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
-                    <dt className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Competition ID:</dt>
-                    <dd className="text-right font-semibold text-(--ink)">{winner.competitionId || "-"}</dd>
+                    <dt className="text-[8px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Competition ID:</dt>
+                    <dd className="text-right text-[11px] font-semibold uppercase text-(--ink)">{toUpperDisplay(winner.competitionId)}</dd>
                   </div>
 
                   <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
-                    <dt className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Competition:</dt>
-                    <dd className="text-right font-semibold text-(--ink)">{winner.competition || "-"}</dd>
+                    <dt className="text-[8px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Competition:</dt>
+                    <dd className="text-right text-[11px] font-semibold uppercase text-(--ink)">{toUpperDisplay(winner.competition)}</dd>
                   </div>
 
                   <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
-                    <dt className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Age Category:</dt>
-                    <dd className="text-right font-semibold text-(--ink)">{winner.ageCategory || "-"}</dd>
+                    <dt className="text-[8px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Age Category:</dt>
+                    <dd className="text-right text-[11px] font-semibold uppercase text-(--ink)">{toUpperDisplay(winner.ageCategory)}</dd>
                   </div>
 
                   <div className="competition-card__meta flex items-start justify-between gap-3 rounded-lg px-2.5 py-1">
-                    <dt className="text-[9px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Position:</dt>
-                    <dd className="text-right font-semibold text-(--rose)">{winner.position || "-"}</dd>
+                    <dt className="text-[8px] font-extrabold uppercase tracking-[0.12em] text-(--stone)">Position:</dt>
+                    <dd className="text-right text-[11px] font-semibold uppercase text-(--rose)">{toUpperDisplay(winner.position)}</dd>
                   </div>
                 </dl>
               </div>
