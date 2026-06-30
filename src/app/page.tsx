@@ -8,7 +8,6 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { HeroSlider } from "@/components/hero-slider";
 import { SiteFooter } from "@/components/site-footer";
-import { ministryGalleryImages } from "@/lib/site-images";
 import { getApiBaseUrl } from "@/lib/api-base-url";
 import { BlogPost } from "@/types/blog";
 
@@ -33,9 +32,21 @@ type Testimonial = {
 };
 
 const highlights = [
-  { icon: HeartHandshake, title: "Women Fellowship", text: "Weekly circle for prayer, mentoring, and real life support." },
-  { icon: Mic2, title: "Sunday Messages", text: "Strong Bible-centered teachings for growth and clarity." },
-  { icon: CalendarDays, title: "Events & Retreats", text: "Monthly gatherings, worship nights, and outreach projects." },
+  {
+    icon: HeartHandshake,
+    title: "Women's Fellowship",
+    text: "Join our weekly community of Christian women for prayer, mentorship, spiritual growth, and real-life support. Build meaningful relationships while growing deeper in faith and purpose.",
+  },
+  {
+    icon: Mic2,
+    title: "Sunday Messages",
+    text: "Access powerful Bible-centered teachings designed to strengthen your faith, provide spiritual clarity, and equip you for victorious Christian living.",
+  },
+  {
+    icon: CalendarDays,
+    title: "Events & Prayer Retreats",
+    text: "Experience transformative gatherings through our weekly and monthly events, prayer meetings, fasting retreats, and community programs that inspire faith and foster connection.",
+  },
 ];
 
 const stats = [
@@ -47,18 +58,27 @@ const stats = [
 
 const baseApiUrl = getApiBaseUrl();
 
-const quickLinks = [
-  { href: "/watch", title: "Watch", text: "Live worship services and on-demand encouragement messages." },
-  { href: "/visit", title: "Visit", text: "Plan your first visit and see service times before you arrive." },
-  { href: "/connect", title: "Connect", text: "Join groups, serve in ministry, and stay spiritually supported." },
-  { href: "/about", title: "About", text: "Learn our mission, beliefs, and community vision." },
-];
-
 const fallbackVerse = {
   text: "She is clothed with strength and dignity, and she laughs without fear of the future.",
   reference: "Proverbs 31:25",
   period: "week",
 };
+
+const bibleVersesForGrowth = [
+  { text: "But grow in the grace and knowledge of our Lord and Savior Jesus Christ. To him be glory both now and forever! Amen.", reference: "2 Peter 3:18" },
+  { text: "So then, just as you received Christ Jesus as Lord, continue to live your lives in him, rooted and built up in him, strengthened in the faith as you were taught, and overflowing with thankfulness.", reference: "Colossians 2:6-7" },
+  { text: "Keep this Book of the Law always on your lips; meditate on it day and night, so that you may be careful to do everything written in it. Then you will be prosperous and successful.", reference: "Joshua 1:8" },
+  { text: "But solid food is for the mature, who by constant use have trained themselves to distinguish good from evil.", reference: "Hebrews 5:14" },
+  { text: "Instead, speaking the truth in love, we will grow to become in every respect the mature body of him who is the head, that is, Christ.", reference: "Ephesians 4:15" },
+];
+
+const bibleVersesForWomen = [
+  { text: "She is clothed with strength and dignity; she can laugh at the days to come.", reference: "Proverbs 31:25" },
+  { text: "Charm is deceptive, and beauty is fleeting; but a woman who fears the Lord is to be praised.", reference: "Proverbs 31:30" },
+  { text: "Blessed is she who has believed that the Lord would fulfill his promises to her!", reference: "Luke 1:45" },
+  { text: "God is within her, she will not fall; God will help her at break of day.", reference: "Psalm 46:5" },
+  { text: "And who knows but that you have come to your royal position for such a time as this?", reference: "Esther 4:14" },
+];
 
 function buildApiCandidates(path: string) {
   const trimmedBase = baseApiUrl.replace(/\/+$/, "");
@@ -142,16 +162,16 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── INTRO + QUICK LINKS ── editorial split */}
+        {/* ── INTRO ── condensed paragraph + image */}
         <section className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Welcome</p>
               <h2 className="mt-3 text-5xl font-semibold leading-[1.12] text-(--ink)">
-                A Place Built<br />For Women<br />Of Faith.
+                Empowering Women<br />To Grow In Faith<br />And Purpose.
               </h2>
-              <p className="mt-5 max-w-md text-base leading-8 text-(--stone)">
-                SpiritualWoman Fellowship is a safe, empowering community where women grow in faith, connect with purpose, and serve with strength.
+              <p className="mt-5 text-base leading-8 text-(--stone)">
+                Welcome to The Spiritual Woman, a faith-based platform dedicated to helping Christian women deepen their relationship with God, discover their purpose, and live a life rooted in biblical truth. Through inspiring devotionals, practical biblical teachings, prayer resources, and uplifting articles, we empower women to navigate life&rsquo;s challenges with faith, wisdom, and confidence. Whether you are seeking spiritual growth, Christian encouragement, or a supportive community of women of faith, you have found a place where your spiritual journey matters. Join us as we explore God&rsquo;s Word, strengthen our faith, and embrace the calling He has placed on our lives.
               </p>
               <Link
                 href="/about"
@@ -160,59 +180,65 @@ export default function Home() {
                 Learn our story →
               </Link>
             </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {quickLinks.map((item, index) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`group flex flex-col justify-between rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5 ${
-                    index === 1
-                      ? "bg-(--rose) text-white"
-                      : index === 3
-                        ? "border border-(--ash) bg-(--ink) text-white"
-                        : "border border-(--ash) bg-white"
-                  }`}
-                >
-                  <p className={`text-sm font-bold uppercase tracking-[0.2em] ${index === 1 || index === 3 ? "text-white/70" : "text-(--rose)"}`}>
-                    {item.title}
-                  </p>
-                  <p className={`mt-3 text-sm leading-6 ${index === 1 || index === 3 ? "text-white/85" : "text-(--stone)"}`}>
-                    {item.text}
-                  </p>
-                  <span className={`mt-4 text-xs font-bold uppercase tracking-[0.18em] ${index === 1 || index === 3 ? "text-white/90" : "text-(--rose)"}`}>
-                    Go →
-                  </span>
-                </Link>
-              ))}
+            <div className="relative overflow-hidden rounded-3xl">
+              <Image
+                src="/new/shallow-focus-shot-white-female-reading-bible-bright-rays-sun.jpg"
+                alt="Woman reading Bible in sunlight"
+                width={600}
+                height={500}
+                className="h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
             </div>
           </div>
         </section>
 
-        {/* ── HIGHLIGHTS ── horizontal list, no duplicate cards */}
+        {/* ── HIGHLIGHTS ── enhanced professional card styling */}
         <section id="about" className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="divide-y divide-(--ash) rounded-3xl border border-(--ash) bg-white">
+          <div className="mb-8 text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Our Ministries</p>
+            <h2 className="mt-3 text-4xl font-semibold text-(--ink)">
+              Grow In Faith & Community
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-(--stone)">
+              Discover meaningful ways to deepen your spiritual walk, connect with like-minded sisters, and experience God&rsquo;s love through community.
+            </p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
             {highlights.map((item, index) => {
               const Icon = item.icon;
               return (
                 <motion.div
                   key={item.title}
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1, duration: 0.4 }}
-                  className="flex items-start gap-6 px-6 py-7 sm:items-center sm:px-8"
+                  className={`group rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 ${
+                    index === 1
+                      ? "bg-(--rose) text-white"
+                      : "border border-(--ash) bg-white hover:shadow-lg"
+                  }`}
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-(--blush) text-(--rose)">
-                    <Icon size={22} />
+                  <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${
+                    index === 1 ? "bg-white/20" : "bg-(--blush)"
+                  }`}>
+                    <Icon size={24} className={index === 1 ? "text-white" : "text-(--rose)"} />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-(--ink)">{item.title}</h3>
-                    <p className="mt-1 text-sm leading-7 text-(--stone)">{item.text}</p>
-                  </div>
-                  <span className="hidden shrink-0 text-2xl font-light text-(--ash) sm:block">
+                  <h3 className={`mt-5 text-xl font-bold ${
+                    index === 1 ? "text-white" : "text-(--ink)"
+                  }`}>{item.title}</h3>
+                  <p className={`mt-2 text-sm leading-7 ${
+                    index === 1 ? "text-white/85" : "text-(--stone)"
+                  }`}>{item.text}</p>
+                  {index !== 1 && (
+                    <div className="mt-5 h-1 w-10 rounded-full bg-(--rose)/20" />
+                  )}
+                  <p className={`mt-4 text-[0.65rem] font-bold uppercase tracking-[0.18em] ${
+                    index === 1 ? "text-white/70" : "text-(--rose)"
+                  }`}>
                     0{index + 1}
-                  </span>
+                  </p>
                 </motion.div>
               );
             })}
@@ -258,15 +284,15 @@ export default function Home() {
             <div className="grid gap-0 md:grid-cols-2">
               {/* Left: text */}
               <div className="px-8 py-12 sm:px-12">
-                <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Fellowship Rhythm</p>
+                <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Meeting Times</p>
                 <h2 className="mt-4 text-4xl font-semibold leading-tight text-white">
-                  Build a Consistent Faith Routine
+                  Join Us In Prayer & Study
                 </h2>
                 <p className="mt-5 text-sm leading-8 text-white/70">
-                  Join a weekly rhythm of worship, study, and prayer that keeps your spiritual growth grounded and intentional.
+                  Dedicate time each day to seek God&rsquo;s presence through prayer, worship, Bible study, and spiritual encouragement. Strengthen your faith and grow deeper in your walk with Christ.
                 </p>
                 <Link
-                  href="/connect"
+                  href="/contact"
                   className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
                 >
                   Join a group →
@@ -276,11 +302,11 @@ export default function Home() {
               {/* Right: schedule cards */}
               <div className="flex flex-col justify-center gap-3 border-t border-white/10 px-8 py-12 sm:px-10 md:border-l md:border-t-0">
                 {[
-                  { day: "Tuesday", time: "6:30 PM", label: "Online Bible Study" },
-                  { day: "Saturday", time: "7:00 AM", label: "Prayer & Accountability" },
-                  { day: "Sunday", time: "9:30 AM", label: "Live Worship Service" },
+                  { day: "Monday – Friday", time: "12:00 PM (WAT)", label: "Prayer Meeting" },
+                  { day: "Monday – Friday", time: "10:00 PM (WAT)", label: "Daily Intercession & Word" },
+                  { day: "Saturday", time: "6:00 AM (WAT)", label: "Weekend Charge" },
                 ].map((item) => (
-                  <div key={item.day} className="flex items-center gap-4 rounded-xl border border-white/10 bg-white/8 px-5 py-4">
+                  <div key={item.label} className="flex items-center gap-4 rounded-xl border border-white/10 bg-white/8 px-5 py-4">
                     <div className="h-2 w-2 shrink-0 rounded-full bg-(--rose)" />
                     <div className="flex-1">
                       <p className="text-sm font-bold text-white">{item.label}</p>
@@ -290,6 +316,78 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ── 5 BIBLE VERSES FOR SPIRITUAL GROWTH ── enhanced styling */}
+        <section className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 text-center">
+            <BookOpen className="mx-auto text-(--rose)" size={28} />
+            <p className="mt-3 text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Scripture</p>
+            <h2 className="mt-3 text-4xl font-semibold text-(--ink)">
+              5 Bible Verses for Spiritual Growth
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-(--stone)">
+              Meditate on these powerful scriptures to deepen your faith and draw closer to God.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {bibleVersesForGrowth.map((v, index) => (
+              <motion.div
+                key={v.reference}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08, duration: 0.35 }}
+                className={`group rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
+                  index === 2
+                    ? "bg-(--rose) text-white"
+                    : "border border-(--ash) bg-white"
+                }`}
+              >
+                <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold ${
+                  index === 2 ? "bg-white/20 text-white" : "bg-(--blush) text-(--rose)"
+                }`}>
+                  {index + 1}
+                </div>
+                <p className={`text-[0.65rem] font-bold uppercase tracking-[0.18em] ${
+                  index === 2 ? "text-white/70" : "text-(--rose)"
+                }`}>{v.reference}</p>
+                <p className={`mt-2 text-sm leading-7 italic ${
+                  index === 2 ? "text-white/90" : "text-(--stone)"
+                }`}>
+                  &ldquo;{v.text}&rdquo;
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 5 BIBLE VERSES FOR WOMEN ── */}
+        <section className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 text-center">
+            <HeartHandshake className="mx-auto text-(--rose)" size={28} />
+            <p className="mt-3 text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Scripture</p>
+            <h2 className="mt-3 text-4xl font-semibold text-(--ink)">
+              5 Bible Verses for Women
+            </h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {bibleVersesForWomen.map((v, index) => (
+              <motion.div
+                key={v.reference}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08, duration: 0.35 }}
+                className={`rounded-2xl px-5 py-6 ${index === 1 ? "bg-(--rose) text-white" : "border border-(--ash) bg-white"}`}
+              >
+                <p className={`text-[0.65rem] font-bold uppercase tracking-[0.18em] ${index === 1 ? "text-white/70" : "text-(--rose)"}`}>{v.reference}</p>
+                <p className={`mt-2 text-sm leading-7 italic ${index === 1 ? "text-white/90" : "text-(--stone)"}`}>
+                  &ldquo;{v.text}&rdquo;
+                </p>
+              </motion.div>
+            ))}
           </div>
         </section>
 
@@ -328,38 +426,6 @@ export default function Home() {
             </div>
           </section>
         )}
-
-        {/* ── GALLERY ── full bleed, no text below images */}
-        <section className="mt-20" aria-label="Ministry gallery">
-          <div className="mx-auto mb-8 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-            <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Ministry Life</p>
-            <h2 className="mt-3 text-4xl font-semibold text-(--ink)">Moments From Our Community</h2>
-          </div>
-          <div className="mx-auto grid w-full max-w-6xl gap-3 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
-            {ministryGalleryImages.map((image, index) => (
-              <motion.div
-                key={image}
-                initial={{ opacity: 0, scale: 0.97 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: index * 0.1, duration: 0.45 }}
-                className={`group overflow-hidden rounded-2xl ${index === 1 ? "lg:row-span-1 lg:mt-6" : ""}`}
-              >
-                <div className="relative overflow-hidden">
-                  <Image
-                    src={image}
-                    alt="SpiritualWoman community moment"
-                    width={650}
-                    height={400}
-                    className={`w-full object-cover transition-transform duration-500 group-hover:scale-105 ${index === 1 ? "h-64" : "h-56"}`}
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
-                  <p className="absolute bottom-4 left-5 text-sm font-bold text-white">Faith Story {index + 1}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
 
         {/* ── BLOG ── list layout, not card grid */}
         <section id="blog" className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -411,7 +477,7 @@ export default function Home() {
           <div className="flex flex-col items-center rounded-3xl border border-(--rose)/25 bg-(--blush) px-8 py-10 text-center sm:px-14 sm:py-12">
             <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Join Us</p>
             <h2 className="mt-4 max-w-xl text-4xl font-semibold text-(--ink)">
-              Let&apos;s Walk This Journey Together
+              Let&rsquo;s Walk This Journey Together
             </h2>
             <p className="mx-auto mt-5 max-w-lg text-sm leading-8 text-(--stone)">
               Join a growing community of women committed to faith, purpose, and transformation through Christ.
@@ -423,12 +489,6 @@ export default function Home() {
               >
                 Contact Fellowship Team
               </Link>
-              <a
-                href="mailto:hello@spiritualwoman.org"
-                className="rounded-full border border-(--rose)/40 px-8 py-3 font-bold text-(--rose) hover:bg-white"
-              >
-                Email Directly
-              </a>
             </div>
           </div>
         </section>

@@ -7,33 +7,6 @@ import { pageHeroImages } from "@/lib/site-images";
 
 const baseApiUrl = getApiBaseUrl();
 
-const contactChannels = [
-  {
-    title: "General Inquiries",
-    detail: "hello@spiritualwoman.org",
-    cta: "mailto:hello@spiritualwoman.org",
-    label: "Send Email",
-  },
-  {
-    title: "Prayer Requests",
-    detail: "prayer@spiritualwoman.org",
-    cta: "mailto:prayer@spiritualwoman.org",
-    label: "Request Prayer",
-  },
-  {
-    title: "Events And Outreach",
-    detail: "events@spiritualwoman.org",
-    cta: "mailto:events@spiritualwoman.org",
-    label: "Contact Team",
-  },
-  {
-    title: "Call Or WhatsApp",
-    detail: "+1 (240) 555-0187",
-    cta: "tel:+12405550187",
-    label: "Call Now",
-  },
-];
-
 type ContactFormState = {
   name: string;
   email: string;
@@ -211,50 +184,6 @@ export default function ContactPage() {
       description="Reach out for prayer, support, events, and fellowship information. We would love to hear your story and walk with you in faith."
       image={pageHeroImages.contact}
     >
-      <div className="grid gap-5 md:grid-cols-2">
-        {contactChannels.map((channel, index) => (
-          <article
-            key={channel.title}
-            className={`home-accent-card elevated rounded-2xl border border-(--ash) bg-white px-6 py-6 transition duration-300 hover:-translate-y-1 hover:border-(--rose)/40 ${
-              index === 1 ? "ink-rose-card" : ""
-            }`}
-          >
-            <p className={`text-xs font-bold uppercase tracking-[0.2em] ${index === 1 ? "ink-rose-title" : "text-(--rose)"}`}>
-              {channel.title}
-            </p>
-            <p className={`mt-3 text-lg font-bold ${index === 1 ? "text-white" : "text-(--ink)"}`}>{channel.detail}</p>
-            <a
-              href={channel.cta}
-              className={`mt-5 inline-block rounded-full border px-4 py-2 text-sm font-bold transition-colors ${
-                index === 1
-                  ? "border-white/35 text-white hover:border-(--rose)/65 hover:text-(--rose)"
-                  : "border-(--ash) text-(--ink) hover:border-(--rose)/40 hover:text-(--rose)"
-              }`}
-            >
-              {channel.label}
-            </a>
-          </article>
-        ))}
-      </div>
-
-      <section className="home-accent-card mt-8 rounded-2xl border border-(--ash) bg-white px-6 py-7">
-        <h2 className="text-2xl font-bold text-(--ink)">Office And Gathering Details</h2>
-        <div className="mt-4 grid gap-3 text-sm leading-7 text-(--stone) sm:grid-cols-2">
-          <p>
-            <span className="font-bold text-(--ink)">Address:</span> 1204 Hope Lane, Silver Spring, MD 20901
-          </p>
-          <p>
-            <span className="font-bold text-(--ink)">Response Time:</span> Within 24 hours for all inquiries
-          </p>
-          <p>
-            <span className="font-bold text-(--ink)">Prayer Line:</span> Saturday at 7:00 AM EST
-          </p>
-          <p>
-            <span className="font-bold text-(--ink)">Service Day:</span> Sunday at 9:30 AM EST
-          </p>
-        </div>
-      </section>
-
       <section className="mt-8 rounded-2xl border border-(--ash) bg-white px-6 py-7">
         <h2 className="text-2xl font-bold text-(--ink)">Send Us A Message</h2>
         <p className="mt-2 text-sm leading-7 text-(--stone)">

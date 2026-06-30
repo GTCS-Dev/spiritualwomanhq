@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Mail, Send } from "lucide-react";
 import { SiteLogo } from "@/components/site-logo";
 
 export function SiteFooter() {
@@ -24,29 +23,6 @@ export function SiteFooter() {
           <p className="mt-5 text-sm leading-7 text-(--stone)">
             Building women of faith through worship, teaching, mentoring, and purpose-driven community impact across every season of life.
           </p>
-          <div className="mt-6 flex items-center gap-3">
-            <a
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-(--ash) text-(--stone) transition-colors hover:border-(--rose) hover:text-(--rose)"
-              href="mailto:hello@spiritualwoman.org"
-              aria-label="Email us"
-            >
-              <Mail size={15} />
-            </a>
-            <a
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-(--ash) text-(--stone) transition-colors hover:border-(--rose) hover:text-(--rose)"
-              href="mailto:prayer@spiritualwoman.org"
-              aria-label="Prayer requests"
-            >
-              <Heart size={15} />
-            </a>
-            <a
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-(--ash) text-(--stone) transition-colors hover:border-(--rose) hover:text-(--rose)"
-              href="/contact"
-              aria-label="Contact page"
-            >
-              <Send size={15} />
-            </a>
-          </div>
         </div>
 
         {/* Service Hours */}
@@ -73,11 +49,8 @@ export function SiteFooter() {
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">Explore</p>
           <nav className="grid gap-0.5">
             <Link href="/about" className={linkCls("/about")}>About Us</Link>
-            <Link href="/connect" className={linkCls("/connect")}>Fellowship Groups</Link>
-            <Link href="/blog" className={linkCls("/blog")}>Blog &amp; Articles</Link>
+            <Link href="/blog" className={linkCls("/blog")}>Blog & Articles</Link>
             <Link href="/competitions" className={linkCls("/competitions")}>Competitions</Link>
-            <Link href="/watch" className={linkCls("/watch")}>Watch Online</Link>
-            <Link href="/visit" className={linkCls("/visit")}>Plan a Visit</Link>
             <Link href="/contact" className={linkCls("/contact")}>Contact Us</Link>
           </nav>
         </div>
@@ -86,12 +59,6 @@ export function SiteFooter() {
         <div>
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">Get In Touch</p>
           <p className="text-sm text-(--stone)">We would love to hear from you and welcome you into our community.</p>
-          <a
-            href="mailto:hello@spiritualwoman.org"
-            className="mt-4 block text-sm font-semibold text-(--ink) hover:text-(--rose)"
-          >
-            hello@spiritualwoman.org
-          </a>
           <Link
             href="/contact"
             className="mt-5 inline-flex items-center gap-2 rounded-full bg-(--rose) px-5 py-2.5 text-sm font-bold text-white hover:bg-(--rose-dark)"
@@ -104,7 +71,7 @@ export function SiteFooter() {
       {/* Bottom bar */}
       <div className="border-t border-(--ash)">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-4 py-5 text-xs text-(--stone) sm:px-6 lg:flex-row lg:items-center">
-          <p>© 2026 Layo Obidike · Powered by LOPLATFORMS · All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} Spiritual Woman Fellowship · Powered by <a href="https://loplatforms.com/" target="_blank" rel="noopener noreferrer" className="hover:text-(--rose)">LOPLATFORMS</a> · All Rights Reserved.</p>
           <div className="flex flex-wrap items-center gap-5">
             <Link href="/privacy-policy" className="hover:text-(--rose)">Privacy Policy</Link>
             <Link href="/terms-of-use" className="hover:text-(--rose)">Terms of Use</Link>
