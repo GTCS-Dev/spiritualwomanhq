@@ -107,17 +107,27 @@ export default function ContactPage() {
         return next;
       });
     }
+    // Dismiss success banner when user starts editing (ready to send another)
+    if (isSubmitted) {
+      setIsSubmitted(false);
+    }
+  }
+
+  function handleResetForm() {
+    setForm(initialForm);
+    setFieldErrors({});
+    setSubmitError("");
+    setIsSubmitted(false);
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitError("");
-    setIsSubmitted(false);
 
     // Check honeypot – if filled, silently discard (bot)
     if (honeypotRef.current?.value) {
       // Pretend success to avoid alerting bots
-      setForm(initialForm);
+      handleResetForm();
       setIsSubmitted(true);
       return;
     }
@@ -166,7 +176,6 @@ export default function ContactPage() {
         throw new Error(errorMessage);
       }
 
-      setForm(initialForm);
       setFieldErrors({});
       setIsSubmitted(true);
     } catch (error) {
