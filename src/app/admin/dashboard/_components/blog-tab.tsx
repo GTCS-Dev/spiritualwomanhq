@@ -45,6 +45,18 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
     if (token) fetchPosts();
   }, [token, fetchPosts]);
 
+  /** Auto-generate excerpt from the first paragraph block text */
+  function generateExcerpt(blocks: PostBlock[]): string {
+    // Find the first paragraph block with text
+    const firstParagraph = blocks.find(
+      (b) => b.type === "paragraph" && b.text && b.text.trim().length > 0
+    );
+    if (!firstParagraph || !firstParagraph.text) return "";
+    const text = firstParagraph.text.trim();
+    if (text.length <= 150) return text;
+    return text.slice(0, 147).trimEnd() + "...";
+  }
+
   function resetDraft() {
     setPost({
       ...initialPost,
@@ -54,8 +66,6 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
 
   function validateDraft(input: DraftPost) {
     if (input.title.trim().length < 4) return "Title must be at least 4 characters.";
-    if (input.excerpt.trim().length < 10) return "Excerpt must be at least 10 characters.";
-    if (input.content.trim().length < 10) return "Summary content must be at least 10 characters.";
     if (input.coverImage.trim().length < 4) return "Cover image is required.";
     if (input.author.trim().length < 2) return "Author must be at least 2 characters.";
     if (input.blocks.length < 1) return "Add at least one content block.";
@@ -89,16 +99,23 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
       return;
     }
     try {
+      // Auto-generate excerpt from first paragraph block
+      const excerpt = generateExcerpt(post.blocks);
+      if (!excerpt) {
+        onStatus("Add at least one paragraph with text to generate the excerpt.");
+        return;
+      }
+
       const endpoint = post.id ? `${apiUrl}/posts/${post.id}` : `${apiUrl}/posts`;
       const response = await fetch(endpoint, {
         method: post.id ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           title: post.title,
-          excerpt: post.excerpt,
+          excerpt,
           category: post.category,
           coverImage: post.coverImage,
-          content: post.content,
+          content: excerpt,
           blocks: post.blocks,
           isPublished: post.isPublished,
           author: post.author,
@@ -214,11 +231,13 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
           </div>
 
           <div className="grid gap-5">
+            {/* Title */}
             <div>
               <label className={labelCls}>Title</label>
               <input className={inputCls} placeholder="Post title" value={post.title} onChange={(event) => setPost((current) => ({ ...current, title: event.target.value }))} />
             </div>
 
+            {/* Category + Author */}
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
                 <label className={labelCls}>Category</label>
@@ -234,16 +253,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
               </div>
             </div>
 
-            <div>
-              <label className={labelCls}>Excerpt (shown in cards)</label>
-              <textarea className={`${inputCls} resize-none`} rows={2} placeholder="Brief description" value={post.excerpt} onChange={(event) => setPost((current) => ({ ...current, excerpt: event.target.value }))} />
-            </div>
-
-            <div>
-              <label className={labelCls}>Summary Content</label>
-              <textarea className={`${inputCls} resize-none`} rows={3} placeholder="Opening paragraph" value={post.content} onChange={(event) => setPost((current) => ({ ...current, content: event.target.value }))} />
-            </div>
-
+            {/* Cover Image - simplified */}
             <div>
               <label className={labelCls}>Cover Image</label>
               <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
@@ -255,7 +265,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
                 ))}
               </div>
               <div className="mt-2">
-                <label className={`${labelCls} mt-3`}>Or upload cover image</label>
+                <label className={`${labelCls} mt-3`}>Or upload</label>
                 <input
                   type="file"
                   accept="image/*"
@@ -275,9 +285,10 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
               </div>
             </div>
 
+            {/* Content Blocks */}
             <div>
               <div className="mb-3 flex items-center justify-between">
-                <label className={labelCls}>Content Blocks</label>
+                <label className={labelCls}>Content</label>
                 <div className="flex items-center gap-2">
                   <select value={activeBlockType} onChange={(event) => setActiveBlockType(event.target.value as PostBlockType)} className="rounded-lg border border-(--ash) bg-white px-2 py-1 text-xs">
                     <option value="paragraph">Paragraph</option>
@@ -337,8 +348,10 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
                   </div>
                 ))}
               </div>
+              <p className="mt-2 text-xs text-(--stone)">Excerpt is auto-generated from the first paragraph. Max 150 characters.</p>
             </div>
 
+            {/* Publish */}
             <div className="flex items-center justify-between border-t border-(--ash) pt-5">
               <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold">
                 <input type="checkbox" checked={post.isPublished} onChange={(event) => setPost((current) => ({ ...current, isPublished: event.target.checked }))} />

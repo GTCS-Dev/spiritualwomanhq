@@ -4,7 +4,10 @@ export type PostCategory =
   | "events"
   | "leadership"
   | "family"
-  | "prayer";
+  | "prayer"
+  | "article"
+  | "blog"
+  | "post";
 
 export type PostBlockType = "heading2" | "heading3" | "paragraph" | "image";
 
@@ -39,4 +42,7 @@ export const categoryLabels: Record<PostCategory, string> = {
   leadership: "Leadership",
   family: "Family",
   prayer: "Prayer",
+  article: "Article",
+  blog: "Blog",
+  post: "Post",
 };
