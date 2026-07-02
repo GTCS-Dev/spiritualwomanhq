@@ -45,7 +45,7 @@ export default function BlogPage() {
       <SiteHeader />
 
       <main className="w-full pb-20">
-        <section className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-(--ash)">
+        <section className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-b border-[#E19508]/15">
           <Image
             src={heroPost?.coverImage ?? "https://images.unsplash.com/photo-1519817650390-64a93db511aa?auto=format&fit=crop&w=2000&q=80"}
             alt="SpiritualWoman blog"
@@ -54,14 +54,20 @@ export default function BlogPage() {
             className="h-[58vh] min-h-[420px] w-full object-cover object-center"
             priority
           />
-          <div className="absolute inset-0 bg-linear-to-r from-[#221226]/72 via-[#3b2140]/35 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#001946]/85 via-[#05193B]/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#001946]/50 via-transparent to-transparent" />
+          <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full border-2 border-[#E19508]/12" />
+          <div className="pointer-events-none absolute left-[30%] top-[40%] h-24 w-24 rounded-full border-2 border-[#E19508]/10" />
           <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-6xl px-4 pb-12 sm:px-6 lg:px-8 lg:pb-16">
-            <div className="max-w-3xl rounded-3xl border border-white/15 bg-black/22 px-6 py-6 backdrop-blur-md sm:px-8 sm:py-7">
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#ffbfd1]">Blog</p>
+            <div className="max-w-3xl rounded-3xl border border-[#E19508]/30 bg-[#001946]/60 px-6 py-6 backdrop-blur-xl sm:px-8 sm:py-7">
+              <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.28em] text-[#E19508]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#E19508]" />
+                Blog
+              </div>
               <h1 className="mt-3 text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
                 Stories, Teachings, And Encouragement
               </h1>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/90 sm:text-base sm:leading-8">
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/85 sm:text-base sm:leading-8">
                 Explore modern faith articles across prayer, testimony, leadership, family, and events.
               </p>
             </div>

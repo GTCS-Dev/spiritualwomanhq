@@ -193,7 +193,10 @@ export default function ContactPage() {
       description="Reach out for prayer, support, events, and fellowship information. We would love to hear your story and walk with you in faith."
       image={pageHeroImages.contact}
     >
-      <section className="mt-8 rounded-2xl border border-(--ash) bg-white px-6 py-7">
+      <section className="relative mt-8 overflow-hidden rounded-2xl border-2 border-[#E19508]/15 bg-white px-6 py-7 shadow-[0_28px_60px_-30px_rgba(0,25,70,0.2)]">
+        {/* Gold decorative circles */}
+        <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full border-2 border-[#E19508]/10" />
+        <div className="pointer-events-none absolute -bottom-5 -right-5 h-24 w-24 rounded-full border-2 border-[#E19508]/8" />
         <h2 className="text-2xl font-bold text-(--ink)">Send Us A Message</h2>
         <p className="mt-2 text-sm leading-7 text-(--stone)">
           Fill this form and our team will follow up with you as soon as possible.

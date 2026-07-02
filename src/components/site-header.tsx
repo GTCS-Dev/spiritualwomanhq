@@ -45,7 +45,7 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-(--ash) bg-(--container)/96 shadow-[0_8px_24px_-18px_rgba(31,24,34,0.28)] backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[#E19508]/15 bg-(--container)/96 shadow-[0_8px_24px_-18px_rgba(0,25,70,0.28)] backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-4 py-3.5 sm:px-6">
         {/* Logo — always visible */}
         <SiteLogo />

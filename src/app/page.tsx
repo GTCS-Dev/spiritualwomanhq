@@ -150,57 +150,26 @@ export default function Home() {
       <main className="w-full overflow-x-hidden pb-20">
         <HeroSlider />
 
-        {/* ── STATS BAND ── full-width stripe, no cards */}
-        <div className="border-b border-(--ash) bg-(--surface)">
-          <div className="mx-auto grid w-full max-w-6xl grid-cols-2 divide-x divide-(--ash) md:grid-cols-4">
+        {/* ── STATS BAND ── */}
+        <div className="border-b border-[#E19508]/15 bg-gradient-to-r from-[#05193B] via-[#001946] to-[#05193B]">
+          <div className="mx-auto grid w-full max-w-6xl grid-cols-2 divide-x divide-[#E19508]/15 md:grid-cols-4">
             {stats.map((s) => (
               <div key={s.label} className="px-6 py-8 text-center">
-                <p className="text-4xl font-extrabold tracking-tight text-(--rose)">{s.value}</p>
-                <p className="mt-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-(--stone)">{s.label}</p>
+                <p className="text-4xl font-extrabold tracking-tight text-[#E19508]">{s.value}</p>
+                <p className="mt-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-white/60">{s.label}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* ── INTRO ── condensed paragraph + image */}
-        <section className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Welcome</p>
-              <h2 className="mt-3 text-5xl font-semibold leading-[1.12] text-(--ink)">
-                Empowering Women<br />To Grow In Faith<br />And Purpose.
-              </h2>
-              <p className="mt-5 text-base leading-8 text-(--stone)">
-                Welcome to The Spiritual Woman, a faith-based platform dedicated to helping Christian women deepen their relationship with God, discover their purpose, and live a life rooted in biblical truth. Through inspiring devotionals, practical biblical teachings, prayer resources, and uplifting articles, we empower women to navigate life&rsquo;s challenges with faith, wisdom, and confidence. Whether you are seeking spiritual growth, Christian encouragement, or a supportive community of women of faith, you have found a place where your spiritual journey matters. Join us as we explore God&rsquo;s Word, strengthen our faith, and embrace the calling He has placed on our lives.
-              </p>
-              <Link
-                href="/about"
-                className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-(--rose) hover:text-(--rose-dark)"
-              >
-                Learn our story →
-              </Link>
-            </div>
-            <div className="relative overflow-hidden rounded-3xl">
-              <Image
-                src="/new/shallow-focus-shot-white-female-reading-bible-bright-rays-sun.jpg"
-                alt="Woman reading Bible in sunlight"
-                width={600}
-                height={500}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent" />
-            </div>
-          </div>
-        </section>
-
-        {/* ── HIGHLIGHTS ── enhanced professional card styling */}
+        {/* ── HIGHLIGHTS ── */}
         <section id="about" className="mx-auto mt-20 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.26em] text-(--rose)">Our Ministries</p>
-            <h2 className="mt-3 text-4xl font-semibold text-(--ink)">
+            <p className="text-xs font-bold uppercase tracking-[0.26em] text-[#E19508]">Our Ministries</p>
+            <h2 className="mt-3 text-4xl font-semibold text-[#001946]">
               Grow In Faith & Community
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-(--stone)">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#5d6068]">
               Discover meaningful ways to deepen your spiritual walk, connect with like-minded sisters, and experience God&rsquo;s love through community.
             </p>
           </div>
@@ -214,39 +183,48 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1, duration: 0.4 }}
-                  className={`group rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 ${
+                  className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 ${
                     index === 1
-                      ? "bg-(--rose) text-white"
-                      : "border border-(--ash) bg-white hover:shadow-lg"
+                      ? "bg-gradient-to-br from-[#980140] via-[#A2014A] to-[#001946] text-white"
+                      : "border-2 border-[#E19508]/15 bg-white hover:shadow-lg"
                   }`}
                 >
-                  <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${
-                    index === 1 ? "bg-white/20" : "bg-(--blush)"
-                  }`}>
-                    <Icon size={24} className={index === 1 ? "text-white" : "text-(--rose)"} />
-                  </div>
-                  <h3 className={`mt-5 text-xl font-bold ${
-                    index === 1 ? "text-white" : "text-(--ink)"
-                  }`}>{item.title}</h3>
-                  <p className={`mt-2 text-sm leading-7 ${
-                    index === 1 ? "text-white/85" : "text-(--stone)"
-                  }`}>{item.text}</p>
-                  {index !== 1 && (
-                    <div className="mt-5 h-1 w-10 rounded-full bg-(--rose)/20" />
+                  {/* Gold circle accent */}
+                  {index === 1 && (
+                    <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full border-2 border-[#E19508]/15" />
                   )}
-                  <p className={`mt-4 text-[0.65rem] font-bold uppercase tracking-[0.18em] ${
-                    index === 1 ? "text-white/70" : "text-(--rose)"
-                  }`}>
-                    0{index + 1}
-                  </p>
+                  {index !== 1 && (
+                    <div className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full border-2 border-[#E19508]/8" />
+                  )}
+                  <div className="relative z-10">
+                    <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${
+                      index === 1 ? "bg-white/20" : "bg-[#fef6f0]"
+                    }`}>
+                      <Icon size={24} className={index === 1 ? "text-white" : "text-[#980140]"} />
+                    </div>
+                    <h3 className={`mt-5 text-xl font-bold ${
+                      index === 1 ? "text-white" : "text-[#001946]"
+                    }`}>{item.title}</h3>
+                    <p className={`mt-2 text-sm leading-7 ${
+                      index === 1 ? "text-white/85" : "text-[#5d6068]"
+                    }`}>{item.text}</p>
+                    {index !== 1 && (
+                      <div className="mt-5 h-1 w-10 rounded-full bg-[#E19508]/30" />
+                    )}
+                    <p className={`mt-4 text-[0.65rem] font-bold uppercase tracking-[0.18em] ${
+                      index === 1 ? "text-white/70" : "text-[#E19508]"
+                    }`}>
+                      0{index + 1}
+                    </p>
+                  </div>
                 </motion.div>
               );
             })}
           </div>
         </section>
 
-        {/* ── VERSE ── full-width editorial pull-quote, no card box */}
-        <section className="mt-14 bg-(--blush) py-10 sm:py-12">
+        {/* ── VERSE ── full-width */}
+        <section className="mt-14 bg-gradient-to-r from-[#fef6f0] via-[#faf5fd] to-[#fef6f0] py-10 sm:py-12">
           <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
             <BookOpen className="mx-auto text-(--rose)" size={32} />
             {verses.length > 1 ? (
