@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             ← Back To Blog
           </Link>
 
-          <article className="mt-4 overflow-hidden rounded-3xl border border-(--ash) bg-white">
+          <article className="mt-4 overflow-hidden rounded-3xl border border-(--ash) bg-(--container)">
             <div className="px-6 py-8 sm:px-10">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-(--rose)">{categoryLabels[post.category]}</p>
               <p className="mt-5 text-lg leading-8 text-(--stone)">{post.excerpt}</p>

@@ -90,7 +90,7 @@ export default function BlogPage() {
                 className={`rounded-full px-4 py-2 text-sm font-bold transition-colors ${
                   activeCategory === category
                     ? "bg-(--rose) text-white"
-                    : "bg-white text-(--ink) hover:bg-(--blush) hover:text-(--rose)"
+                    : "bg-(--container) text-(--ink) hover:bg-(--blush) hover:text-(--rose)"
                 }`}
               >
                 {category === "all" ? "All" : categoryLabels[category]}
@@ -101,7 +101,7 @@ export default function BlogPage() {
         </section>
 
         {heroPost ? (
-            <article className="mx-auto mt-10 grid w-full max-w-6xl overflow-hidden rounded-3xl border border-(--ash) bg-white shadow-[0_20px_40px_-28px_rgba(31,24,34,0.35)] lg:grid-cols-[1.1fr_0.9fr]">
+            <article className="mx-auto mt-10 grid w-full max-w-6xl overflow-hidden rounded-3xl border border-(--ash) bg-(--container) shadow-[0_20px_40px_-28px_rgba(31,24,34,0.35)] lg:grid-cols-[1.1fr_0.9fr]">
             <Image
               src={heroPost.coverImage}
               alt={heroPost.title}
@@ -134,10 +134,10 @@ export default function BlogPage() {
 
           <section className="mx-auto mt-8 grid w-full max-w-6xl gap-5 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8">
           {gridPosts.map((post) => (
-              <article key={post.id} className="elevated overflow-hidden rounded-2xl border border-(--ash) bg-white transition-transform duration-300 hover:-translate-y-1">
+              <article key={post.id} className="elevated overflow-hidden rounded-2xl border border-(--ash) bg-(--container) transition-transform duration-300 hover:-translate-y-1">
                 <div className="relative">
                   <Image src={post.coverImage} alt={post.title} width={700} height={420} className="h-52 w-full object-cover" />
-                  <div className="absolute left-4 top-4 rounded-full bg-white/92 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.18em] text-(--rose)">
+                  <div className="absolute left-4 top-4 rounded-full bg-(--container)/92 px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.18em] text-(--rose)">
                     {categoryLabels[post.category]}
                   </div>
                 </div>

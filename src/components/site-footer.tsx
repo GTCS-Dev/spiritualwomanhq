@@ -10,7 +10,7 @@ export function SiteFooter() {
 
   const linkCls = (href: string) =>
     `flex items-center gap-2 py-1 text-sm transition-colors ${
-      isActive(href) ? "font-semibold text-[#E19508]" : "text-white/60 hover:text-[#E19508]"
+      isActive(href) ? "font-semibold text-[#E19508]" : "text-white hover:text-[#E19508]"
     }`;
 
   return (
@@ -23,7 +23,7 @@ export function SiteFooter() {
         {/* Brand */}
         <div className="xl:col-span-1">
           <SiteLogo lightMode />
-          <p className="mt-5 text-sm leading-7 text-white/60">
+          <p className="mt-5 text-sm leading-7 text-white">
             Building women of faith through worship, teaching, mentoring, and purpose-driven community impact across every season of life.
           </p>
         </div>
@@ -33,15 +33,15 @@ export function SiteFooter() {
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-[#E19508]">Service Times</p>
           <div className="grid gap-3">
             <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/50">Bible Study</p>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white">Bible Study</p>
               <p className="mt-1 font-semibold text-white">Tuesday · 6:30 PM</p>
             </div>
             <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/50">Prayer Session</p>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white">Prayer Session</p>
               <p className="mt-1 font-semibold text-white">Saturday · 7:00 AM</p>
             </div>
             <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/50">Sunday Worship</p>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white">Sunday Worship</p>
               <p className="mt-1 font-semibold text-white">Sunday · 9:30 AM</p>
             </div>
           </div>
@@ -61,7 +61,7 @@ export function SiteFooter() {
         {/* Contact */}
         <div>
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-[#E19508]">Get In Touch</p>
-          <p className="text-sm text-white/60">We would love to hear from you and welcome you into our community.</p>
+          <p className="text-sm text-white">We would love to hear from you and welcome you into our community.</p>
           <Link
             href="/contact"
             className="mt-5 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#980140] to-[#E19508] px-5 py-2.5 text-sm font-bold text-white hover:opacity-90"
@@ -73,11 +73,11 @@ export function SiteFooter() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-4 py-5 text-xs text-white/50 sm:px-6 lg:flex-row lg:items-center">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-4 py-5 text-xs text-white sm:px-6 lg:flex-row lg:items-center">
           <p>© {new Date().getFullYear()} Spiritual Woman Fellowship · Powered by <a href="https://loplatforms.com/" target="_blank" rel="noopener noreferrer" className="text-[#E19508] hover:text-white">LOPLATFORMS</a> · All Rights Reserved.</p>
           <div className="flex flex-wrap items-center gap-5">
-            <Link href="/privacy-policy" className="text-white/50 hover:text-[#E19508]">Privacy Policy</Link>
-            <Link href="/terms-of-use" className="text-white/50 hover:text-[#E19508]">Terms of Use</Link>
+            <Link href="/privacy-policy" className="text-white hover:text-[#E19508]">Privacy Policy</Link>
+            <Link href="/terms-of-use" className="text-white hover:text-[#E19508]">Terms of Use</Link>
           </div>
         </div>
       </div>

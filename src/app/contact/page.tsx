@@ -75,7 +75,9 @@ function validateForm(form: ContactFormState): FormErrors {
 }
 
 function getFieldErrorClassName(error?: string): string {
-  return error ? "border-red-400 focus:border-red-500" : "border-(--ash) focus:border-(--rose)/55";
+  return error 
+    ? "border-red-500/70 focus:border-red-500" 
+    : "border-white/[0.08] focus:border-[#E19508]/60";
 }
 
 export default function ContactPage() {
@@ -85,7 +87,6 @@ export default function ContactPage() {
   const [submitError, setSubmitError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Honeypot ref for spam prevention (hidden field that bots fill in)
   const honeypotRef = useRef<HTMLInputElement>(null);
 
   const canSubmit = useMemo(
@@ -99,7 +100,6 @@ export default function ContactPage() {
 
   function handleFieldChange(field: keyof ContactFormState, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
-    // Clear field-level error on change
     if (fieldErrors[field]) {
       setFieldErrors((prev) => {
         const next = { ...prev };
@@ -107,7 +107,6 @@ export default function ContactPage() {
         return next;
       });
     }
-    // Dismiss success banner when user starts editing (ready to send another)
     if (isSubmitted) {
       setIsSubmitted(false);
     }
@@ -124,15 +123,12 @@ export default function ContactPage() {
     event.preventDefault();
     setSubmitError("");
 
-    // Check honeypot – if filled, silently discard (bot)
     if (honeypotRef.current?.value) {
-      // Pretend success to avoid alerting bots
       handleResetForm();
       setIsSubmitted(true);
       return;
     }
 
-    // Client-side validation
     const errors = validateForm(form);
     setFieldErrors(errors);
 
@@ -193,17 +189,19 @@ export default function ContactPage() {
       description="Reach out for prayer, support, events, and fellowship information. We would love to hear your story and walk with you in faith."
       image={pageHeroImages.contact}
     >
-      <section className="relative mt-8 overflow-hidden rounded-2xl border-2 border-[#E19508]/15 bg-white px-6 py-7 shadow-[0_28px_60px_-30px_rgba(0,25,70,0.2)]">
-        {/* Gold decorative circles */}
-        <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full border-2 border-[#E19508]/10" />
-        <div className="pointer-events-none absolute -bottom-5 -right-5 h-24 w-24 rounded-full border-2 border-[#E19508]/8" />
-        <h2 className="text-2xl font-bold text-(--ink)">Send Us A Message</h2>
-        <p className="mt-2 text-sm leading-7 text-(--stone)">
-          Fill this form and our team will follow up with you as soon as possible.
+      <section className="relative mt-8 overflow-hidden rounded-2xl border-2 border-[#E19508]/20 bg-[#001233]/70 backdrop-blur-sm px-6 py-8 text-white shadow-[0_24px_50px_-20px_rgba(0,0,0,0.5)] selection:bg-[#980140]/40 selection:text-white">
+        {/* ── BRAND DECORATIVE ELEMENTS ── */}
+        <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full border-2 border-[#E19508]/10 opacity-40" />
+        <div className="pointer-events-none absolute -bottom-5 -right-5 h-24 w-24 rounded-full border-2 border-[#980140]/10 opacity-30" />
+        
+        <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#E19508]">Connect Directly</p>
+        <h2 className="mt-1 font-serif text-2xl font-bold tracking-tight text-white sm:text-3xl">Send Us A Message</h2>
+        <p className="mt-2 text-sm leading-relaxed text-white/70 max-w-xl">
+          Fill out the fields below and our team will follow up with you systematically.
         </p>
 
-        <form className="mt-6 grid gap-4" onSubmit={handleSubmit} noValidate>
-          {/* Honeypot field – hidden from real users, catches bots */}
+        <form className="mt-6 grid gap-5" onSubmit={handleSubmit} noValidate>
+          {/* Honeypot Spam Barrier */}
           <div className="absolute -left-[9999px]" aria-hidden="true">
             <label htmlFor="website">Website (do not fill)</label>
             <input
@@ -216,105 +214,106 @@ export default function ContactPage() {
             />
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="text-sm font-semibold text-(--ink)">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-white/80">
               Full Name
               <input
                 type="text"
                 required
                 value={form.name}
                 onChange={(event) => handleFieldChange("name", event.target.value)}
-                className={`mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition ${getFieldErrorClassName(fieldErrors.name)}`}
+                className={`mt-2 w-full rounded-xl border bg-[#001946]/50 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all ${getFieldErrorClassName(fieldErrors.name)}`}
                 placeholder="Your full name"
                 maxLength={80}
               />
-              {fieldErrors.name ? <p className="mt-1 text-xs text-red-500">{fieldErrors.name}</p> : null}
+              {fieldErrors.name && <p className="mt-1.5 text-xs text-red-400 font-medium">{fieldErrors.name}</p>}
             </label>
-            <label className="text-sm font-semibold text-(--ink)">
+            <label className="text-xs font-bold uppercase tracking-wider text-white/80">
               Email Address
               <input
                 type="email"
                 required
                 value={form.email}
                 onChange={(event) => handleFieldChange("email", event.target.value)}
-                className={`mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition ${getFieldErrorClassName(fieldErrors.email)}`}
+                className={`mt-2 w-full rounded-xl border bg-[#001946]/50 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all ${getFieldErrorClassName(fieldErrors.email)}`}
                 placeholder="you@example.com"
                 maxLength={120}
               />
-              {fieldErrors.email ? <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p> : null}
+              {fieldErrors.email && <p className="mt-1.5 text-xs text-red-400 font-medium">{fieldErrors.email}</p>}
             </label>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="text-sm font-semibold text-(--ink)">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className="text-xs font-bold uppercase tracking-wider text-white/80">
               Phone (Optional)
               <input
                 type="text"
                 value={form.phone}
                 onChange={(event) => handleFieldChange("phone", event.target.value)}
-                className={`mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition ${getFieldErrorClassName(fieldErrors.phone)}`}
+                className={`mt-2 w-full rounded-xl border bg-[#001946]/50 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all ${getFieldErrorClassName(fieldErrors.phone)}`}
                 placeholder="+1 240 000 0000"
                 maxLength={30}
               />
-              {fieldErrors.phone ? <p className="mt-1 text-xs text-red-500">{fieldErrors.phone}</p> : null}
+              {fieldErrors.phone && <p className="mt-1.5 text-xs text-red-400 font-medium">{fieldErrors.phone}</p>}
             </label>
-            <label className="text-sm font-semibold text-(--ink)">
+            <label className="text-xs font-bold uppercase tracking-wider text-white/80">
               Subject
               <input
                 type="text"
                 required
                 value={form.subject}
                 onChange={(event) => handleFieldChange("subject", event.target.value)}
-                className={`mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition ${getFieldErrorClassName(fieldErrors.subject)}`}
+                className={`mt-2 w-full rounded-xl border bg-[#001946]/50 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all ${getFieldErrorClassName(fieldErrors.subject)}`}
                 placeholder="How can we support you?"
                 maxLength={120}
               />
-              {fieldErrors.subject ? <p className="mt-1 text-xs text-red-500">{fieldErrors.subject}</p> : null}
+              {fieldErrors.subject && <p className="mt-1.5 text-xs text-red-400 font-medium">{fieldErrors.subject}</p>}
             </label>
           </div>
 
-          <label className="text-sm font-semibold text-(--ink)">
+          <label className="text-xs font-bold uppercase tracking-wider text-white/80">
             Message
             <textarea
               required
-              rows={6}
+              rows={5}
               value={form.message}
               onChange={(event) => handleFieldChange("message", event.target.value)}
-              className={`mt-2 w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition ${getFieldErrorClassName(fieldErrors.message)}`}
+              className={`mt-2 w-full rounded-xl border bg-[#001946]/50 px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all ${getFieldErrorClassName(fieldErrors.message)}`}
               placeholder="Share your message here..."
               maxLength={2500}
             />
-            <div className="mt-1 flex justify-between">
+            <div className="mt-1.5 flex justify-between items-center text-[11px] font-mono tracking-tight">
               {fieldErrors.message ? (
-                <p className="text-xs text-red-500">{fieldErrors.message}</p>
+                <p className="text-red-400 font-medium font-sans">{fieldErrors.message}</p>
               ) : (
                 <span />
               )}
-              <span className="text-xs text-(--stone)">{form.message.length}/2500</span>
+              <span className="text-white/40">{form.message.length}/2500</span>
             </div>
           </label>
 
-          {submitError ? (
-            <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          {/* ── DYNAMIC SYSTEM FEEDBACK STAGES ── */}
+          {submitError && (
+            <div className="rounded-xl border border-red-500/30 bg-red-950/40 backdrop-blur-sm px-4 py-3 text-xs font-semibold text-red-400">
               {submitError}
             </div>
-          ) : null}
+          )}
 
-          {isSubmitted ? (
-            <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
-              Message sent successfully. We will be in touch soon.
+          {isSubmitted && (
+            <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/40 backdrop-blur-sm px-4 py-3 text-xs font-semibold text-emerald-400">
+              Message systematically dispatched. Our framework team will respond promptly.
             </div>
-          ) : null}
+          )}
 
           <button
             type="submit"
             disabled={!canSubmit || isSubmitting}
-            className="inline-flex w-fit items-center rounded-full bg-(--rose) px-7 py-3 text-sm font-bold text-white transition-colors hover:bg-(--rose-dark) disabled:cursor-not-allowed disabled:bg-(--stone) disabled:opacity-60"
+            className="inline-flex w-fit items-center justify-center rounded-full bg-[#980140] px-8 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-[#980140]/25 hover:bg-[#7c0134] transition-all hover:scale-[1.02] disabled:cursor-not-allowed disabled:bg-[#001946] disabled:text-white/40 disabled:border-white/5 disabled:scale-100 disabled:shadow-none"
           >
             {isSubmitting ? (
               <>
-                <span className="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                Sending...
+                <span className="mr-2 inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                Processing...
               </>
             ) : (
               "Send Message"

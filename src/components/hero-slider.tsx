@@ -22,7 +22,7 @@ export function HeroSlider() {
           <div className="pointer-events-none absolute -bottom-40 -right-20 h-96 w-96 rounded-full bg-[#980140]/20 blur-[120px]" />
           <div className="pointer-events-none absolute left-[40%] top-[30%] h-64 w-64 rounded-full bg-[#A2014A]/10 blur-[90px]" />
 
-          {/* Decorative gold circles — more visible now */}
+          {/* Decorative gold circles */}
           <div className="pointer-events-none absolute left-[20%] top-[-8%] h-[420px] w-[420px] rounded-full border-2 border-[#E19508]/20" />
           <div className="pointer-events-none absolute right-[10%] top-[15%] h-[280px] w-[280px] rounded-full border-2 border-[#E19508]/15" />
           <div className="pointer-events-none absolute bottom-[5%] left-[50%] h-[180px] w-[180px] rounded-full border-2 border-[#E19508]/12" />
@@ -123,22 +123,22 @@ export function HeroSlider() {
               <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#001946]/60 to-transparent" />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#001946]/40 to-transparent" />
 
-              {/* Glassmorphism badge */}
+              {/* Colorful Symmetrical Circle Badge Structure */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
-                className="absolute bottom-6 right-6 z-20 flex items-center gap-3 rounded-2xl border-2 border-[#E19508]/30 bg-[#001946]/80 px-5 py-4 shadow-2xl backdrop-blur-xl"
+                className="absolute bottom-6 right-6 z-20 flex h-36 w-36 aspect-square flex-col items-center justify-center gap-1.5 rounded-full border-2 border-[#E19508] bg-gradient-to-br from-[#001946] via-[#980140] to-[#E19508] p-4 text-center shadow-[0_16px_36px_rgba(152,1,64,0.4)] backdrop-blur-md"
               >
-                <Heart size={20} className="text-[#E19508]" />
-                <div className="text-right">
-                  <p className="font-[family-name:var(--font-heading)] text-sm font-semibold leading-snug text-white">
+                <Heart size={18} className="text-[#E19508] fill-[#E19508]/20" />
+                <div className="leading-tight">
+                  <p className="font-[family-name:var(--font-heading)] text-[0.8rem] font-bold tracking-wide text-white">
                     Sisterhood
                   </p>
-                  <p className="font-[family-name:var(--font-heading)] text-sm font-semibold leading-snug text-[#E19508]">
+                  <p className="font-[family-name:var(--font-heading)] text-[0.8rem] font-bold tracking-wide text-[#E19508]">
                     Faith
                   </p>
-                  <p className="font-[family-name:var(--font-heading)] text-sm font-semibold leading-snug text-white/80">
+                  <p className="font-[family-name:var(--font-heading)] text-[0.8rem] font-bold tracking-wide text-white/90">
                     Purpose
                   </p>
                 </div>
@@ -150,20 +150,20 @@ export function HeroSlider() {
 
       {/* ─── FEATURE HIGHLIGHTS ─── */}
       <section className="mx-auto -mt-6 max-w-7xl px-4 sm:px-6 lg:px-8 relative z-20">
-        <div className="rounded-[28px] border-2 border-[#E19508]/15 bg-white px-6 py-8 shadow-[0_28px_60px_-30px_rgba(0,25,70,0.3)] sm:px-10 sm:py-10">
+        <div className="rounded-[28px] border border-white bg-white px-6 py-8 shadow-[0_24px_50px_-20px_rgba(0,0,0,0.7)] sm:px-10 sm:py-10">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feat, i) => (
               <div key={feat.title} className="relative flex flex-col items-center text-center">
                 {i > 0 && (
-                  <div className="absolute -left-3 top-0 hidden h-full w-px bg-gradient-to-b from-transparent via-[#E19508]/30 to-transparent lg:block" />
+                  <div className="absolute -left-3 top-0 hidden h-full w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent lg:block" />
                 )}
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#E19508]/12">
-                  <feat.icon size={22} className="text-[#E19508]" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#E19508]/10">
+                  <feat.icon size={22} className="text-[#E19508] fill-[#E19508]/10" />
                 </div>
-                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-bold text-[#001946]">
+                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-bold text-[#001233]">
                   {feat.title}
                 </h3>
-                <p className="mt-2 max-w-[220px] text-xs leading-6 text-[#5d6068]">
+                <p className="mt-2 max-w-[220px] text-xs leading-6 text-slate-600">
                   {feat.desc}
                 </p>
               </div>
@@ -212,7 +212,7 @@ export function HeroSlider() {
                 </svg>
               </div>
 
-              {/* Quote text with premium typography */}
+              {/* Quote text */}
               <div className="mt-6">
                 <p className="font-[family-name:var(--font-heading)] text-2xl font-medium italic leading-relaxed text-white/92 sm:text-3xl sm:leading-[1.55] lg:text-[2rem] lg:leading-[1.6]">
                   <span className="relative">

@@ -9,28 +9,17 @@
   --brand-white: #FFFFFF;
   --brand-black: #000000;
 
-  /* Dark professional theme — default */
-  --rose: var(--brand-burgundy);
-  --rose-dark: var(--brand-burgundy-secondary);
-  --stone: #a5a1ad;
-  --ash: #2e2a38;
-  --ink: #f3f5f7;
-  --blush: #1a1520;
-  --background: #0a0712;
-  --container: #14101c;
-  --surface: #1e1829;
-  --foreground: #f3f5f7;
-}
-
-html.theme-dark,
-html[data-theme="dark"] {
-  /* Same — dark is the default */
+  /* Additional professional neutral tones */
+  --neutral-900: #0a0712;
+  --neutral-800: #12111a;
+  --neutral-700: #1f1e2b;
+  --neutral-100: #f3f5f7;
+  --neutral-200: #e5e7eb;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-body);
+  --font-serif: var(--font-heading);
 }
 
 html {
@@ -38,112 +27,118 @@ html {
   scroll-padding-top: 92px;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
-
-::selection {
-  background: color-mix(in srgb, var(--brand-gold) 50%, transparent 50%);
-  color: white;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
+::selection {
+  background: color-mix(in srgb, var(--brand-gold) 45%, transparent 55%);
+  color: var(--brand-white);
+}
+
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), 'Georgia', serif;
-  letter-spacing: -0.012em;
-  line-height: 1.08;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   text-wrap: balance;
-  color: var(--foreground);
+  font-weight: 600;
 }
 
 body {
-  background:
-    radial-gradient(ellipse at 20% 10%, rgba(225, 149, 8, 0.10), transparent 40%),
-    radial-gradient(ellipse at 80% 15%, rgba(152, 1, 64, 0.12), transparent 35%),
-    radial-gradient(ellipse at 50% 90%, rgba(0, 25, 70, 0.15), transparent 40%),
-    linear-gradient(175deg, #0a0712 0%, #0f0b18 30%, #14101c 70%, #0a0712 100%);
-  color: var(--foreground);
-  font-family: var(--font-body), 'Roboto', 'Segoe UI', sans-serif;
-  line-height: 1.7;
+  background-color: var(--neutral-900);
+  color: var(--neutral-100);
+  font-family: var(--font-body), 'Roboto', system-ui, sans-serif;
+  line-height: 1.75;
   font-feature-settings: "ss01" 1, "cv02" 1, "cv11" 1;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
+/* Base text elements */
 p, li, label, input, textarea, select, button {
   letter-spacing: -0.01em;
-  color: var(--stone);
 }
-img, video, svg { display: block; }
-a { 
-  text-decoration-thickness: from-font; 
-  text-underline-offset: 0.18em; 
+
+/* Media & Links */
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.2em;
   color: var(--brand-gold);
+  transition: color 200ms ease;
 }
-a:hover { color: #f0a820; }
-button { cursor: pointer; }
+
+a:hover {
+  color: #f0a820;
+}
+
+/* Interactive elements */
+button {
+  cursor: pointer;
+}
 
 :focus-visible {
   outline: 3px solid var(--brand-gold);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-a, button, input, textarea, select {
-  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+/* Smooth transitions */
+a,
+button,
+input,
+textarea,
+select {
+  transition: color 200ms ease, 
+              background-color 200ms ease, 
+              border-color 200ms ease, 
+              box-shadow 200ms ease, 
+              transform 200ms ease;
 }
 
-/* Cards & containers — dark tint */
-.content-card {
-  background: linear-gradient(165deg, rgba(20, 16, 28, 0.96), rgba(14, 10, 20, 0.92));
-  border: 1px solid rgba(225, 149, 8, 0.12);
-  box-shadow: 0 20px 48px -32px rgba(0, 0, 0, 0.5);
+/* Header */
+header {
+  background-color: var(--neutral-900);
+  border-bottom: 1px solid rgba(225, 149, 8, 0.12);
 }
 
-/* Header & footer backgrounds */
-html:not(.theme-dark):not([data-theme="dark"]) header {
-  background-color: rgba(10, 7, 18, 0.92) !important;
-  border-color: rgba(225, 149, 8, 0.15) !important;
+/* Form elements */
+input,
+textarea,
+select {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--neutral-100);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
 }
 
-/* Theme-dark is same as default — no change needed */
-html.theme-dark body {
-  background:
-    radial-gradient(circle at 8% 5%, rgba(152, 1, 64, 0.18), transparent 36%),
-    radial-gradient(circle at 86% 8%, rgba(0, 25, 70, 0.12), transparent 30%),
-    linear-gradient(180deg, #0a0712 0%, #14101c 45%, #0a0712 100%);
-}
-
-html.theme-dark [class*="bg-white"] { background-color: #14101c !important; }
-
-/* White background override — all cards should be dark */
-[class*="bg-white"] {
-  background-color: #14101c !important;
-}
-
-html.theme-dark [class*="border-(--ash)"] { border-color: #2e2a38 !important; }
-
-/* Borders */
-.border-(--ash), [class*="border-(--ash)"] {
-  border-color: #2e2a38;
-}
-
-/* Inputs */
-input, textarea, select {
-  background-color: #0a0712;
-  color: #f3f4f6;
-  border-color: #2e2a38;
-}
-input:focus, textarea:focus, select:focus {
-  border-color: var(--brand-gold);
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--brand-burgundy);
+  box-shadow: 0 0 0 3px rgba(152, 1, 64, 0.15);
   outline: none;
 }
 
-/* Verse marquee */
-.verse-marquee-track {
-  display: flex; width: max-content; gap: 1rem;
-  animation: verse-scroll 96s linear infinite;
+/* Utility classes for consistency */
+.bg-card {
+  background-color: var(--neutral-800);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
-.verse-marquee-track:hover { animation-play-state: paused; }
-.verse-marquee-item { width: min(860px, 90vw); flex: 0 0 auto; }
 
-@keyframes verse-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-50% - 0.5rem)); }
+.border-brand {
+  border-color: var(--brand-burgundy);
+}
+
+.text-brand-gold {
+  color: var(--brand-gold);
+}
+
+.text-brand-navy {
+  color: var(--brand-navy);
 }

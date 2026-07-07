@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Menu, MoonStar, Sun, X } from "lucide-react";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
 import { SiteLogo } from "@/components/site-logo";
 
 type NavItem = {
@@ -23,24 +23,6 @@ const navItems: NavItem[] = [
 export function SiteHeader() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return localStorage.getItem("sw_theme") === "dark";
-  });
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("theme-dark", isDarkTheme);
-    document.documentElement.setAttribute("data-theme", isDarkTheme ? "dark" : "light");
-    localStorage.setItem("sw_theme", isDarkTheme ? "dark" : "light");
-  }, [isDarkTheme]);
-
-  function toggleTheme() {
-    const nextThemeIsDark = !isDarkTheme;
-    setIsDarkTheme(nextThemeIsDark);
-    document.documentElement.classList.toggle("theme-dark", nextThemeIsDark);
-    document.documentElement.setAttribute("data-theme", nextThemeIsDark ? "dark" : "light");
-    localStorage.setItem("sw_theme", nextThemeIsDark ? "dark" : "light");
-  }
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
@@ -69,16 +51,6 @@ export function SiteHeader() {
           {/* Separator */}
           <span className="mx-1.5 h-5 w-px bg-(--ash)" aria-hidden />
 
-          {/* Actions */}
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="rounded-full p-2 text-(--stone) transition-colors hover:bg-(--blush) hover:text-(--rose)"
-            aria-label="Toggle dark theme"
-          >
-            {isDarkTheme ? <Sun size={17} /> : <MoonStar size={17} />}
-          </button>
-
           <Link
             href="/admin"
             className="ml-1 rounded-full bg-(--rose) px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-(--rose-dark)"
@@ -89,14 +61,6 @@ export function SiteHeader() {
 
         {/* Mobile actions */}
         <div className="ml-auto flex items-center gap-2 lg:hidden">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label="Toggle dark theme"
-            className="rounded-full p-2 text-(--stone) hover:bg-(--blush)"
-          >
-            {isDarkTheme ? <Sun size={20} /> : <MoonStar size={20} />}
-          </button>
           <button
             aria-label="Toggle navigation menu"
             className="rounded-lg border border-(--ash) p-2 text-(--ink)"

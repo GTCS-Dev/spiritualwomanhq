@@ -43,13 +43,13 @@ export default function PrivacyPolicyPage() {
             className={`relative overflow-hidden rounded-2xl px-6 py-6 ${
               item.featured
                 ? "bg-gradient-to-br from-[#980140] via-[#A2014A] to-[#001946] text-white"
-                : "border-2 border-[#E19508]/15 bg-white shadow-[0_28px_60px_-30px_rgba(0,25,70,0.15)]"
+                : "border-2 border-[#E19508]/15 bg-(--container) shadow-[0_28px_60px_-30px_rgba(0,25,70,0.15)]"
             }`}
           >
             <div className={`pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full border-2 ${item.featured ? "border-[#E19508]/20" : "border-[#E19508]/10"}`} />
             <div className="relative z-10">
-              <h2 className={`text-2xl font-bold ${item.featured ? "text-white" : "text-[#001946]"}`}>{item.title}</h2>
-              <p className={`mt-3 text-sm leading-7 ${item.featured ? "text-white/85" : "text-[#5d6068]"}`}>{item.text}</p>
+              <h2 className={`text-2xl font-bold ${item.featured ? "text-white" : "text-(--ink)"}`}>{item.title}</h2>
+              <p className={`mt-3 text-sm leading-7 ${item.featured ? "text-white/85" : "text-(--stone)"}`}>{item.text}</p>
               {(item as any).extra ? (
                 <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#E19508]">{(item as any).extra}</p>
               ) : null}
