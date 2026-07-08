@@ -101,14 +101,14 @@ export function VerseTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
     await fetchVerses();
   }
 
-  const inputCls = "w-full rounded-xl border border-(--ash) bg-white px-4 py-2.5 text-sm outline-none focus:border-(--rose)/60 focus:ring-2 focus:ring-(--rose)/15";
-  const labelCls = "block text-xs font-bold uppercase tracking-[0.16em] text-(--stone) mb-1.5";
+  const inputCls = "w-full rounded-xl border border-[#E19508]/15 bg-[#001233]/80 px-4 py-2.5 text-sm text-white outline-none focus:border-[#E19508]/60 focus:ring-2 focus:ring-[#E19508]/15 placeholder:text-white/40";
+  const labelCls = "block text-xs font-bold uppercase tracking-[0.16em] text-[#E19508]/80 mb-1.5";
 
   return (
     <div className="grid gap-8 lg:grid-cols-12">
       <form onSubmit={save} className="lg:col-span-5">
-        <div className="rounded-2xl border border-(--ash) bg-white p-6">
-          <h2 className="mb-5 text-xl font-extrabold text-(--ink)">{editingId ? "Edit Verse" : "Add Verse"}</h2>
+        <div className="rounded-2xl border border-[#E19508]/15 bg-[#001233]/70 backdrop-blur-sm p-6 shadow-[0_16px_40px_-20px_rgba(0,25,70,0.3)]">
+          <h2 className="mb-5 text-xl font-extrabold text-white">{editingId ? "Edit Verse" : "Add Verse"}</h2>
           <div className="grid gap-4">
             <div>
               <label className={labelCls}>Verse Text</label>
@@ -121,16 +121,16 @@ export function VerseTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
             <div>
               <label className={labelCls}>Period</label>
               <select className={inputCls} value={period} onChange={(event) => setPeriod(event.target.value)}>
-                <option value="week">Verse of the Week</option>
-                <option value="day">Verse of the Day</option>
+                <option value="week" className="bg-[#001233] text-white">Verse of the Week</option>
+                <option value="day" className="bg-[#001233] text-white">Verse of the Day</option>
               </select>
             </div>
             <div className="flex gap-2 pt-1">
-              <button type="submit" className="rounded-full bg-(--rose) px-6 py-2.5 font-bold text-white hover:bg-(--rose-dark)">
+              <button type="submit" className="rounded-full bg-[#980140] px-6 py-2.5 font-bold text-white transition-all duration-300 hover:bg-[#7c0134] hover:shadow-[0_6px_20px_-8px_rgba(152,1,64,0.5)]">
                 {editingId ? "Update Verse" : "Save Verse"}
               </button>
               {editingId && (
-                <button type="button" onClick={cancelEdit} className="rounded-full border border-(--ash) px-5 py-2.5 text-sm font-semibold text-(--stone) hover:text-(--ink)">
+                <button type="button" onClick={cancelEdit} className="rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-5 py-2.5 text-sm font-semibold text-white/70 transition-all duration-300 hover:border-[#E19508]/30 hover:text-white">
                   Cancel
                 </button>
               )}
@@ -140,34 +140,34 @@ export function VerseTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
       </form>
 
       <div className="lg:col-span-7">
-        <div className="rounded-2xl border border-(--ash) bg-white p-5">
-          <h2 className="mb-4 text-base font-extrabold text-(--ink)">Saved Verses ({verses.length})</h2>
+        <div className="rounded-2xl border border-[#E19508]/15 bg-[#001233]/70 backdrop-blur-sm p-5 shadow-[0_16px_40px_-20px_rgba(0,25,70,0.3)]">
+          <h2 className="mb-4 text-base font-extrabold text-white">Saved Verses ({verses.length})</h2>
           <div className="grid gap-4">
             {verses.map((verse) => (
-              <div key={verse._id} className={`rounded-xl border p-4 ${verse.isActive ? "border-(--rose)/40 bg-(--blush)" : "border-(--ash)"}`}>
+              <div key={verse._id} className={`rounded-xl border p-4 transition-all duration-300 ${verse.isActive ? "border-[#E19508]/30 bg-[#980140]/10" : "border-[#E19508]/10 bg-[#001233]/50 hover:border-[#E19508]/20"}`}>
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    {verse.isActive && <span className="mb-2 inline-block rounded-full bg-(--rose) px-2.5 py-0.5 text-xs font-bold text-white">Active</span>}
-                    <p className="text-sm font-semibold italic text-(--ink)">&ldquo;{verse.text}&rdquo;</p>
-                    <p className="mt-1 text-xs font-bold text-(--rose)">{verse.reference} — {verse.period === "day" ? "Day" : "Week"}</p>
+                    {verse.isActive && <span className="mb-2 inline-block rounded-full bg-[#980140] px-2.5 py-0.5 text-xs font-bold text-white shadow-[0_2px_8px_-4px_rgba(152,1,64,0.5)]">Active</span>}
+                    <p className="text-sm font-semibold italic text-white">&ldquo;{verse.text}&rdquo;</p>
+                    <p className="mt-1 text-xs font-bold text-[#E19508]">{verse.reference} — {verse.period === "day" ? "Day" : "Week"}</p>
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {!verse.isActive && (
-                    <button type="button" onClick={() => setActive(verse._id)} className="rounded-full bg-(--rose) px-3 py-1 text-xs font-bold text-white">
+                    <button type="button" onClick={() => setActive(verse._id)} className="rounded-full bg-[#980140] px-3 py-1 text-xs font-bold text-white transition-all duration-300 hover:bg-[#7c0134]">
                       Set Active
                     </button>
                   )}
-                  <button type="button" onClick={() => startEdit(verse)} className="flex items-center gap-1 rounded-full border border-(--ash) px-3 py-1 text-xs font-semibold hover:text-(--rose)">
+                  <button type="button" onClick={() => startEdit(verse)} className="flex items-center gap-1 rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-white/80 transition-all duration-300 hover:border-[#E19508]/30 hover:text-[#E19508]">
                     <Pencil size={11} /> Edit
                   </button>
-                  <button type="button" onClick={() => deleteVerse(verse._id)} className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50">
+                  <button type="button" onClick={() => deleteVerse(verse._id)} className="rounded-full border border-red-500/30 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-red-400 transition-all duration-300 hover:bg-red-500/10">
                     <Trash2 size={11} />
                   </button>
                 </div>
               </div>
             ))}
-            {verses.length === 0 && <p className="text-sm text-(--stone)">No verses yet. Add one to display on the home page.</p>}
+            {verses.length === 0 && <p className="text-sm text-white/50">No verses yet. Add one to display on the home page.</p>}
           </div>
         </div>
       </div>

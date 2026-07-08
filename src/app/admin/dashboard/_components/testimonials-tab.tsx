@@ -123,19 +123,19 @@ export function TestimonialsTab({ token, onUnauthorized, onStatus }: AdminTabPro
     await fetchAll();
   }
 
-  const inputCls = "w-full rounded-xl border border-(--ash) bg-white px-4 py-2.5 text-sm outline-none focus:border-(--rose)/60 focus:ring-2 focus:ring-(--rose)/15";
-  const labelCls = "block text-xs font-bold uppercase tracking-[0.16em] text-(--stone) mb-1.5";
+  const inputCls = "w-full rounded-xl border border-[#E19508]/15 bg-[#001233]/80 px-4 py-2.5 text-sm text-white outline-none focus:border-[#E19508]/60 focus:ring-2 focus:ring-[#E19508]/15 placeholder:text-white/40";
+  const labelCls = "block text-xs font-bold uppercase tracking-[0.16em] text-[#E19508]/80 mb-1.5";
 
   return (
     <div className="grid gap-8 lg:grid-cols-12">
       <form onSubmit={save} className="lg:col-span-5">
-        <div className="rounded-2xl border border-(--ash) bg-white p-6">
-          <h2 className="mb-5 text-xl font-extrabold text-(--ink)">{editingId ? "Edit Testimonial" : "Add Testimonial"}</h2>
+        <div className="rounded-2xl border border-[#E19508]/15 bg-[#001233]/70 backdrop-blur-sm p-6 shadow-[0_16px_40px_-20px_rgba(0,25,70,0.3)]">
+          <h2 className="mb-5 text-xl font-extrabold text-white">{editingId ? "Edit Testimonial" : "Add Testimonial"}</h2>
           <div className="grid gap-4">
             <div>
               <label className={labelCls}>Quote</label>
               <textarea className={`${inputCls} resize-none`} rows={4} placeholder="Their story in their words..." value={quote} onChange={(event) => setQuote(clampToMaxWords(event.target.value, MAX_TESTIMONIAL_WORDS))} />
-              <p className="mt-1 text-xs font-semibold text-(--stone)">{quoteWordCount}/{MAX_TESTIMONIAL_WORDS} words</p>
+              <p className="mt-1 text-xs font-semibold text-white/50">{quoteWordCount}/{MAX_TESTIMONIAL_WORDS} words</p>
             </div>
             <div>
               <label className={labelCls}>Name</label>
@@ -146,11 +146,11 @@ export function TestimonialsTab({ token, onUnauthorized, onStatus }: AdminTabPro
               <input className={inputCls} placeholder="e.g. Member since 2022" value={role} onChange={(event) => setRole(event.target.value)} />
             </div>
             <div className="flex gap-2 pt-1">
-              <button type="submit" className="rounded-full bg-(--rose) px-6 py-2.5 font-bold text-white hover:bg-(--rose-dark)">
+              <button type="submit" className="rounded-full bg-[#980140] px-6 py-2.5 font-bold text-white transition-all duration-300 hover:bg-[#7c0134] hover:shadow-[0_6px_20px_-8px_rgba(152,1,64,0.5)]">
                 {editingId ? "Update" : "Save Testimonial"}
               </button>
               {editingId && (
-                <button type="button" onClick={cancelEdit} className="rounded-full border border-(--ash) px-5 py-2.5 text-sm font-semibold text-(--stone) hover:text-(--ink)">
+                <button type="button" onClick={cancelEdit} className="rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-5 py-2.5 text-sm font-semibold text-white/70 transition-all duration-300 hover:border-[#E19508]/30 hover:text-white">
                   Cancel
                 </button>
               )}
@@ -160,38 +160,38 @@ export function TestimonialsTab({ token, onUnauthorized, onStatus }: AdminTabPro
       </form>
 
       <div className="lg:col-span-7">
-        <div className="rounded-2xl border border-(--ash) bg-white p-5">
-          <h2 className="mb-4 text-base font-extrabold text-(--ink)">All Testimonials ({testimonials.length})</h2>
+        <div className="rounded-2xl border border-[#E19508]/15 bg-[#001233]/70 backdrop-blur-sm p-5 shadow-[0_16px_40px_-20px_rgba(0,25,70,0.3)]">
+          <h2 className="mb-4 text-base font-extrabold text-white">All Testimonials ({testimonials.length})</h2>
           <div className="grid gap-4">
             {testimonials.map((testimonial) => (
-              <div key={testimonial._id} className={`rounded-xl border p-4 ${testimonial.isPublished ? "border-(--ash)" : "border-dashed border-(--stone)/40 opacity-70"}`}>
+              <div key={testimonial._id} className={`rounded-xl border p-4 transition-all duration-300 ${testimonial.isPublished ? "border-[#E19508]/10 bg-[#001233]/50 hover:border-[#E19508]/20" : "border-dashed border-white/20 bg-[#001233]/30 opacity-70"}`}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-(--blush) text-sm font-bold text-(--rose)">{testimonial.name[0]}</div>
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#980140]/20 text-sm font-bold text-[#E19508]">{testimonial.name[0]}</div>
                     <div>
-                      <p className="text-sm font-bold text-(--ink)">{testimonial.name}</p>
-                      <p className="text-xs text-(--stone)">{testimonial.role}</p>
+                      <p className="text-sm font-bold text-white">{testimonial.name}</p>
+                      <p className="text-xs text-white/50">{testimonial.role}</p>
                     </div>
                   </div>
-                  <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold ${testimonial.isPublished ? "bg-green-100 text-green-700" : "bg-(--ash) text-(--stone)"}`}>
+                  <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold ${testimonial.isPublished ? "bg-green-900/40 text-green-400" : "bg-white/10 text-white/50"}`}>
                     {testimonial.isPublished ? "Visible" : "Hidden"}
                   </span>
                 </div>
-                <p className="mt-3 text-sm italic text-(--stone)">&ldquo;{testimonial.quote}&rdquo;</p>
+                <p className="mt-3 text-sm italic text-white/70">&ldquo;{testimonial.quote}&rdquo;</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <button type="button" onClick={() => startEdit(testimonial)} className="flex items-center gap-1 rounded-full border border-(--ash) px-3 py-1 text-xs font-semibold hover:text-(--rose)">
+                  <button type="button" onClick={() => startEdit(testimonial)} className="flex items-center gap-1 rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-white/80 transition-all duration-300 hover:border-[#E19508]/30 hover:text-[#E19508]">
                     <Pencil size={11} /> Edit
                   </button>
-                  <button type="button" onClick={() => togglePublish(testimonial)} className="rounded-full border border-(--ash) px-3 py-1 text-xs font-semibold hover:border-(--rose)/40">
+                  <button type="button" onClick={() => togglePublish(testimonial)} className="rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-white/80 transition-all duration-300 hover:border-[#E19508]/30">
                     {testimonial.isPublished ? "Hide" : "Show"}
                   </button>
-                  <button type="button" onClick={() => deleteTestimonial(testimonial._id)} className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50">
+                  <button type="button" onClick={() => deleteTestimonial(testimonial._id)} className="rounded-full border border-red-500/30 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-red-400 transition-all duration-300 hover:bg-red-500/10">
                     <Trash2 size={11} />
                   </button>
                 </div>
               </div>
             ))}
-            {testimonials.length === 0 && <p className="text-sm text-(--stone)">No testimonials yet. Add one to feature stories on the home page.</p>}
+            {testimonials.length === 0 && <p className="text-sm text-white/50">No testimonials yet. Add one to feature stories on the home page.</p>}
           </div>
         </div>
       </div>

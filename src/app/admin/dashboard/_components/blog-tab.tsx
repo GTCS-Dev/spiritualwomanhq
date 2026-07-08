@@ -214,17 +214,17 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
     }));
   }
 
-  const inputCls = "w-full rounded-xl border border-(--ash) bg-white px-4 py-2.5 text-sm outline-none focus:border-(--rose)/60 focus:ring-2 focus:ring-(--rose)/15";
-  const labelCls = "block text-xs font-bold uppercase tracking-[0.16em] text-(--stone) mb-1.5";
+  const inputCls = "w-full rounded-xl border border-[#E19508]/15 bg-[#001233]/80 px-4 py-2.5 text-sm text-white outline-none focus:border-[#E19508]/60 focus:ring-2 focus:ring-[#E19508]/15 placeholder:text-white/40";
+  const labelCls = "block text-xs font-bold uppercase tracking-[0.16em] text-[#E19508]/80 mb-1.5";
 
   return (
     <div className="grid gap-8 lg:grid-cols-12">
       <form onSubmit={onPublish} className="lg:col-span-8">
-        <div className="rounded-2xl border border-(--ash) bg-white p-6 sm:p-8">
+        <div className="rounded-2xl border border-[#E19508]/15 bg-[#001233]/70 backdrop-blur-sm p-6 sm:p-8 shadow-[0_16px_40px_-20px_rgba(0,25,70,0.3)]">
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-extrabold text-(--ink)">{post.id ? "Edit Post" : "New Post"}</h2>
+            <h2 className="text-xl font-extrabold text-white">{post.id ? "Edit Post" : "New Post"}</h2>
             {post.id && (
-              <button type="button" onClick={resetDraft} className="flex items-center gap-1.5 rounded-full border border-(--ash) px-3 py-1.5 text-xs font-semibold text-(--stone) hover:text-(--rose)">
+              <button type="button" onClick={resetDraft} className="flex items-center gap-1.5 rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-3 py-1.5 text-xs font-semibold text-white/70 transition-all duration-300 hover:border-[#E19508]/30 hover:text-[#E19508]">
                 <X size={12} /> Clear
               </button>
             )}
@@ -243,7 +243,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
                 <label className={labelCls}>Category</label>
                 <select className={inputCls} value={post.category} onChange={(event) => setPost((current) => ({ ...current, category: event.target.value as PostCategory }))}>
                   {(Object.keys(categoryLabels) as PostCategory[]).map((category) => (
-                    <option key={category} value={category}>{categoryLabels[category]}</option>
+                    <option key={category} value={category} className="bg-[#001233] text-white">{categoryLabels[category]}</option>
                   ))}
                 </select>
               </div>
@@ -258,9 +258,9 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
               <label className={labelCls}>Cover Image</label>
               <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
                 {coverOptions.map((src) => (
-                  <button key={src} type="button" onClick={() => setPost((current) => ({ ...current, coverImage: src }))} className={`relative overflow-hidden rounded-xl border-2 transition ${post.coverImage === src ? "border-(--rose)" : "border-transparent"}`}>
+                  <button key={src} type="button" onClick={() => setPost((current) => ({ ...current, coverImage: src }))} className={`relative overflow-hidden rounded-xl border-2 transition-all duration-300 ${post.coverImage === src ? "border-[#E19508] shadow-[0_0_0_2px_rgba(225,149,8,0.2)]" : "border-[#E19508]/10 hover:border-[#E19508]/30"}`}>
                     <Image src={src} alt="" width={120} height={75} className="h-14 w-full object-cover" />
-                    {post.coverImage === src && <div className="absolute inset-0 flex items-center justify-center bg-(--rose)/20"><Check size={14} className="text-(--rose)" /></div>}
+                    {post.coverImage === src && <div className="absolute inset-0 flex items-center justify-center bg-[#980140]/40 backdrop-blur-[2px]"><Check size={14} className="text-[#E19508]" /></div>}
                   </button>
                 ))}
               </div>
@@ -269,7 +269,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
                 <input
                   type="file"
                   accept="image/*"
-                  className="text-sm"
+                  className="text-sm text-white/70 file:mr-3 file:rounded-full file:border-0 file:bg-[#980140] file:px-3 file:py-1 file:text-xs file:font-bold file:text-white"
                   onChange={async (event) => {
                     const file = event.target.files?.[0];
                     if (!file) return;
@@ -290,13 +290,13 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
               <div className="mb-3 flex items-center justify-between">
                 <label className={labelCls}>Content</label>
                 <div className="flex items-center gap-2">
-                  <select value={activeBlockType} onChange={(event) => setActiveBlockType(event.target.value as PostBlockType)} className="rounded-lg border border-(--ash) bg-white px-2 py-1 text-xs">
-                    <option value="paragraph">Paragraph</option>
-                    <option value="heading2">Heading 2</option>
-                    <option value="heading3">Heading 3</option>
-                    <option value="image">Image</option>
+                  <select value={activeBlockType} onChange={(event) => setActiveBlockType(event.target.value as PostBlockType)} className="rounded-lg border border-[#E19508]/15 bg-[#001233]/80 px-2 py-1 text-xs text-white">
+                    <option value="paragraph" className="bg-[#001233] text-white">Paragraph</option>
+                    <option value="heading2" className="bg-[#001233] text-white">Heading 2</option>
+                    <option value="heading3" className="bg-[#001233] text-white">Heading 3</option>
+                    <option value="image" className="bg-[#001233] text-white">Image</option>
                   </select>
-                  <button type="button" onClick={addBlock} className="flex items-center gap-1 rounded-full bg-(--rose) px-3 py-1 text-xs font-bold text-white">
+                  <button type="button" onClick={addBlock} className="flex items-center gap-1 rounded-full bg-[#980140] px-3 py-1 text-xs font-bold text-white transition-all duration-300 hover:bg-[#7c0134] hover:shadow-[0_4px_12px_-6px_rgba(152,1,64,0.5)]">
                     <Plus size={12} /> Add Block
                   </button>
                 </div>
@@ -304,10 +304,10 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
 
               <div className="grid gap-3">
                 {post.blocks.map((block, index) => (
-                  <div key={block.id} className="rounded-xl border border-(--ash) bg-(--blush)/40 p-4">
+                  <div key={block.id} className="rounded-xl border border-[#E19508]/10 bg-[#001233]/50 p-4 transition-all duration-300 hover:border-[#E19508]/20">
                     <div className="mb-2 flex items-center justify-between">
-                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-(--rose)">Block {index + 1} — {block.type}</p>
-                      <button type="button" onClick={() => removeBlock(block.id)} className="text-(--stone) hover:text-red-500"><Trash2 size={14} /></button>
+                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#E19508]">Block {index + 1} — {block.type}</p>
+                      <button type="button" onClick={() => removeBlock(block.id)} className="text-white/50 transition-colors hover:text-red-400"><Trash2 size={14} /></button>
                     </div>
 
                     {block.type === "image" ? (
@@ -316,7 +316,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
                         <input
                           type="file"
                           accept="image/*"
-                          className="mt-2 text-sm"
+                          className="mt-2 text-sm text-white/70 file:mr-3 file:rounded-full file:border-0 file:bg-[#980140] file:px-3 file:py-1 file:text-xs file:font-bold file:text-white"
                           onChange={async (event) => {
                             const file = event.target.files?.[0];
                             if (!file) return;
@@ -334,12 +334,12 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
                       <div>
                         <textarea className={`${inputCls} resize-none`} rows={3} value={block.text ?? ""} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, text: event.target.value }))} />
                         {block.type === "paragraph" && (
-                          <div className="mt-2 flex gap-4 text-xs">
-                            <label className="flex items-center gap-1.5 font-semibold">
-                              <input type="checkbox" checked={Boolean(block.bold)} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, bold: event.target.checked }))} /> Bold
+                          <div className="mt-2 flex gap-4 text-xs text-white/70">
+                            <label className="flex items-center gap-1.5 font-semibold cursor-pointer">
+                              <input type="checkbox" className="accent-[#E19508]" checked={Boolean(block.bold)} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, bold: event.target.checked }))} /> Bold
                             </label>
-                            <label className="flex items-center gap-1.5 font-semibold">
-                              <input type="checkbox" checked={Boolean(block.italic)} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, italic: event.target.checked }))} /> Italic
+                            <label className="flex items-center gap-1.5 font-semibold cursor-pointer">
+                              <input type="checkbox" className="accent-[#E19508]" checked={Boolean(block.italic)} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, italic: event.target.checked }))} /> Italic
                             </label>
                           </div>
                         )}
@@ -348,16 +348,16 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
                   </div>
                 ))}
               </div>
-              <p className="mt-2 text-xs text-(--stone)">Excerpt is auto-generated from the first paragraph. Max 150 characters.</p>
+              <p className="mt-2 text-xs text-white/50">Excerpt is auto-generated from the first paragraph. Max 150 characters.</p>
             </div>
 
             {/* Publish */}
-            <div className="flex items-center justify-between border-t border-(--ash) pt-5">
-              <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold">
-                <input type="checkbox" checked={post.isPublished} onChange={(event) => setPost((current) => ({ ...current, isPublished: event.target.checked }))} />
+            <div className="flex items-center justify-between border-t border-[#E19508]/10 pt-5">
+              <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold text-white/80">
+                <input type="checkbox" className="accent-[#E19508]" checked={post.isPublished} onChange={(event) => setPost((current) => ({ ...current, isPublished: event.target.checked }))} />
                 Publish immediately
               </label>
-              <button type="submit" disabled={!canPublish} className="rounded-full bg-(--rose) px-6 py-2.5 font-bold text-white transition-colors hover:bg-(--rose-dark) disabled:opacity-40">
+              <button type="submit" disabled={!canPublish} className="rounded-full bg-[#980140] px-6 py-2.5 font-bold text-white transition-all duration-300 hover:bg-[#7c0134] hover:shadow-[0_6px_20px_-8px_rgba(152,1,64,0.5)] disabled:opacity-40">
                 {post.id ? "Update Post" : "Publish Post"}
               </button>
             </div>
@@ -366,28 +366,28 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
       </form>
 
       <aside className="lg:col-span-4">
-        <div className="rounded-2xl border border-(--ash) bg-white p-5">
-          <h2 className="mb-4 text-base font-extrabold text-(--ink)">All Posts ({posts.length})</h2>
+        <div className="rounded-2xl border border-[#E19508]/15 bg-[#001233]/70 backdrop-blur-sm p-5 shadow-[0_16px_40px_-20px_rgba(0,25,70,0.3)]">
+          <h2 className="mb-4 text-base font-extrabold text-white">All Posts ({posts.length})</h2>
           <div className="grid max-h-[800px] gap-3 overflow-auto pr-1">
             {posts.map((item) => (
-              <div key={item.id} className="rounded-xl border border-(--ash) p-4">
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-(--rose)">{categoryLabels[item.category]} — {item.isPublished ? "Published" : "Draft"}</p>
-                <p className="mt-1.5 text-sm font-bold leading-snug text-(--ink)">{item.title}</p>
-                <p className="mt-1 text-xs text-(--stone)">{new Date(item.createdAt).toLocaleDateString()}</p>
+              <div key={item.id} className="rounded-xl border border-[#E19508]/10 bg-[#001233]/50 p-4 transition-all duration-300 hover:border-[#E19508]/20">
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#E19508]">{categoryLabels[item.category]} — {item.isPublished ? "Published" : "Draft"}</p>
+                <p className="mt-1.5 text-sm font-bold leading-snug text-white">{item.title}</p>
+                <p className="mt-1 text-xs text-white/50">{new Date(item.createdAt).toLocaleDateString()}</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <button type="button" onClick={() => editPost(item)} className="flex items-center gap-1 rounded-full border border-(--ash) px-3 py-1 text-xs font-semibold hover:border-(--rose)/40 hover:text-(--rose)">
+                  <button type="button" onClick={() => editPost(item)} className="flex items-center gap-1 rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-white/80 transition-all duration-300 hover:border-[#E19508]/30 hover:text-[#E19508]">
                     <Pencil size={11} /> Edit
                   </button>
-                  <button type="button" onClick={() => togglePublish(item)} className="rounded-full border border-(--ash) px-3 py-1 text-xs font-semibold hover:border-(--rose)/40">
+                  <button type="button" onClick={() => togglePublish(item)} className="rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-white/80 transition-all duration-300 hover:border-[#E19508]/30">
                     {item.isPublished ? "Unpublish" : "Publish"}
                   </button>
-                  <button type="button" onClick={() => deletePost(item.id)} className="rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50">
+                  <button type="button" onClick={() => deletePost(item.id)} className="rounded-full border border-red-500/30 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-red-400 transition-all duration-300 hover:bg-red-500/10">
                     <Trash2 size={11} />
                   </button>
                 </div>
               </div>
             ))}
-            {posts.length === 0 && <p className="text-sm text-(--stone)">No posts yet. Create your first one.</p>}
+            {posts.length === 0 && <p className="text-sm text-white/50">No posts yet. Create your first one.</p>}
           </div>
         </div>
       </aside>

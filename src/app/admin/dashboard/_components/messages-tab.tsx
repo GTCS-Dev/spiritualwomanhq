@@ -27,25 +27,25 @@ export function MessagesTab({ token, onUnauthorized, onStatus }: AdminTabProps) 
   }, [token, onUnauthorized, onStatus]);
 
   return (
-    <div className="rounded-2xl border border-(--ash) bg-white p-6">
-      <h2 className="mb-5 text-xl font-extrabold text-(--ink)">Contact Messages ({messages.length})</h2>
+    <div className="rounded-2xl border border-[#E19508]/15 bg-[#001233]/70 backdrop-blur-sm p-6 shadow-[0_16px_40px_-20px_rgba(0,25,70,0.3)]">
+      <h2 className="mb-5 text-xl font-extrabold text-white">Contact Messages ({messages.length})</h2>
       {messages.length === 0 ? (
-        <p className="text-sm text-(--stone)">No messages yet.</p>
+        <p className="text-sm text-white/50">No messages yet.</p>
       ) : (
         <div className="grid gap-3">
           {messages.map((message) => (
-            <div key={message._id} className="rounded-xl border border-(--ash) p-4">
+            <div key={message._id} className="rounded-xl border border-[#E19508]/10 bg-[#001233]/50 p-4 transition-all duration-300 hover:border-[#E19508]/20">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-bold text-(--ink)">{message.name}</p>
-                  <p className="text-xs text-(--stone)">{message.email} — {new Date(message.createdAt).toLocaleDateString()}</p>
-                  {message.subject && <p className="mt-1 text-xs font-semibold text-(--rose)">{message.subject}</p>}
+                  <p className="font-bold text-white">{message.name}</p>
+                  <p className="text-xs text-white/50">{message.email} — {new Date(message.createdAt).toLocaleDateString()}</p>
+                  {message.subject && <p className="mt-1 text-xs font-semibold text-[#E19508]">{message.subject}</p>}
                 </div>
-                <button type="button" onClick={() => setExpanded(expanded === message._id ? null : message._id)} className="rounded-full border border-(--ash) px-3 py-1 text-xs font-semibold hover:text-(--rose)">
+                <button type="button" onClick={() => setExpanded(expanded === message._id ? null : message._id)} className="rounded-full border border-[#E19508]/15 bg-[#001233]/50 px-3 py-1 text-xs font-semibold text-white/80 transition-all duration-300 hover:border-[#E19508]/30 hover:text-[#E19508]">
                   {expanded === message._id ? "Collapse" : "Read"}
                 </button>
               </div>
-              {expanded === message._id && <p className="mt-3 rounded-lg bg-(--blush) px-4 py-3 text-sm leading-7 text-(--stone)">{message.message}</p>}
+              {expanded === message._id && <p className="mt-3 rounded-lg bg-[#001233]/60 border border-[#E19508]/8 px-4 py-3 text-sm leading-7 text-white/80">{message.message}</p>}
             </div>
           ))}
         </div>
