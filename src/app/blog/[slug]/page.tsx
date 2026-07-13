@@ -83,7 +83,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               <div className="border-t border-white/[0.08] pt-8">
-                <BlogContentRenderer blocks={post.blocks} />
+                <BlogContentRenderer blocks={post.blocks} htmlContent={post.content} />
               </div>
 
               {/* ── POST FOOTER ── */}

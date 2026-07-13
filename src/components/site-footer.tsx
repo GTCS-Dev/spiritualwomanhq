@@ -10,7 +10,7 @@ export function SiteFooter() {
 
   const linkCls = (href: string) =>
     `flex items-center gap-2 py-1 text-sm transition-colors ${
-      isActive(href) ? "font-semibold text-[#E19508]" : "text-white hover:text-[#E19508]"
+      isActive(href) ? "font-semibold text-white" : "text-white hover:text-[#E19508]"
     }`;
 
   return (

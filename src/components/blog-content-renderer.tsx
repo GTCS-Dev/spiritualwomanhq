@@ -3,9 +3,21 @@ import { PostBlock } from "@/types/blog";
 
 type BlogContentRendererProps = {
   blocks: PostBlock[];
+  htmlContent?: string;
 };
 
-export function BlogContentRenderer({ blocks }: BlogContentRendererProps) {
+export function BlogContentRenderer({ blocks, htmlContent }: BlogContentRendererProps) {
+  // If HTML content is provided (from TipTap editor), render it directly
+  if (htmlContent) {
+    return (
+      <div
+        className="mx-auto max-w-3xl text-white antialiased selection:bg-[#980140]/40 selection:text-white prose prose-invert prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h1:mt-8 prose-h1:mb-4 prose-h2:text-3xl prose-h2:mt-6 prose-h2:mb-3 prose-h3:text-2xl prose-h3:mt-5 prose-h3:mb-2 prose-p:text-sm prose-p:leading-relaxed prose-p:text-white/70 prose-p:mb-4 prose-a:text-[#E19508] prose-a:underline prose-a:underline-offset-2 prose-a:hover:text-[#f0a820] prose-img:rounded-xl prose-img:my-6 prose-img:mx-auto prose-img:max-w-full prose-img:h-auto prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-4 prose-ol:list-decimal prose-ol:pl-6 prose-ol:mb-4 prose-li:text-white/70 prose-li:leading-relaxed prose-li:mb-1 prose-strong:text-white prose-strong:font-bold prose-em:text-white/90"
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
+      />
+    );
+  }
+
+  // Fallback to block-based rendering for legacy posts
   return (
     <div className="mx-auto max-w-3xl space-y-6 text-white antialiased selection:bg-[#980140]/40 selection:text-white">
       {blocks.map((block) => {

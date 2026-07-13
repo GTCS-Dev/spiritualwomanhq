@@ -17,11 +17,12 @@ import {
   parseApiError,
 } from "./shared";
 import { blogCoverImages } from "@/lib/site-images";
+import { RichTextEditor } from "@/components/rich-text-editor";
 
 export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
-  const [post, setPost] = useState<DraftPost>({
+const [post, setPost] = useState<DraftPost>({
     ...initialPost,
-    blocks: [{ id: crypto.randomUUID(), type: "paragraph", text: "", bold: false, italic: false }],
+    blocks: [],
   });
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [activeBlockType, setActiveBlockType] = useState<PostBlockType>("paragraph");
@@ -45,16 +46,13 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
     if (token) fetchPosts();
   }, [token, fetchPosts]);
 
-  /** Auto-generate excerpt from the first paragraph block text */
-  function generateExcerpt(blocks: PostBlock[]): string {
-    // Find the first paragraph block with text
-    const firstParagraph = blocks.find(
-      (b) => b.type === "paragraph" && b.text && b.text.trim().length > 0
-    );
-    if (!firstParagraph || !firstParagraph.text) return "";
-    const text = firstParagraph.text.trim();
-    if (text.length <= 150) return text;
-    return text.slice(0, 147).trimEnd() + "...";
+  /** Auto-generate excerpt from the first paragraph of HTML content */
+  function generateExcerpt(html: string): string {
+    // Strip HTML tags and get plain text
+    const plainText = html.replace(/<[^>]*>/g, "").trim();
+    if (!plainText) return "";
+    if (plainText.length <= 150) return plainText;
+    return plainText.slice(0, 147).trimEnd() + "...";
   }
 
   function resetDraft() {
@@ -68,14 +66,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
     if (input.title.trim().length < 4) return "Title must be at least 4 characters.";
     if (input.coverImage.trim().length < 4) return "Cover image is required.";
     if (input.author.trim().length < 2) return "Author must be at least 2 characters.";
-    if (input.blocks.length < 1) return "Add at least one content block.";
-    for (const block of input.blocks) {
-      if (block.type === "image") {
-        if (!block.imageUrl?.trim()) return "Each image block must include an image URL.";
-      } else if (!block.text?.trim()) {
-        return `Block "${block.type}" requires text.`;
-      }
-    }
+    if (!input.content || input.content.replace(/<[^>]*>/g, "").trim().length < 10) return "Content must have at least 10 characters of text.";
     return null;
   }
 
@@ -99,8 +90,8 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
       return;
     }
     try {
-      // Auto-generate excerpt from first paragraph block
-      const excerpt = generateExcerpt(post.blocks);
+      // Auto-generate excerpt from HTML content
+      const excerpt = generateExcerpt(post.content);
       if (!excerpt) {
         onStatus("Add at least one paragraph with text to generate the excerpt.");
         return;
@@ -115,7 +106,7 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
           excerpt,
           category: post.category,
           coverImage: post.coverImage,
-          content: excerpt,
+          content: post.content,
           blocks: post.blocks,
           isPublished: post.isPublished,
           author: post.author,
@@ -181,37 +172,6 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
       author: target.author,
     });
     onStatus(`Editing: "${target.title}"`);
-  }
-
-  function addBlock() {
-    setPost((current) => ({
-      ...current,
-      blocks: [
-        ...current.blocks,
-        {
-          id: crypto.randomUUID(),
-          type: activeBlockType,
-          text: activeBlockType === "image" ? undefined : "",
-          imageUrl: activeBlockType === "image" ? blogCoverImages[0] : undefined,
-          bold: false,
-          italic: false,
-        },
-      ],
-    }));
-  }
-
-  function updateBlock(blockId: string, updater: (block: PostBlock) => PostBlock) {
-    setPost((current) => ({
-      ...current,
-      blocks: current.blocks.map((block) => (block.id === blockId ? updater(block) : block)),
-    }));
-  }
-
-  function removeBlock(blockId: string) {
-    setPost((current) => ({
-      ...current,
-      blocks: current.blocks.filter((block) => block.id !== blockId),
-    }));
   }
 
   const inputCls = "w-full rounded-xl border border-[#E19508]/15 bg-[#001233]/80 px-4 py-2.5 text-sm text-white outline-none focus:border-[#E19508]/60 focus:ring-2 focus:ring-[#E19508]/15 placeholder:text-white/40";
@@ -285,69 +245,13 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
               </div>
             </div>
 
-            {/* Content Blocks */}
+            {/* Rich Text Content */}
             <div>
-              <div className="mb-3 flex items-center justify-between">
-                <label className={labelCls}>Content</label>
-                <div className="flex items-center gap-2">
-                  <select value={activeBlockType} onChange={(event) => setActiveBlockType(event.target.value as PostBlockType)} className="rounded-lg border border-[#E19508]/15 bg-[#001233]/80 px-2 py-1 text-xs text-white">
-                    <option value="paragraph" className="bg-[#001233] text-white">Paragraph</option>
-                    <option value="heading2" className="bg-[#001233] text-white">Heading 2</option>
-                    <option value="heading3" className="bg-[#001233] text-white">Heading 3</option>
-                    <option value="image" className="bg-[#001233] text-white">Image</option>
-                  </select>
-                  <button type="button" onClick={addBlock} className="flex items-center gap-1 rounded-full bg-[#980140] px-3 py-1 text-xs font-bold text-white transition-all duration-300 hover:bg-[#7c0134] hover:shadow-[0_4px_12px_-6px_rgba(152,1,64,0.5)]">
-                    <Plus size={12} /> Add Block
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid gap-3">
-                {post.blocks.map((block, index) => (
-                  <div key={block.id} className="rounded-xl border border-[#E19508]/10 bg-[#001233]/50 p-4 transition-all duration-300 hover:border-[#E19508]/20">
-                    <div className="mb-2 flex items-center justify-between">
-                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#E19508]">Block {index + 1} — {block.type}</p>
-                      <button type="button" onClick={() => removeBlock(block.id)} className="text-white/50 transition-colors hover:text-red-400"><Trash2 size={14} /></button>
-                    </div>
-
-                    {block.type === "image" ? (
-                      <div>
-                        <input className={inputCls} placeholder="Image URL" value={block.imageUrl ?? ""} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, imageUrl: event.target.value }))} />
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="mt-2 text-sm text-white/70 file:mr-3 file:rounded-full file:border-0 file:bg-[#980140] file:px-3 file:py-1 file:text-xs file:font-bold file:text-white"
-                          onChange={async (event) => {
-                            const file = event.target.files?.[0];
-                            if (!file) return;
-                            try {
-                              const url = await uploadFile(file);
-                              updateBlock(block.id, (current) => ({ ...current, imageUrl: url }));
-                              onStatus("Block image uploaded.");
-                            } catch {
-                              onStatus("Block image upload failed.");
-                            }
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <div>
-                        <textarea className={`${inputCls} resize-none`} rows={3} value={block.text ?? ""} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, text: event.target.value }))} />
-                        {block.type === "paragraph" && (
-                          <div className="mt-2 flex gap-4 text-xs text-white/70">
-                            <label className="flex items-center gap-1.5 font-semibold cursor-pointer">
-                              <input type="checkbox" className="accent-[#E19508]" checked={Boolean(block.bold)} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, bold: event.target.checked }))} /> Bold
-                            </label>
-                            <label className="flex items-center gap-1.5 font-semibold cursor-pointer">
-                              <input type="checkbox" className="accent-[#E19508]" checked={Boolean(block.italic)} onChange={(event) => updateBlock(block.id, (current) => ({ ...current, italic: event.target.checked }))} /> Italic
-                            </label>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <label className={labelCls}>Content</label>
+              <RichTextEditor
+                content={post.content}
+                onChange={(html) => setPost((current) => ({ ...current, content: html }))}
+              />
               <p className="mt-2 text-xs text-white/50">Excerpt is auto-generated from the first paragraph. Max 150 characters.</p>
             </div>
 
