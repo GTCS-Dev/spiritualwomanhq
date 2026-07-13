@@ -98,19 +98,23 @@ const [post, setPost] = useState<DraftPost>({
       }
 
       const endpoint = post.id ? `${apiUrl}/posts/${post.id}` : `${apiUrl}/posts`;
+      // Only include blocks if there are actual blocks (legacy support)
+      const payload: Record<string, unknown> = {
+        title: post.title,
+        excerpt,
+        category: post.category,
+        coverImage: post.coverImage,
+        content: post.content,
+        isPublished: post.isPublished,
+        author: post.author,
+      };
+      if (post.blocks && post.blocks.length > 0) {
+        payload.blocks = post.blocks;
+      }
       const response = await fetch(endpoint, {
         method: post.id ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({
-          title: post.title,
-          excerpt,
-          category: post.category,
-          coverImage: post.coverImage,
-          content: post.content,
-          blocks: post.blocks,
-          isPublished: post.isPublished,
-          author: post.author,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
