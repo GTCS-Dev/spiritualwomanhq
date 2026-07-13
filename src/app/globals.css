@@ -15,6 +15,15 @@
   --neutral-700: #1f1e2b;
   --neutral-100: #f3f5f7;
   --neutral-200: #e5e7eb;
+
+  /* ── Semantic design tokens (light/dark aware) ── */
+  --ink: #1a1a2e;
+  --ash: rgba(225, 149, 8, 0.20);
+  --container: #ffffff;
+  --stone: rgba(80, 80, 100, 0.75);
+  --rose: #980140;
+  --blush: rgba(152, 1, 64, 0.07);
+  --rose-dark: #7c0134;
 }
 
 @theme inline {
@@ -101,11 +110,6 @@ select {
               transform 200ms ease;
 }
 
-/* Header */
-header {
-  background-color: var(--neutral-900);
-  border-bottom: 1px solid rgba(225, 149, 8, 0.12);
-}
 
 /* Form elements */
 input,

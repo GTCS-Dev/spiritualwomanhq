@@ -12,10 +12,18 @@ type ContentPageShellProps = {
 
 export function ContentPageShell({ title, subtitle, description, image, children }: ContentPageShellProps) {
   return (
-    <div className="min-h-screen text-(--ink)">
-      <SiteHeader />
-      <main className="w-full pb-20">
-        <section className="relative left-1/2 mt-0 w-screen -translate-x-1/2 overflow-hidden border-b border-[#E19508]/15">
+    <div className="min-h-screen bg-[#001946] text-white antialiased selection:bg-[#980140]/40 selection:text-white relative">
+      {/* ── ATMOSPHERIC BRAND GLOWS ── */}
+      <div className="absolute top-[15%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#980140]/10 blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-[45%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-[#E19508]/5 blur-[150px] pointer-events-none z-0" />
+      <div className="absolute bottom-[10%] left-[-5%] w-[40vw] h-[40vw] rounded-full bg-[#980140]/8 blur-[100px] pointer-events-none z-0" />
+
+      <div className="bg-[#001233]/90 backdrop-blur-md border-b border-white/10 relative z-50">
+        <SiteHeader />
+      </div>
+
+      <main className="w-full overflow-x-hidden relative z-10 pb-20">
+        <section className="relative left-1/2 mt-0 w-screen -translate-x-1/2 overflow-hidden border-b border-white/[0.06]">
           <Image src={image} alt={title} width={2200} height={980} className="h-[56vh] min-h-[440px] w-full object-cover object-center" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-[#001946]/85 via-[#05193B]/50 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#001946]/60 via-transparent to-transparent" />
@@ -43,7 +51,10 @@ export function ContentPageShell({ title, subtitle, description, image, children
 
         <section className="mx-auto mt-18 w-full max-w-6xl px-4 sm:mt-20 sm:px-6 lg:px-8">{children}</section>
       </main>
-      <SiteFooter />
+
+      <div className="bg-[#001233] border-t border-white/10 relative z-20">
+        <SiteFooter />
+      </div>
     </div>
   );
 }

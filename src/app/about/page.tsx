@@ -16,6 +16,8 @@ export default function AboutPage() {
           {/* Gold decorative circles */}
           <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full border-2 border-[#E19508]/10 transition-all duration-700 group-hover:scale-110 group-hover:border-[#E19508]/15" />
           <div className="pointer-events-none absolute -bottom-5 -right-5 h-24 w-24 rounded-full border-2 border-[#E19508]/8" />
+          <div className="pointer-events-none absolute left-[60%] top-[20%] h-16 w-16 rounded-full border-2 border-[#E19508]/6" />
+          <div className="pointer-events-none absolute right-[10%] bottom-[30%] h-12 w-12 rounded-full border-2 border-[#E19508]/5" />
 
           <div className="relative z-10 grid gap-0 md:grid-cols-[1.2fr_0.8fr]">
             <div className="px-8 py-10 sm:px-12 sm:py-12">
@@ -36,7 +38,7 @@ export default function AboutPage() {
             </div>
             <div className="relative min-h-[320px] overflow-hidden md:min-h-full">
               <Image
-                src="/new/group-four-gorgeous-african-american-womans-wear-summer-hat-holding-hands-praying-green-grass-park.jpg"
+                src="/new/about.jpg"
                 alt="Women praying together in fellowship"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -87,6 +89,8 @@ export default function AboutPage() {
         {/* ── What We Offer ── */}
         <section className="group relative overflow-hidden rounded-2xl border-2 border-[#E19508]/15 bg-(--container) px-8 py-10 sm:px-12 shadow-[0_28px_60px_-30px_rgba(0,25,70,0.2)] transition-shadow duration-500 hover:shadow-[0_32px_80px_-28px_rgba(0,25,70,0.3)]">
           <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full border-2 border-[#E19508]/8 transition-all duration-700 group-hover:scale-110" />
+          <div className="pointer-events-none absolute -left-10 bottom-[10%] h-28 w-28 rounded-full border-2 border-[#E19508]/6" />
+          <div className="pointer-events-none absolute right-[20%] top-[40%] h-14 w-14 rounded-full border-2 border-[#E19508]/5" />
           <div className="relative z-10">
             <span className="inline-flex items-center gap-2 rounded-full border border-[#E19508]/25 bg-[#E19508]/8 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-[#E19508]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#E19508]" />

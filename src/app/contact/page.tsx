@@ -193,6 +193,8 @@ export default function ContactPage() {
         {/* ── BRAND DECORATIVE ELEMENTS ── */}
         <div className="pointer-events-none absolute -left-10 -top-10 h-40 w-40 rounded-full border-2 border-[#E19508]/10 opacity-40" />
         <div className="pointer-events-none absolute -bottom-5 -right-5 h-24 w-24 rounded-full border-2 border-[#980140]/10 opacity-30" />
+        <div className="pointer-events-none absolute left-[50%] top-[15%] h-20 w-20 rounded-full border-2 border-[#E19508]/6 opacity-30" />
+        <div className="pointer-events-none absolute right-[10%] bottom-[40%] h-14 w-14 rounded-full border-2 border-[#E19508]/5 opacity-25" />
         
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#E19508]">Connect Directly</p>
         <h2 className="mt-1 font-serif text-2xl font-bold tracking-tight text-white sm:text-3xl">Send Us A Message</h2>

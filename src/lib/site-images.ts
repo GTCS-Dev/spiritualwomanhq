@@ -1,7 +1,7 @@
 export const heroImages = [
-  "/new/shallow-focus-shot-white-female-reading-bible-bright-rays-sun.jpg",
-  "/new/hands-folded-prayer-holy-bible-church.jpg",
-  "/new/group-four-gorgeous-african-american-womans-wear-summer-hat-holding-hands-praying-green-grass-park.jpg",
+  "/new/about1.jpg",
+  "/new/contact.jpg",
+  "/new/contact.jpg",
 ] as const;
 
 export const ministryGalleryImages = [...heroImages] as const;
@@ -20,7 +20,7 @@ export const pageHeroImages = {
   contact: heroImages[1],
   watch: heroImages[1],
   connect: heroImages[2],
-  competitions: blogCoverImages[1],
+  competitions: "/new/competition.jpg",
   privacy: blogCoverImages[0],
   terms: blogCoverImages[3],
 } as const;

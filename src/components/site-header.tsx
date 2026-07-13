@@ -27,10 +27,10 @@ export function SiteHeader() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#E19508]/15 bg-(--container)/96 shadow-[0_8px_24px_-18px_rgba(0,25,70,0.28)] backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[#E19508]/15 bg-[#001233]/95 shadow-[0_8px_24px_-18px_rgba(0,0,0,0.4)] backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-4 py-3.5 sm:px-6">
         {/* Logo — always visible */}
-        <SiteLogo />
+        <SiteLogo lightMode />
 
         {/* Desktop nav — centred, fills space, links flush right */}
         <nav className="ml-auto hidden items-center gap-1 lg:flex">
@@ -40,8 +40,8 @@ export function SiteHeader() {
               href={item.href}
               className={`rounded-full px-3.5 py-1.5 text-sm font-medium tracking-wide transition-colors ${
                 isActive(item.href)
-                  ? "bg-(--blush) font-semibold text-(--rose)"
-                  : "text-(--stone) hover:bg-(--blush) hover:text-(--rose)"
+                  ? "bg-[#980140]/15 font-semibold text-[#E19508]"
+                  : "text-white/70 hover:bg-[#980140]/10 hover:text-[#E19508]"
               }`}
             >
               {item.label}
@@ -49,11 +49,11 @@ export function SiteHeader() {
           ))}
 
           {/* Separator */}
-          <span className="mx-1.5 h-5 w-px bg-(--ash)" aria-hidden />
+          <span className="mx-1.5 h-5 w-px bg-[#E19508]/15" aria-hidden />
 
           <Link
             href="/admin"
-            className="ml-1 rounded-full bg-(--rose) px-5 py-2 text-sm font-bold text-white transition-colors hover:bg-(--rose-dark)"
+            className="ml-1 rounded-full bg-gradient-to-r from-[#980140] to-[#A2014A] px-5 py-2 text-sm font-bold text-white transition-all hover:shadow-[0_4px_14px_-6px_rgba(152,1,64,0.5)]"
           >
             Admin
           </Link>
@@ -63,7 +63,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2 lg:hidden">
           <button
             aria-label="Toggle navigation menu"
-            className="rounded-lg border border-(--ash) p-2 text-(--ink)"
+            className="rounded-lg border border-[#E19508]/15 bg-[#001946]/60 p-2 text-white"
             onClick={() => setIsOpen((prev) => !prev)}
             type="button"
           >
@@ -79,7 +79,7 @@ export function SiteHeader() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
-            className="border-t border-(--ash) bg-(--container) px-4 py-3 lg:hidden"
+            className="border-t border-[#E19508]/15 bg-[#001233]/98 px-4 py-3 lg:hidden"
           >
             <motion.div
               initial="hidden"
@@ -100,8 +100,8 @@ export function SiteHeader() {
                     href={item.href}
                     className={`block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${
                       isActive(item.href)
-                        ? "bg-(--blush) text-(--rose)"
-                        : "text-(--ink) hover:bg-(--blush) hover:text-(--rose)"
+                        ? "bg-[#980140]/15 text-[#E19508]"
+                        : "text-white/70 hover:bg-[#980140]/10 hover:text-[#E19508]"
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
@@ -112,7 +112,7 @@ export function SiteHeader() {
               <motion.div variants={{ hidden: { opacity: 0, y: -8 }, show: { opacity: 1, y: 0 } }} transition={{ duration: 0.2 }} className="col-span-2 sm:col-span-3">
                 <Link
                   href="/admin"
-                  className="mt-1 block rounded-xl bg-(--rose) px-4 py-2.5 text-center text-sm font-bold text-white"
+                  className="mt-1 block rounded-xl bg-gradient-to-r from-[#980140] to-[#A2014A] px-4 py-2.5 text-center text-sm font-bold text-white"
                   onClick={() => setIsOpen(false)}
                 >
                   Admin Dashboard

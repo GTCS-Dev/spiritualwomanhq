@@ -65,10 +65,7 @@ export default function Home() {
       <div className="absolute top-[45%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-[#E19508]/5 blur-[150px] pointer-events-none z-0" />
       <div className="absolute bottom-[10%] left-[-5%] w-[40vw] h-[40vw] rounded-full bg-[#980140]/8 blur-[100px] pointer-events-none z-0" />
 
-      {/* Top Navigation Bar */}
-      <div className="bg-[#001233]/90 backdrop-blur-md border-b border-white/10 relative z-50">
-        <SiteHeader />
-      </div>
+      <SiteHeader />
 
       <main className="w-full overflow-x-hidden relative z-10">
         <HeroSlider />
