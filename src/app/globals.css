@@ -27,8 +27,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-body);
-  --font-serif: var(--font-heading);
+  --font-sans: var(--font-roboto);
+  --font-serif: var(--font-roboto);
 }
 
 html {
@@ -47,7 +47,7 @@ html {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), 'Georgia', serif;
+  font-family: var(--font-roboto), 'Roboto', system-ui, sans-serif;
   letter-spacing: -0.02em;
   line-height: 1.1;
   text-wrap: balance;
@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 body {
   background-color: var(--neutral-900);
   color: var(--neutral-100);
-  font-family: var(--font-body), 'Roboto', system-ui, sans-serif;
+  font-family: var(--font-roboto), 'Roboto', system-ui, sans-serif;
   line-height: 1.75;
   font-feature-settings: "ss01" 1, "cv02" 1, "cv11" 1;
   text-rendering: optimizeLegibility;

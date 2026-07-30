@@ -38,7 +38,7 @@ export function HeroSlider() {
                 className="flex items-center gap-3"
               >
                 <span className="h-px w-10 bg-[#E19508]" />
-                <span className="font-[family-name:var(--font-body)] text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-[#E19508]">
+                <span className="font-[family-name:var(--font-roboto)] text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-[#E19508]">
                   CONNECT • GROW • IMPACT
                 </span>
               </motion.div>
@@ -50,14 +50,14 @@ export function HeroSlider() {
                 transition={{ duration: 0.55, delay: 0.2 }}
                 className="mt-6 max-w-[540px]"
               >
-                <span className="font-[family-name:var(--font-heading)] text-[clamp(2.8rem,7vw,5rem)] font-bold leading-[1.02] tracking-[-0.02em] text-white">
+                <span className="font-[family-name:var(--font-roboto)] text-[clamp(2.8rem,7vw,5rem)] font-bold leading-[1.02] tracking-[-0.02em] text-white">
                   Join fellowship<br />
                 </span>
                 <span className="relative">
-                  <span className="font-[family-name:var(--font-heading)] text-[clamp(2.8rem,7vw,5rem)] font-bold leading-[1.02] tracking-[-0.02em] text-white">
+                  <span className="font-[family-name:var(--font-roboto)] text-[clamp(2.8rem,7vw,5rem)] font-bold leading-[1.02] tracking-[-0.02em] text-white">
                     and grow{" "}
                   </span>
-                  <span className="bg-gradient-to-r from-[#E19508] via-[#980140] to-[#A2014A] bg-clip-text font-[family-name:var(--font-script)] text-[clamp(3rem,8vw,5.8rem)] italic leading-[0.9] tracking-normal text-transparent">
+                  <span className="bg-gradient-to-r from-[#E19508] via-[#980140] to-[#A2014A] bg-clip-text font-[family-name:var(--font-roboto)] text-[clamp(3rem,8vw,5.8rem)] italic leading-[0.9] tracking-normal text-transparent">
                     in faith
                   </span>
                 </span>
@@ -132,13 +132,13 @@ export function HeroSlider() {
               >
                 <Heart size={18} className="text-[#E19508] fill-[#E19508]/20" />
                 <div className="leading-tight">
-                  <p className="font-[family-name:var(--font-heading)] text-[0.8rem] font-bold tracking-wide text-white">
+                  <p className="font-[family-name:var(--font-roboto)] text-[0.8rem] font-bold tracking-wide text-white">
                     Sisterhood
                   </p>
-                  <p className="font-[family-name:var(--font-heading)] text-[0.8rem] font-bold tracking-wide text-[#E19508]">
+                  <p className="font-[family-name:var(--font-roboto)] text-[0.8rem] font-bold tracking-wide text-[#E19508]">
                     Faith
                   </p>
-                  <p className="font-[family-name:var(--font-heading)] text-[0.8rem] font-bold tracking-wide text-white/90">
+                  <p className="font-[family-name:var(--font-roboto)] text-[0.8rem] font-bold tracking-wide text-white/90">
                     Purpose
                   </p>
                 </div>
@@ -160,7 +160,7 @@ export function HeroSlider() {
                 <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#E19508]/10">
                   <feat.icon size={22} className="text-[#E19508] fill-[#E19508]/10" />
                 </div>
-                <h3 className="mt-4 font-[family-name:var(--font-heading)] text-lg font-bold text-[#001233]">
+                <h3 className="mt-4 font-[family-name:var(--font-roboto)] text-lg font-bold text-[#001233]">
                   {feat.title}
                 </h3>
                 <p className="mt-2 max-w-[220px] text-xs leading-6 text-slate-600">
@@ -214,7 +214,7 @@ export function HeroSlider() {
 
               {/* Quote text */}
               <div className="mt-6">
-                <p className="font-[family-name:var(--font-heading)] text-2xl font-medium italic leading-relaxed text-white/92 sm:text-3xl sm:leading-[1.55] lg:text-[2rem] lg:leading-[1.6]">
+                <p className="font-[family-name:var(--font-roboto)] text-2xl font-medium italic leading-relaxed text-white/92 sm:text-3xl sm:leading-[1.55] lg:text-[2rem] lg:leading-[1.6]">
                   <span className="relative">
                     <span className="text-[#E19508]/40 text-4xl sm:text-5xl absolute -left-6 -top-4">&ldquo;</span>
                     Together, we uplift, inspire, and walk in faith&mdash;empowered by God, united in purpose.
