@@ -11,9 +11,18 @@ export type DraftPost = {
   category: PostCategory;
   coverImage: string;
   content: string;
+  jsonContent?: Record<string, unknown> | null;
   blocks: PostBlock[];
   isPublished: boolean;
   author: string;
+  seo?: {
+    seoTitle?: string;
+    seoDescription?: string;
+    ogImage?: string;
+    focusKeyword?: string;
+  };
+  readingTime?: number;
+  wordCount?: number;
 };
 
 export type Verse = {
