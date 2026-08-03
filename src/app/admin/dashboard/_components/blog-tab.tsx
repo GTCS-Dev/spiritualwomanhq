@@ -172,7 +172,13 @@ export function BlogTab({ token, onUnauthorized, onStatus }: AdminTabProps) {
       }
 
       if (post.blocks && post.blocks.length > 0) {
-        payload.blocks = post.blocks;
+        // Only send blocks that have actual content (non-empty text or an image URL)
+        const validBlocks = post.blocks.filter(
+          (block) => (block.text && block.text.trim().length > 0) || (block.imageUrl && block.imageUrl.trim().length > 0),
+        );
+        if (validBlocks.length > 0) {
+          payload.blocks = validBlocks;
+        }
       }
 
       const response = await fetch(endpoint, {
